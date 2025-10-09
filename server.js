@@ -11,13 +11,27 @@ app.get('/', (req, res) => {
   res.render('dashboard'); 
 });
 
-app.get('/test', (req, res) => {
-  res.render('berita'); 
-});
 
 app.get('/sekolah', (req, res) => {
   res.render('sekolah'); 
 });
+
+app.get('/siswa', (req, res) => {
+  res.render('siswa'); 
+});
+
+app.get('/supplier', (req, res) => {
+  res.render('supplier'); 
+});
+
+app.get('/siswa', (req, res) => {
+  res.render('tray'); 
+});
+
+app.get('/laporan', (req, res) => {
+  res.render('laporan'); 
+});
+
 
 app.listen(3000, () => {
   console.log('listening on port 3000');

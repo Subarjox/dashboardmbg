@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.render("dashboard");
+  res.render("tray");
 });
 
 app.get("/sekolah", (req, res) => {

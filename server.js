@@ -1,5 +1,5 @@
-const express = require('express');
-const path = require('path'); 
+const express = require("express");
+const path = require("path");
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -7,32 +7,30 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.get('/', (req, res) => {
-  res.render('dashboard'); 
+app.get("/", (req, res) => {
+  res.render("tray");
 });
 
-
-app.get('/sekolah', (req, res) => {
-  res.render('sekolah'); 
+app.get("/sekolah", (req, res) => {
+  res.render("sekolah");
 });
 
-app.get('/siswa', (req, res) => {
-  res.render('siswa'); 
+app.get("/siswa", (req, res) => {
+  res.render("siswa");
 });
 
-app.get('/supplier', (req, res) => {
-  res.render('supplier'); 
+app.get("/supplier", (req, res) => {
+  res.render("supplier");
 });
 
-app.get('/siswa', (req, res) => {
-  res.render('tray'); 
+app.get("/siswa", (req, res) => {
+  res.render("tray");
 });
 
-app.get('/laporan', (req, res) => {
-  res.render('laporan'); 
+app.get("/laporan", (req, res) => {
+  res.render("laporan");
 });
-
 
 app.listen(3000, () => {
-  console.log('listening on port 3000');
+  console.log("listening on port 3000");
 });

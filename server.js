@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", (req, res) => {
-  res.render("tray");
+  res.render("dashboard");
 });
 
 app.get("/sekolah", (req, res) => {
@@ -24,6 +24,10 @@ app.get("/supplier", (req, res) => {
 });
 
 app.get("/siswa", (req, res) => {
+  res.render("siswa");
+});
+
+app.get("/tray", (req, res) => {
   res.render("tray");
 });
 

@@ -29,6 +29,29 @@ app.use(session({
   cookie: { secure: false }
 }));
 
+app.use((req, res, next) => {
+  const path = req.path.replace(/\/$/, ""); // hapus trailing slash
+  res.locals.currentPath = path;
+  res.locals.isActive = (matchPath, options = { exact: false }) => {
+    if (!matchPath) return false;
+    matchPath = matchPath.replace(/\/$/, "");
+    if (options.exact) return path === matchPath;
+    return path.startsWith(matchPath);
+  };
+  next();
+});
+
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  
+  res.locals.pageTitle = "Dashboard";
+  res.locals.pageBreadcrumb = [
+    { name: "Dashboard", href: "/dashboard" }
+  ];
+
+  next();
+});
+
 // Routes
 app.get('/', (req, res) => res.render('login'));
 app.get('/register', (req, res) => res.render('register'));
@@ -71,21 +94,25 @@ app.post('/login', async (req, res) => {
     return res.render('login', { error: 'Password salah' });
   }
 
-  req.session.user = { id: user.id, email: user.email };
+  req.session.user = {   
+    id: user.id, 
+    email: user.email, 
+    nama: user.nama };
   res.redirect('/dashboard');
 });
 
 app.get('/dashboard', isAuthenticated, (req, res) => res.render('dashboard', { user: req.session.user }));
-app.get('/sekolah', isAuthenticated, (req, res) => res.render('sekolah'));
 
 const siswaRoutes = require('./routes/siswaroutes');
 app.use('/siswa', siswaRoutes);
+
+const sekolahRoutes = require('./routes/sekolahroutes');
+app.use('/sekolah', sekolahRoutes);
 
 app.get('/tes', isAuthenticated, (req, res) => res.render('detail_siswa'));
 app.get('/supplier', isAuthenticated, (req, res) => res.render('supplier'));
 app.get('/tray', isAuthenticated, (req, res) => res.render('tray'));
 app.get('/laporan', isAuthenticated, (req, res) => res.render('laporan'));
-app.get('/tambah_sekolah', isAuthenticated, (req, res) => res.render('tambah_sekolah'));
 
 
 // LOGOUT

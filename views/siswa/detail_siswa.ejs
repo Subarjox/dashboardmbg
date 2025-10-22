@@ -83,12 +83,14 @@
                       
                         <!-- Bagian Kanan: Foto -->
                         <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                          <div class="upload-area" style="position: relative; cursor: pointer;">
                           <% if(siswa.foto_siswa) { %>
                             <img src="<%= siswa.foto_siswa %>" alt="Foto Siswa" class="img-fluid rounded mb-3" style="max-height: 200px; object-fit: cover;">
                           <% } else { %>
                             <p>Tidak ada foto</p>
                           <% } %>
                         </div>
+                      </div>
                       </div>
                       
                         <div class="row mt-5">

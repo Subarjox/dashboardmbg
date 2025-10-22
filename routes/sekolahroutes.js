@@ -14,6 +14,8 @@ router.get('/', isAuthenticated, sekolahController.getAll);
 
 router.get('/detail/:id', isAuthenticated, sekolahController.getOne);
 
+router.get('/datasekolah', isAuthenticated, sekolahController.getAllAjax);
+
 // Form tambah sekolah
 router.get('/tambah', isAuthenticated, sekolahController.addForm);
 router.post('/tambah', isAuthenticated, upload.single('foto'), sekolahController.create);

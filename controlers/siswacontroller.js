@@ -36,6 +36,48 @@ const siswaController = {
     });
   },
 
+  getAllAjax: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10; // jumlah data per halaman
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
+  
+      const search = req.query.search || '';
+      const provinsi = req.query.provinsi || '';
+  
+      let query = supabase.from('siswa')
+        .select(`
+          nisn,
+          nama,
+          orang_tua,
+          kategori_alergi,
+          deskripsi_alergi,
+          foto_siswa,
+          sekolah:sekolah_id(nama_sekolah, kota, provinsi)
+        `, { count: 'exact' });
+  
+      if (search) query = query.ilike('nama', `%${search}%`);
+      if (provinsi) query = query.eq('sekolah.provinsi', provinsi);
+  
+      query = query.range(from, to).order('nisn', { ascending: true });
+  
+      const { data, count, error } = await query;
+  
+      if (error) return res.json({ error: error.message });
+  
+      res.json({
+        data,
+        currentPage: page,
+        totalPages: Math.ceil(count / limit),
+        totalData: count
+      });
+  
+    } catch (err) {
+      res.json({ error: err.message });
+    }
+  },  
+
   // 📗 READ: satu siswa
   getOne: async (req, res) => {
     const { id } = req.params;

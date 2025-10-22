@@ -10,6 +10,8 @@ const upload = multer({ storage });
 // ROUTES
 router.get('/', isAuthenticated, siswaController.getAll);
 
+router.get('/datasiswa', isAuthenticated, siswaController.getAllAjax);
+
 router.get('/detail/:id', isAuthenticated, siswaController.getOne);
 
 // Form tambah

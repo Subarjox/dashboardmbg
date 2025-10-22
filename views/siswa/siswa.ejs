@@ -149,7 +149,7 @@
                         <h6>Daftar Siswa</h6>
                         <p class="text-sm mb-0">
                           <i class="fa fa-check text-info" aria-hidden="true"></i>
-                          <span class="font-weight-bold ms-1"><%= siswa.length %></span> Total Siswa
+                          <span class="font-weight-bold ms-1" id="totalSiswa"><%= siswa.length %></span> Total Siswa
                         </p>
                       </div>
                       <div class="col-lg-6 col-5 text-end">
@@ -158,7 +158,7 @@
                         </a>
                       </div>
                     </div>
-            
+
                     <!-- Filter Section -->
                     <div class="row mt-4 g-3">
                       <div class="col-md-3">
@@ -167,7 +167,7 @@
                           <span class="input-group-text bg-white border-end-0">
                             <i class="fas fa-search"></i>
                           </span>
-                          <input type="text" class="form-control border-start-0" placeholder="Cari Siswa / NIS" id="searchInput" />
+                          <input type="text" class="form-control border-start-0" placeholder="Cari Nama Siswa" id="searchInput" />
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -184,14 +184,13 @@
                       </div>
                     </div>
                   </div>
-            
+
                   <div class="card-body px-0 pb-2">
                     <div class="table-responsive">
-                      <% if (siswa.length > 0) { %>
                       <table class="table align-items-center mb-0" id="siswaTable">
                         <thead>
                           <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">NIS</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">NISN</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Siswa</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Sekolah</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Orang Tua</th>
@@ -199,46 +198,25 @@
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <% siswa.forEach((s) => { %>
-                          <tr>
-                            <td class="ps-3"><h6 class="mb-0 text-sm"><%= s.nisn %></h6></td>
-                            <td><h6 class="mb-0 text-sm"><%= s.nama %></h6></td>
-                            <td>
-                              <h6 class="mb-0 text-sm"><%= s.sekolah.nama_sekolah %></h6>
-                              <span class="text-xxs text-secondary">
-                                <%= s.sekolah.kota %>, <%= s.sekolah.provinsi %>
-                              </span>
-                            </td>
-                            <td class="text-center"><h6 class="mb-0 text-sm"><%= s.orang_tua %></h6></td>
-                            <td class="text-center">
-                              <span class="badge <%= 
-                                s.kategori_alergi === 'berat' ? 'bg-danger' :
-                                s.kategori_alergi === 'ringan' ? 'bg-warning' : 'bg-success' 
-                              %>">
-                                <%= s.kategori_alergi %>
-                              </span>
-                            </td>
-                            <td class="text-center">
-                              <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/siswa/detail/<%= s.nisn %>">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="CurrentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
-                              </a>
-                            </td>
-                          </tr>
-                          <% }) %>
+                        <tbody id="siswaTableBody">
+                          <!-- Data akan dimuat via AJAX -->
                         </tbody>
                       </table>
-                      <% } else { %>
-                      <div class="text-center py-4">
+
+                      <!-- Pagination -->
+                      <div id="paginationContainer" class="mt-3 d-flex justify-content-center"></div>
+
+                      <!-- Empty state -->
+                      <div id="emptyState" class="text-center py-4 d-none">
                         <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
                         <p class="text-muted mb-0">Belum ada data siswa.</p>
                       </div>
-                      <% } %>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             
       <footer class="sticky-bottom footer pt-3  ">
         <div class="container-fluid">
@@ -265,30 +243,69 @@
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
   <script>
+    const siswaTableBody = document.getElementById('siswaTableBody');
+    const paginationContainer = document.getElementById('paginationContainer');
     const searchInput = document.getElementById('searchInput');
-    const siswaTable = document.getElementById('siswaTable');
     const filterProvinsi = document.getElementById('filterProvinsi');
-  
-    if (searchInput && siswaTable) {
-      searchInput.addEventListener('keyup', function() {
-        const search = this.value.toLowerCase();
-        Array.from(siswaTable.getElementsByTagName('tr')).forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(search) ? '' : 'none';
-        });
+    
+    let currentPage = 1;
+    
+    async function fetchSiswa(page = 1) {
+      const search = searchInput ? searchInput.value : '';
+      const provinsi = filterProvinsi ? filterProvinsi.value : '';
+    
+      const url = `/siswa/datasiswa?page=${page}&search=${search}&provinsi=${provinsi}`;
+      const res = await fetch(url);
+      const data = await res.json();
+    
+      if (data.error) return console.error(data.error);
+    
+      // render tabel
+      siswaTableBody.innerHTML = '';
+      data.data.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="ps-3"><h6 class="mb-0 text-sm">${s.nisn}</h6></td>
+          <td><h6 class="mb-0 text-sm">${s.nama}</h6></td>
+          <td>
+            <h6 class="mb-0 text-sm">${s.sekolah.nama_sekolah}</h6>
+            <span class="text-xxs text-secondary">${s.sekolah.kota}, ${s.sekolah.provinsi}</span>
+          </td>
+          <td class="text-center"><h6 class="mb-0 text-sm">${s.orang_tua}</h6></td>
+          <td class="text-center">
+            <span class="badge ${
+              s.kategori_alergi === 'berat' ? 'bg-danger' :
+              s.kategori_alergi === 'ringan' ? 'bg-warning' : 'bg-success'
+            }">${s.kategori_alergi}</span>
+          </td>
+          <td class="text-center">
+            <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/siswa/detail/${s.nisn}">
+             <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="CurrentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+            </a>
+          </td>
+        `;
+        siswaTableBody.appendChild(tr);
       });
+    
+      // render pagination
+      paginationContainer.innerHTML = '';
+      for (let i = 1; i <= data.totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `btn btn-sm ${i === data.currentPage ? 'btn-primary mx-1' : 'btn-outline-primary mx-1'}`;
+        btn.addEventListener('click', () => fetchSiswa(i));
+        paginationContainer.appendChild(btn);
+      }
     }
-  
-    if (filterProvinsi) {
-      filterProvinsi.addEventListener('change', function() {
-        const prov = this.value.toLowerCase();
-        Array.from(siswaTable.getElementsByTagName('tr')).forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = prov === '' || text.includes(prov) ? '' : 'none';
-        });
-      });
-    }
-  </script>
+    
+    // Event listener search & filter
+    if (searchInput) searchInput.addEventListener('keyup', () => fetchSiswa(1));
+    if (filterProvinsi) filterProvinsi.addEventListener('change', () => fetchSiswa(1));
+    
+    // Initial fetch
+    fetchSiswa();
+    </script>
+    
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

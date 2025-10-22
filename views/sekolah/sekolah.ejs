@@ -141,105 +141,85 @@
 
 
         <div class="row my-4">
-  <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-    <div class="card">
-      <div class="card-header pb-0">
-        <div class="row align-items-center">
-          <div class="col-lg-6 col-7">
-            <h6><%= pageTitle || 'Daftar Sekolah' %></h6>
-            <p class="text-sm mb-0">
-              <i class="fa fa-check text-info" aria-hidden="true"></i>
-              <span class="font-weight-bold ms-1"><%= sekolah ? sekolah.length : 0 %></span> Total Sekolah
-            </p>
-          </div>
-          <div class="col-lg-6 col-5 text-end">
-            <a class="btn btn-success mt-3" href="/sekolah/tambah">Tambah Sekolah</a>
-          </div>
-        </div>
-
-        <!-- Filter Section -->
-        <div class="row mt-4 g-3">
-          <div class="col-md-3">
-            <label class="form-label fw-bold">Search</label>
-            <div class="input-group">
-              <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
-              <input id="searchInput" type="text" class="form-control border-start-0" placeholder="Cari sekolah..." />
+          <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+            <div class="card">
+              <div class="card-header pb-0">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-7">
+                    <h6><%= pageTitle || 'Daftar Sekolah' %></h6>
+                    <p class="text-sm mb-0">
+                      <i class="fa fa-check text-info" aria-hidden="true"></i>
+                      <span class="font-weight-bold ms-1" id="totalSekolah"><%= sekolah ? sekolah.length : 0 %></span> Total Sekolah
+                    </p>
+                  </div>
+                  <div class="col-lg-6 col-5 text-end">
+                    <a class="btn btn-success mt-3" href="/sekolah/tambah">Tambah Sekolah</a>
+                  </div>
+                </div>
+        
+                <!-- Filter Section -->
+                <div class="row mt-4 g-3">
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold">Search</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+                      <input id="searchInput" type="text" class="form-control border-start-0" placeholder="Cari sekolah..." />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold">Provinsi</label>
+                    <select id="filterProvinsi" class="form-select">
+                      <option value="">Semua Provinsi</option>
+                      <% if (provinsiList) { provinsiList.forEach(p => { %>
+                        <option value="<%= p %>"><%= p %></option>
+                      <% }) } %>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold">Kota/Kabupaten</label>
+                    <select id="filterKota" class="form-select">
+                      <option value="">Semua Kota</option>
+                      <% if (kotaList) { kotaList.forEach(k => { %>
+                        <option value="<%= k %>"><%= k %></option>
+                      <% }) } %>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold">Status</label>
+                    <select id="filterStatus" class="form-select">
+                      <option value="">Semua Status</option>
+                      <option value="aktif">Aktif</option>
+                      <option value="nonaktif">Tidak Aktif</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                  <table id="sekolahTable" class="table align-items-center mb-0">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">ID Sekolah</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Sekolah</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah Siswa</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Sistem</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="sekolahTableBody">
+                      <!-- Data akan di-inject via AJAX -->
+                    </tbody>
+                  </table>
+                  <div id="paginationContainer" class="mt-4 d-flex justify-content-center gap-2">
+                    <!-- Pagination akan di-inject via AJAX -->
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-md-3">
-            <label class="form-label fw-bold">Provinsi</label>
-            <select id="filterProvinsi" class="form-select">
-              <option value="">Semua Provinsi</option>
-              <% if (sekolah) { 
-                  const provinsiList = [...new Set(sekolah.map(s => s.provinsi))];
-                  provinsiList.forEach(p => { %>
-                    <option value="<%= p %>"><%= p %></option>
-              <% }) } %>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label fw-bold">Kota/Kabupaten</label>
-            <select id="filterKota" class="form-select">
-              <option value="">Semua Kota</option>
-              <% if (sekolah) { 
-                  const kotaList = [...new Set(sekolah.map(s => s.kota))];
-                  kotaList.forEach(k => { %>
-                    <option value="<%= k %>"><%= k %></option>
-              <% }) } %>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label fw-bold">Status</label>
-            <select id="filterStatus" class="form-select">
-              <option value="">Semua Status</option>
-              <option value="Aktif">Aktif</option>
-              <option value="Tidak Aktif">Tidak Aktif</option>
-            </select>
-          </div>
         </div>
-      </div>
-
-      <div class="card-body px-0 pb-2">
-        <div class="table-responsive">
-          <table id="sekolahTable" class="table align-items-center mb-0">
-            <thead>
-              <tr>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">ID Sekolah</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Sekolah</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi</th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah Siswa</th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Sistem</th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% if (sekolah && sekolah.length) { 
-                  sekolah.forEach(s => { %>
-                    <tr>
-                      <td class="ps-3"><h6 class="mb-0 text-sm"><%= s.id_sekolah %></h6></td>
-                      <td><h6 class="mb-0 text-sm"><%= s.nama_sekolah %></h6></td>
-                      <td>
-                        <h6 class="mb-0 text-sm"><%= s.kota %></h6>
-                        <span class="text-xxs text-secondary"><%= s.provinsi %></span>
-                      </td>
-                      <td class="text-center"><h6 class="mb-0 text-sm"><%= s.jumlah_siswa %></h6></td>
-                      <td class="text-center">
-                        <span class="badge <%= s.status_sistem === 'aktif' ? 'bg-success' : 'bg-danger' %>"><%= s.status_sistem %></span>
-                      </td>
-                      <td class="text-center">
-                        <a class="btn btn-link text-dark px-3 mb-0" href="/sekolah/edit/<%= s.id_sekolah %>">
-                          <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit
-                        </a>
-                      </td>
-                    </tr>
-              <% }) } %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
         
         
       <footer class="sticky-bottom footer pt-3  ">
@@ -266,38 +246,77 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const filterProvinsi = document.getElementById('filterProvinsi');
-    const filterKota = document.getElementById('filterKota');
-    const filterStatus = document.getElementById('filterStatus');
-    const table = document.getElementById('sekolahTable').getElementsByTagName('tbody')[0];
+  const searchInput = $('#searchInput');
+  const filterProvinsi = $('#filterProvinsi');
+  const filterKota = $('#filterKota');
+  const filterStatus = $('#filterStatus');
+  const tableBody = $('#sekolahTableBody');
+  const paginationContainer = $('#paginationContainer');
   
-    function filterTable() {
-      const search = searchInput.value.toLowerCase();
-      const provinsi = filterProvinsi.value;
-      const kota = filterKota.value;
-      const status = filterStatus.value;
+  function loadPage(page = 1) {
+    const search = searchInput.val();
+    const provinsi = filterProvinsi.val();
+    const kota = filterKota.val();
+    const status = filterStatus.val();
   
-      Array.from(table.rows).forEach(row => {
-        const nama = row.cells[1].innerText.toLowerCase();
-        const rowProvinsi = row.cells[2].innerText.toLowerCase();
-        const rowKota = row.cells[2].querySelector('h6').innerText.toLowerCase();
-        const rowStatus = row.cells[4].innerText;
+    $.get('/sekolah/datasekolah', { page, search, provinsi, kota, status }, function(res) {
+      if (res.error) {
+        alert(res.error);
+        return;
+      }
   
-        const matchSearch = nama.includes(search);
-        const matchProvinsi = provinsi === '' || rowProvinsi.includes(provinsi.toLowerCase());
-        const matchKota = kota === '' || rowKota.includes(kota.toLowerCase());
-        const matchStatus = status === '' || rowStatus === status;
-  
-        row.style.display = (matchSearch && matchProvinsi && matchKota && matchStatus) ? '' : 'none';
+      // Inject table rows
+      let rows = '';
+      res.data.forEach(s => {
+        rows += `
+          <tr>
+            <td class="ps-3"><h6 class="mb-0 text-sm">${s.id_sekolah}</h6></td>
+            <td><h6 class="mb-0 text-sm">${s.nama_sekolah}</h6></td>
+            <td>
+              <h6 class="mb-0 text-sm">${s.kota}</h6>
+              <span class="text-xxs text-secondary">${s.provinsi}</span>
+            </td>
+            <td class="text-center"><h6 class="mb-0 text-sm">${s.jumlah_siswa}</h6></td>
+            <td class="text-center">
+              <span class="badge ${s.status_sistem==='aktif'?'bg-success':'bg-danger'}">${s.status_sistem}</span>
+            </td>
+            <td class="text-center">
+              <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/sekolah/detail/${s.id_sekolah}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="CurrentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+              </a>
+            </td>
+          </tr>
+        `;
       });
-    }
+      tableBody.html(rows);
   
-    searchInput.addEventListener('input', filterTable);
-    filterProvinsi.addEventListener('change', filterTable);
-    filterKota.addEventListener('change', filterTable);
-    filterStatus.addEventListener('change', filterTable);
+      // Inject pagination
+      let paginationHTML = '';
+      if (res.currentPage > 1) {
+        paginationHTML += `<button class="btn btn-sm btn-outline-primary" onclick="loadPage(${res.currentPage-1})">Previous</button>`;
+      }
+      for (let i = 1; i <= res.totalPages; i++) {
+        paginationHTML += `<button class="btn btn-sm ${res.currentPage===i?'btn-primary':'btn-outline-primary'}" onclick="loadPage(${i})">${i}</button>`;
+      }
+      if (res.currentPage < res.totalPages) {
+        paginationHTML += `<button class="btn btn-sm btn-outline-primary" onclick="loadPage(${res.currentPage+1})">Next</button>`;
+      }
+      paginationContainer.html(paginationHTML);
+    });
+  }
+  
+  // Trigger loadPage saat input/filter berubah
+  searchInput.on('input', () => loadPage(1));
+  filterProvinsi.on('change', () => loadPage(1));
+  filterKota.on('change', () => loadPage(1));
+  filterStatus.on('change', () => loadPage(1));
+  
+  // Load halaman pertama saat halaman siap
+  $(document).ready(() => loadPage());
   </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;

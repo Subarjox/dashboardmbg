@@ -247,21 +247,31 @@
     const paginationContainer = document.getElementById('paginationContainer');
     const searchInput = document.getElementById('searchInput');
     const filterProvinsi = document.getElementById('filterProvinsi');
-    
+    const emptyState = document.getElementById('emptyState');
+  
     let currentPage = 1;
-    
+  
     async function fetchSiswa(page = 1) {
-      const search = searchInput ? searchInput.value : '';
-      const provinsi = filterProvinsi ? filterProvinsi.value : '';
-    
+      const search = searchInput ? searchInput.value.trim() : '';
+      const provinsi = filterProvinsi ? filterProvinsi.value.trim() : '';
+  
       const url = `/siswa/datasiswa?page=${page}&search=${search}&provinsi=${provinsi}`;
       const res = await fetch(url);
       const data = await res.json();
-    
+  
       if (data.error) return console.error(data.error);
-    
-      // render tabel
+  
       siswaTableBody.innerHTML = '';
+  
+      // --- Render data siswa ---
+      if (!data.data.length) {
+        emptyState.classList.remove('d-none');
+        paginationContainer.innerHTML = '';
+        return;
+      } else {
+        emptyState.classList.add('d-none');
+      }
+  
       data.data.forEach(s => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -274,37 +284,56 @@
           <td class="text-center"><h6 class="mb-0 text-sm">${s.orang_tua}</h6></td>
           <td class="text-center">
             <span class="badge ${
-              s.kategori_alergi === 'berat' ? 'bg-danger' :
-              s.kategori_alergi === 'ringan' ? 'bg-warning' : 'bg-success'
-            }">${s.kategori_alergi}</span>
+              s.kategori_alergi === 'berat'
+                ? 'bg-danger'
+                : s.kategori_alergi === 'ringan'
+                ? 'bg-warning'
+                : 'bg-success'
+            } text-uppercase">${s.kategori_alergi || '-'}</span>
           </td>
           <td class="text-center">
             <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/siswa/detail/${s.nisn}">
-             <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="CurrentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor">
+                <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z"/>
+              </svg>
             </a>
           </td>
         `;
         siswaTableBody.appendChild(tr);
       });
-    
-      // render pagination
+  
+      // --- Render pagination ---
       paginationContainer.innerHTML = '';
-      for (let i = 1; i <= data.totalPages; i++) {
+      const totalPages = data.totalPages || 1;
+  
+      for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.textContent = i;
-        btn.className = `btn btn-sm ${i === data.currentPage ? 'btn-primary mx-1' : 'btn-outline-primary mx-1'}`;
-        btn.addEventListener('click', () => fetchSiswa(i));
+        btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'}`;
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          fetchSiswa(currentPage);
+        });
         paginationContainer.appendChild(btn);
       }
     }
-    
-    // Event listener search & filter
-    if (searchInput) searchInput.addEventListener('keyup', () => fetchSiswa(1));
-    if (filterProvinsi) filterProvinsi.addEventListener('change', () => fetchSiswa(1));
-    
-    // Initial fetch
-    fetchSiswa();
-    </script>
+  
+    // --- Event listeners ---
+    searchInput?.addEventListener('input', () => {
+      currentPage = 1;
+      fetchSiswa();
+    });
+  
+    filterProvinsi?.addEventListener('change', () => {
+      currentPage = 1;
+      fetchSiswa();
+    });
+  
+    // --- Initial load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchSiswa();
+    });
+  </script>
     
   <script>
     var win = navigator.platform.indexOf('Win') > -1;

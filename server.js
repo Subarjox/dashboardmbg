@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
-  
+
   res.locals.pageTitle = "Dashboard";
   res.locals.pageBreadcrumb = [
     { name: "Dashboard", href: "/dashboard" }
@@ -109,9 +109,12 @@ app.use('/siswa', siswaRoutes);
 const sekolahRoutes = require('./routes/sekolahroutes');
 app.use('/sekolah', sekolahRoutes);
 
+const supplierRoutes = require('./routes/supplierroutes');
+app.use('/supplier', supplierRoutes);
+
 app.get('/tes', isAuthenticated, (req, res) => res.render('detail_siswa'));
 app.get('/supplier', isAuthenticated, (req, res) => res.render('supplier'));
-app.get('/tray', isAuthenticated, (req, res) => res.render('tray'));
+app.get('/tray', isAuthenticated, (req, res) => res.render('tray/tray'));
 app.get('/laporan', isAuthenticated, (req, res) => res.render('laporan'));
 
 

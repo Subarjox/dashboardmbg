@@ -205,6 +205,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah Siswa</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Sistem</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kasus Keracunan</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                       </tr>
                     </thead>
@@ -283,6 +284,9 @@
             <td class="text-center"><h6 class="mb-0 text-sm">${s.jumlah_siswa}</h6></td>
             <td class="text-center">
               <span class="badge ${s.status_sistem==='aktif'?'bg-success':'bg-danger'}">${s.status_sistem}</span>
+            </td>
+            <td class="text-center">
+              <span class="badge ${s.kasus_keracunan==='aman'?'bg-success':'bg-danger'}">${s.kasus_keracunan}</span>
             </td>
             <td class="text-center">
               <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/sekolah/detail/${s.id_sekolah}">

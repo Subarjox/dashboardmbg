@@ -125,6 +125,15 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// handle 404
+app.use((req, res, next) => {
+  res.status(404).render('404', {
+    pageTitle: '404 - Halaman Tidak Ditemukan',
+    pageCrumb: 'Error 404'
+  });
+});
+
+
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

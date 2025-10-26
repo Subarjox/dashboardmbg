@@ -27949,7 +27949,18 @@ pre[class*=language-] {
 .upload-area:hover {
   background-color: #e9ecef;
 }
-
+.error-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #dc3545;
+}
+.error-message {
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+.btn-home {
+  margin-top: 20px;
+}
 /* MS supports */
 @supports (-ms-overflow-style: none) {
   .ps {

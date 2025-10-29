@@ -203,18 +203,18 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">ID Sekolah</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nama Sekolah</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Lokasi</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jumlah Siswa</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">SPPG</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Sistem</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kasus Keracunan</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                       </tr>
                     </thead>
                     <tbody id="sekolahTableBody">
-                      <!-- Data akan di-inject via AJAX -->
+                      <!-- Data di-inject via AJAX -->
                     </tbody>
                   </table>
                   <div id="paginationContainer" class="mt-4 d-flex justify-content-center gap-2">
-                    <!-- Pagination akan di-inject via AJAX -->
+                    <!-- Pagination di-inject via AJAX -->
                   </div>
                 </div>
               </div>
@@ -281,7 +281,7 @@
               <h6 class="mb-0 text-sm">${s.kota}</h6>
               <span class="text-xxs text-secondary">${s.provinsi}</span>
             </td>
-            <td class="text-center"><h6 class="mb-0 text-sm">${s.jumlah_siswa}</h6></td>
+            <td class="text-center"><h6 class="mb-0 text-sm">${s.satuan_gizi.nama_sppg}</h6></td>
             <td class="text-center">
               <span class="badge ${s.status_sistem==='aktif'?'bg-success':'bg-danger'}">${s.status_sistem}</span>
             </td>

@@ -112,6 +112,9 @@ app.use('/sekolah', sekolahRoutes);
 const supplierRoutes = require('./routes/supplierroutes');
 app.use('/supplier', supplierRoutes);
 
+const sppgRoutes = require('./routes/sppgroutes');
+app.use('/sppg', sppgRoutes);
+
 app.get('/tes', isAuthenticated, (req, res) => res.render('detail_siswa'));
 app.get('/supplier', isAuthenticated, (req, res) => res.render('supplier'));
 app.get('/tray', isAuthenticated, (req, res) => res.render('tray/tray'));

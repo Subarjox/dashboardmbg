@@ -68,6 +68,23 @@
                                     required>
                                 </div>
                               </div>
+
+                              <div class="col-md-12 mb-3">
+                                <label for="id_sppg" class="form-label">ID Satuan Pelayanan Pemenuhan Gizi</label>
+                                <select
+                                  class="form-select"
+                                  id="id_sppg"
+                                  name="id_sppg"
+                                  required
+                                >
+                                  <option value="" disabled selected>Pilih Satuan Pelayanan Pemenuhan Gizi</option>
+                                  <% sppgList.forEach(sppg => { %>
+                                    <option value="<%= sppg.id_sppg %>" <%= sekolah.id_sppg === sppg.id_sppg ? 'selected' : '' %>>
+                                      <%= sppg.id_sppg %> - <%= sppg.nama_sppg %>
+                                    </option>
+                                  <% }) %>
+                                </select>
+                              </div>
                       
                               <div class="row">
                                 <div class="col-md-6 mb-3">

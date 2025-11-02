@@ -101,7 +101,8 @@ app.post('/login', async (req, res) => {
   res.redirect('/dashboard');
 });
 
-app.get('/dashboard', isAuthenticated, (req, res) => res.render('dashboard', { user: req.session.user }));
+const dashboardRoutes = require('./routes/dashboardroutes');
+app.use('/dashboard', dashboardRoutes);
 
 const siswaRoutes = require('./routes/siswaroutes');
 app.use('/siswa', siswaRoutes);
@@ -114,6 +115,8 @@ app.use('/supplier', supplierRoutes);
 
 const sppgRoutes = require('./routes/sppgroutes');
 app.use('/sppg', sppgRoutes);
+
+
 
 app.get('/tes', isAuthenticated, (req, res) => res.render('detail_siswa'));
 app.get('/supplier', isAuthenticated, (req, res) => res.render('supplier'));
@@ -139,4 +142,4 @@ app.use((req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server Running, http://localhost:${PORT}`));

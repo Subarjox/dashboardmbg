@@ -14,7 +14,6 @@ router.get('/datasppg', isAuthenticated, sppgController.getAllAjax);
 
 router.get('/detail/:id', isAuthenticated, sppgController.getOne);
 
-// Form tambah
 // Submit tambah siswa (pakai multer)
 router.get('/tambah', isAuthenticated, sppgController.addForm);
 router.post('/tambah', isAuthenticated, upload.single('foto'), sppgController.create);

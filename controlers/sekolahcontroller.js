@@ -127,6 +127,7 @@ const sekolahController = {
       status_sistem,
       telpon_sekolah,
       alamat,
+      kasus_keracunan,
       id_sppg
     } = req.body;
 
@@ -157,6 +158,7 @@ const sekolahController = {
       jumlah_siswa: parseInt(jumlah_siswa) || 0,
       telpon_sekolah: telpon_sekolah || '',
       status_sistem: status_sistem || 'aktif',
+      kasus_keracunan: status_sistem || 'aman',
       foto_sekolah: foto_sekolah || null
     };
 

@@ -28,7 +28,7 @@ const sppgController = {
       pageTitle: 'Daftar SPPG',
       pageCrumb: 'SPPG',
       breadcrumb: ['Dashboard', 'SPPG'],
-    });
+    });                                                                               
   },
 
   // ⚡ AJAX - Pagination, Search, Filter
@@ -38,30 +38,50 @@ const sppgController = {
       const limit = 10;
       const from = (page - 1) * limit;
       const to = from + limit - 1;
-
+  
       const search = req.query.search || '';
       const provinsi = req.query.provinsi || '';
       const kota = req.query.kota || '';
-
+  
       let query = supabase
         .from('satuan_gizi')
         .select('*', { count: 'exact' });
-
+  
       if (search) query = query.ilike('nama_sppg', `%${search}%`);
       if (provinsi) query = query.eq('provinsi_sppg', provinsi);
       if (kota) query = query.eq('kota_sppg', kota);
-
+  
       query = query.range(from, to).order('id_sppg', { ascending: true });
-
+  
       const { data, count, error } = await query;
-
+  
       if (error) return res.json({ error: error.message });
-
+      if (!data) return res.json({ data: [], currentPage: page, totalPages: 0, totalData: 0 });
+  
+      // 🔥 Hitung jumlah sekolah yang connect ke tiap sppg
+      const sppgWithCount = await Promise.all(
+        data.map(async (sppg) => {
+          const { count: sekolahCount, error: sekolahError } = await supabase
+            .from('sekolah')
+            .select('*', { count: 'exact', head: true })
+            .eq('id_sppg', sppg.id_sppg);
+  
+          if (sekolahError) {
+            console.error('Error menghitung sekolah:', sekolahError.message);
+          }
+  
+          return {
+            ...sppg,
+            jumlah_sekolah: sekolahCount || 0,
+          };
+        })
+      );
+  
       res.json({
-        data,
+        data: sppgWithCount,
         currentPage: page,
         totalPages: Math.ceil(count / limit),
-        totalData: count
+        totalData: count,
       });
     } catch (err) {
       res.json({ error: err.message });
@@ -70,22 +90,44 @@ const sppgController = {
 
   // 📗 READ: detail satu SPPG
   getOne: async (req, res) => {
-    const { id } = req.params;
-    const { data, error } = await supabase
-      .from('satuan_gizi')
-      .select('*')
-      .eq('id_sppg', id)
-      .single();
-
-    if (error) return res.send('Error: ' + error.message);
-
-    res.render('sppg/detail_sppg', {
-      user: req.session.user,
-      sppg: data,
-      pageTitle: 'Detail SPPG',
-      pageCrumb: 'SPPG',
-      breadcrumb: ['Dashboard', 'SPPG', 'Detail'],
-    });
+    try {
+      const { id } = req.params;
+  
+      // Ambil detail SPPG
+      const { data: sppg, error } = await supabase
+        .from('satuan_gizi')
+        .select('*')
+        .eq('id_sppg', id)
+        .single();
+  
+      if (error || !sppg) {
+        console.error(error);
+        return res.send('SPPG tidak ditemukan.');
+      }
+  
+      // Hitung jumlah sekolah yang terkait dengan SPPG ini
+      const { count, error: countError } = await supabase
+        .from('sekolah')
+        .select('id_sppg', { count: 'exact' }) // penting: cukup ambil id_sppg
+        .eq('id_sppg', id);
+  
+      if (countError) {
+        console.error(countError);
+        return res.send('Gagal menghitung jumlah sekolah.');
+      }
+  
+      res.render('sppg/detail_sppg', {
+        user: req.session.user,
+        sppg,
+        jumlah_sekolah: count || 0,
+        pageTitle: 'Detail SPPG',
+        pageCrumb: 'SPPG',
+        breadcrumb: ['Dashboard', 'SPPG', 'Detail'],
+      });
+    } catch (err) {
+      console.error('Error getOne SPPG:', err);
+      res.send('Terjadi kesalahan server.');
+    }
   },
 
   // 📙 FORM TAMBAH SPPG
@@ -104,9 +146,10 @@ const sppgController = {
       id_sppg,
       nama_sppg,
       kota_sppg,
+      pemilik_sppg,
       provinsi_sppg,
       alamat_sppg,
-      no_telp_sppg
+      no_telpon_sppg
     } = req.body;
 
     let foto_sppg = null;
@@ -129,9 +172,11 @@ const sppgController = {
       id_sppg,
       nama_sppg,
       kota_sppg,
+      pemilik_sppg,
       provinsi_sppg,
+      status_sppg: 'aktif',
       alamat_sppg,
-      no_telp_sppg,
+      no_telpon_sppg,
       foto_sppg: foto_sppg || null
     };
 
@@ -150,10 +195,20 @@ const sppgController = {
       .single();
 
     if (error) return res.send('Gagal memuat data SPPG: ' + error.message);
+    const { count, error: countError } = await supabase
+    .from('sekolah')
+    .select('id_sppg', { count: 'exact' }) // penting: cukup ambil id_sppg
+    .eq('id_sppg', id);
+
+  if (countError) {
+    console.error(countError);
+    return res.send('Gagal menghitung jumlah sekolah.');
+  }
 
     res.render('sppg/update_sppg', {
       user: req.session.user,
       sppg,
+      jumlah_sekolah: count || 0,
       pageCrumb: 'SPPG',
       pageTitle: 'Edit SPPG',
       breadcrumb: ['Dashboard', 'SPPG', 'Edit'],
@@ -167,8 +222,10 @@ const sppgController = {
       nama_sppg,
       kota_sppg,
       provinsi_sppg,
+      pemilik_sppg,
       alamat_sppg,
-      no_telp_sppg,
+      status_sppg,
+      no_telpon_sppg,
       foto_lama
     } = req.body;
 
@@ -176,8 +233,10 @@ const sppgController = {
       nama_sppg,
       kota_sppg,
       provinsi_sppg,
+      pemilik_sppg,
       alamat_sppg,
-      no_telp_sppg,
+      status_sppg,
+      no_telpon_sppg,
       foto_sppg: foto_lama
     };
 

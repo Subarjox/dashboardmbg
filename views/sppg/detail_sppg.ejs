@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>FoodGuard PRO - Detail SPPG</title>
+
+  <!-- Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+  <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+  <!-- CSS -->
+  <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3" id="sidenav-main">
+    <%- include('../partials/sidehead') %>
+    <hr class="horizontal dark mt-0">
+    <%- include('../partials/sidebar') %>
+  </aside>
+
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+    <!-- Navbar -->
+    <%- include('../partials/navbar') %>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-lg-12 col-12">
+          <div class="row">
+            <div class="col-12 mb-lg-0 mb-4">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="row">
+                    <!-- Bagian kiri -->
+                    <div class="col-lg-7">
+                      <div class="d-flex flex-column h-100">
+
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Nama SPPG</label>
+                            <input type="text" class="form-control" value="<%= sppg.nama_sppg %>" readonly>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">ID SPPG</label>
+                            <input type="text" class="form-control" value="<%= sppg.id_sppg %>" readonly>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Pemilik SPPG</label>
+                                <input type="text" class="form-control" value="<%=  sppg.pemilik_sppg %>" readonly>
+                              </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sekolah Terhubung</label>
+                                <input type="text" class="form-control" value="<%= jumlah_sekolah %>" readonly>
+                              </div>
+                          </div>
+
+
+
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Kota / Kabupaten</label>
+                            <input type="text" class="form-control" value="<%= sppg.kota_sppg %>" readonly>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Provinsi</label>
+                            <input type="text" class="form-control" value="<%= sppg.provinsi_sppg %>" readonly>
+                          </div>
+                        </div>
+
+                        <div class="mb-3">
+                          <label class="form-label">Alamat Lengkap</label>
+                          <textarea class="form-control" rows="3" readonly><%= sppg.alamat_sppg %></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                          <label class="form-label">Nomor Telepon</label>
+                          <input type="text" class="form-control" value="<%= sppg.no_telpon_sppg || '-' %>" readonly>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Bagian kanan -->
+                    <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                      <div class="upload-area" style="position: relative; cursor: pointer;">
+                        <% if (sppg.foto_sppg) { %>
+                          <img src="<%= sppg.foto_sppg %>" alt="Foto SPPG" class="img-fluid rounded mb-3" style="max-height: 200px; object-fit: cover;">
+                        <% } else { %>
+                          <p>Tidak ada foto</p>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tombol aksi -->
+                  <div class="row mt-5">
+                    <div class="col-12 mb-3">
+                      <a href="/sppg/update/<%= sppg.id_sppg %>" class="btn btn-info w-100">
+                        Edit Data SPPG
+                      </a>
+                    </div>
+                    <div class="col-12">
+                      <a href="/sppg/delete/<%= sppg.id_sppg %>" class="btn btn-danger w-100">
+                        Hapus Data SPPG
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="sticky-bottom footer pt-3">
+            <div class="container-fluid">
+              <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                  <div class="copyright text-center text-sm text-muted text-lg-start">
+                    © <script>document.write(new Date().getFullYear())</script>, Irostech
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Core JS -->
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/chartjs.min.js"></script>
+
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), { damping: '0.5' });
+    }
+  </script>
+
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="/assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+</html>

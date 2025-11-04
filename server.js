@@ -56,6 +56,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.render('login'));
 app.get('/register', (req, res) => res.render('register'));
 
+
+//login, register admin
 app.post('/register', async (req, res) => {
   const { nama, email,username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -76,30 +78,93 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const { data: users, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('email', email)
-    .limit(1);
+  try {
+    //user_admin
+    const { data: adminData, error: adminError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .limit(1);
 
-  if (error || users.length === 0) {
-    return res.render('login', { error: 'Email tidak ditemukan' });
+    if (adminError) throw adminError;
+
+    if (adminData && adminData.length > 0) {
+      const admin = adminData[0];
+      const match = await bcrypt.compare(password, admin.password);
+
+      if (!match) return res.render('login', { error: 'Password salah!' });
+
+      req.session.user = {
+        id: admin.id,
+        nama: admin.nama,
+        email: admin.email,
+        role: 'admin',
+      };
+
+      console.log('✅ Login sebagai ADMIN:', admin.email);
+      return res.redirect('/dashboard');
+    }
+
+    //User_Sekolah
+    const { data: sekolahData, error: sekolahError } = await supabase
+      .from('sekolah')
+      .select('*')
+      .eq('email', email)
+      .limit(1);
+
+    if (sekolahError) throw sekolahError;
+
+    if (sekolahData && sekolahData.length > 0) {
+      const sekolah = sekolahData[0];
+      const match = await bcrypt.compare(password, sekolah.password_sekolah);
+
+      if (!match) return res.render('login', { error: 'Password salah!' });
+
+      // ✅ Session untuk Sekolah
+      req.session.user = {
+        id_sekolah: sekolah.id_sekolah,
+        nama: sekolah.nama_sekolah,
+        email: sekolah.email,
+        role: 'sekolah',
+      };
+
+      console.log('✅ Login sebagai SEKOLAH:', sekolah.email);
+      return res.redirect('/');
+    }
+
+    //User_SPPG
+    const { data: sppgData, error: sppgError } = await supabase
+      .from('satuan_gizi')
+      .select('*')
+      .eq('id_sppg', email) 
+      .limit(1);
+
+    if (sppgError) throw sppgError;
+
+    if (sppgData && sppgData.length > 0) {
+
+      const sppg = sppgData[0];
+      if (sppg.password_sppg !== password)
+        return res.render('login', { error: 'Password salah!' });
+
+      req.session.user = {
+        id_sppg: sppg.id_sppg,
+        nama: sppg.nama_sppg,
+        role: 'sppg',
+      };
+
+      console.log('✅ Login sebagai SPPG:', sppg.id_sppg);
+      return res.redirect('/');
+    }
+
+    return res.render('login', { error: 'Akun tidak ditemukan!' });
+
+  } catch (err) {
+    console.error(' Error saat login:', err);
+    res.render('login', { error: 'Terjadi kesalahan server.' });
   }
-
-  const user = users[0];
-  const match = await bcrypt.compare(password, user.password);
-
-  if (!match) {
-    console.log('Password salah');
-    return res.render('login', { error: 'Password salah' });
-  }
-
-  req.session.user = {   
-    id: user.id, 
-    email: user.email, 
-    nama: user.nama };
-  res.redirect('/dashboard');
 });
+
 
 const dashboardRoutes = require('./routes/dashboardroutes');
 app.use('/dashboard', dashboardRoutes);

@@ -58,14 +58,14 @@
                                 </div>
                       
                                 <div class="col-md-6 mb-3">
-                                  <label for="npsn" class="form-label">NPSN</label>
+                                  <label for="npsn" class="form-label">NPSN (Tidak Untuk Diubah)</label>
                                   <input 
                                     type="text" 
                                     class="form-control" 
                                     id="npsn" 
                                     name="id_sekolah" 
                                     value="<%= sekolah.id_sekolah %>" 
-                                    required>
+                                    readonly>
                                 </div>
                               </div>
 
@@ -108,6 +108,18 @@
                                     value="<%= sekolah.provinsi %>" 
                                     required>
                                 </div>
+                              </div>
+
+                              <div class="col-md-12 mb-3">
+                                <label for="email_sekolah" class="form-label">Email Sekolah </label>
+                                <input
+                                  type="email"
+                                  class="form-control"
+                                  id="email_sekolah"
+                                  name="email_sekolah"
+                                  value="<%= sekolah.email_sekolah %>"
+                                  required
+                                />
                               </div>
                       
                               <div class="mb-3">

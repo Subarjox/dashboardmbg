@@ -24,40 +24,44 @@
 <body class="">
   <main class="main-content  mt-0">
     <section>
-      <div class="page-header min-vh-75">
+      <div class="page-header min-vh-90">
         <div class="container">
           <div class="row">
-            <div class="col-xl-6 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+            <div class="col-xl-5 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
-                <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-primary">Dashboard Makan Bergizi Gratis</h3>
+                <div class="card-header pb-0 text-center bg-transparent">
+                  <h3 class="font-weight-bolder text-info">Dashboard Makan Bergizi Gratis</h3>
                 </div>
                 <div class="card-body">
                   <form role="form" method="POST" action="/login">
-                    <label>Email</label>
+                    <label>Email / ID SPPG</label>
                     <div class="mb-3">
                       <input 
-                      type="email"
-                      name="email"
-                      class="form-control"
-                      placeholder="Email"
-                      aria-label="Email"
-                      aria-describedby="email-addon"
-                      required
+                        type="text" 
+                        name="email" 
+                        class="form-control"
+                        placeholder="Masukkan email (Admin/Sekolah) atau ID SPPG"
+                        aria-label="Email atau ID"
+                        aria-describedby="email-addon"
+                        required
                       >
                     </div>
+                  
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="password"
-                      name="password"
-                      class="form-control"
-                      placeholder="password"
-                      aria-label="password"
-                      aria-describedby="password-addon"
-                      required >
+                      <input 
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Masukkan password"
+                        aria-label="Password"
+                        aria-describedby="password-addon"
+                        required
+                      >
                     </div>
+                  
                     <div class="text-center">
-                      <button type="submit" class="btn bg-primary w-100 mt-4 mb-0">
+                      <button type="submit" class="btn bg-info w-100 mt-4 mb-0">
                         <span class="text-white">Login</span>
                       </button>
                     </div>
@@ -66,7 +70,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
                     Belum Punya Akun ?
-                    <a href="/register" class="text-primary font-weight-bold">Daftar </a>
+                    <a href="/register" class="text-info font-weight-bold">Daftar </a>
                   </p>
                   <p class="mb-2 text-sm mx-auto">Atau</p>
                   <p class="mb-4 text-sm mx-auto">
@@ -74,11 +78,16 @@
                     <a href="/login" class="text-info font-weight-bold">Recover </a>
                   </p>
                 </div>
+                <div class="card-footer text-center pt-0">
+                  <p class="mb-1 text-sm mx-auto">
+                    <a href="/register" class="text-info font-weight-bold">Baca Panduan Login Disini </a>
+                  </p>
+                </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/jurnalist.jpg')"></div>
+                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n8" style="background-image:url('../assets/img/sekolah.png')"></div>
               </div>
             </div>
           </div>

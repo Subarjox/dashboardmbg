@@ -1,4 +1,3 @@
-// controllers/sppgController.js
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -8,7 +7,6 @@ const supabase = createClient(
 );
 
 const sppgController = {
-  // 📘 READ: semua SPPG
   getAll: async (req, res) => {
     const { data, error } = await supabase
       .from('satuan_gizi')
@@ -31,7 +29,6 @@ const sppgController = {
     });                                                                               
   },
 
-  // ⚡ AJAX - Pagination, Search, Filter
   getAllAjax: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
@@ -88,7 +85,6 @@ const sppgController = {
     }
   },
 
-  // 📗 READ: detail satu SPPG
   getOne: async (req, res) => {
     try {
       const { id } = req.params;
@@ -130,7 +126,6 @@ const sppgController = {
     }
   },
 
-  // 📙 FORM TAMBAH SPPG
   addForm: async (req, res) => {
     res.render('sppg/tambah_sppg', {
       user: req.session.user,
@@ -146,6 +141,7 @@ const sppgController = {
       id_sppg,
       nama_sppg,
       kota_sppg,
+      email_sppg,
       pemilik_sppg,
       provinsi_sppg,
       alamat_sppg,
@@ -170,7 +166,9 @@ const sppgController = {
 
     const insertData = {
       id_sppg,
+      password_sppg: id_sppg,
       nama_sppg,
+      email_sppg,
       kota_sppg,
       pemilik_sppg,
       provinsi_sppg,
@@ -185,7 +183,6 @@ const sppgController = {
     res.redirect('/sppg');
   },
 
-  // 🟡 FORM EDIT SPPG
   editForm: async (req, res) => {
     const { id } = req.params;
     const { data: sppg, error } = await supabase
@@ -197,7 +194,7 @@ const sppgController = {
     if (error) return res.send('Gagal memuat data SPPG: ' + error.message);
     const { count, error: countError } = await supabase
     .from('sekolah')
-    .select('id_sppg', { count: 'exact' }) // penting: cukup ambil id_sppg
+    .select('id_sppg', { count: 'exact' }) 
     .eq('id_sppg', id);
 
   if (countError) {
@@ -215,7 +212,6 @@ const sppgController = {
     });
   },
 
-  // 🧩 UPDATE SPPG
   update: async (req, res) => {
     const { id } = req.params;
     const {
@@ -264,7 +260,6 @@ const sppgController = {
     res.redirect('/sppg');
   },
 
-  // 🔴 DELETE SPPG
   delete: async (req, res) => {
     const { id } = req.params;
     const { error } = await supabase.from('satuan_gizi')

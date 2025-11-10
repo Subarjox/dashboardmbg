@@ -6,6 +6,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+const bcrypt = require('bcrypt');
+
 const sppgController = {
   getAll: async (req, res) => {
     const { data, error } = await supabase
@@ -55,7 +57,6 @@ const sppgController = {
       if (error) return res.json({ error: error.message });
       if (!data) return res.json({ data: [], currentPage: page, totalPages: 0, totalData: 0 });
   
-      // 🔥 Hitung jumlah sekolah yang connect ke tiap sppg
       const sppgWithCount = await Promise.all(
         data.map(async (sppg) => {
           const { count: sekolahCount, error: sekolahError } = await supabase
@@ -89,7 +90,6 @@ const sppgController = {
     try {
       const { id } = req.params;
   
-      // Ambil detail SPPG
       const { data: sppg, error } = await supabase
         .from('satuan_gizi')
         .select('*')
@@ -101,10 +101,9 @@ const sppgController = {
         return res.send('SPPG tidak ditemukan.');
       }
   
-      // Hitung jumlah sekolah yang terkait dengan SPPG ini
       const { count, error: countError } = await supabase
         .from('sekolah')
-        .select('id_sppg', { count: 'exact' }) // penting: cukup ambil id_sppg
+        .select('id_sppg', { count: 'exact' }) 
         .eq('id_sppg', id);
   
       if (countError) {
@@ -135,7 +134,7 @@ const sppgController = {
     });
   },
 
-  // 🟢 CREATE SPPG BARU
+
   create: async (req, res) => {
     const {
       id_sppg,
@@ -164,9 +163,10 @@ const sppgController = {
       foto_sppg = supabase.storage.from('foto-sppg').getPublicUrl(data.path).data.publicUrl;
     }
 
+    const password_sppg = await bcrypt.hash(id_sppg, 10);
     const insertData = {
       id_sppg,
-      password_sppg: id_sppg,
+      password_sppg,
       nama_sppg,
       email_sppg,
       kota_sppg,

@@ -1,6 +1,7 @@
 // controllers/sekolahController.js
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -164,9 +165,11 @@ const sekolahController = {
           .getPublicUrl(data.path).data.publicUrl;
       }
 
+      const password_sekolah = await bcrypt.hash(id_sekolah, 10);
+
       const insertData = {
         id_sekolah,
-        password_sekolah: id_sekolah,
+        password_sekolah,
         nama_sekolah,
         kota,
         provinsi,
@@ -283,8 +286,6 @@ const sekolahController = {
         id_sppg: parseInt(id_sppg),
         foto_sekolah: foto_lama,
       };
-
-      console.log(updateData);
   
       if (req.file) {
         const { data, error: uploadError } = await supabase.storage

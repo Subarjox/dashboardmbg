@@ -4,7 +4,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { createClient } = require('@supabase/supabase-js');
-const { isAuthenticated } = require('./middleware/authmiddleware');
+const { isAuthenticated, isSekolah } = require('./middleware/authmiddleware');
 
 const app = express();
 
@@ -57,7 +57,7 @@ app.get('/', (req, res) => res.render('login'));
 app.get('/register', (req, res) => res.render('register'));
 
 
-//login, register admin
+
 app.post('/register', async (req, res) => {
   const { nama, email,username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,9 +77,9 @@ app.post('/register', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
-  try {
     //user_admin
+  try {
+
     const { data: adminData, error: adminError } = await supabase
       .from('users')
       .select('*')
@@ -92,7 +92,7 @@ app.post('/login', async (req, res) => {
       const admin = adminData[0];
       const match = await bcrypt.compare(password, admin.password);
 
-      if (!match) return res.render('login', { error: 'Password salah!' });
+      if (!match) return res.render('/', { error: 'Password salah!' });
 
       req.session.user = {
         id: admin.id,
@@ -109,7 +109,7 @@ app.post('/login', async (req, res) => {
     const { data: sekolahData, error: sekolahError } = await supabase
       .from('sekolah')
       .select('*')
-      .eq('email', email)
+      .eq('email_sekolah', email)
       .limit(1);
 
     if (sekolahError) throw sekolahError;
@@ -118,17 +118,18 @@ app.post('/login', async (req, res) => {
       const sekolah = sekolahData[0];
       const match = await bcrypt.compare(password, sekolah.password_sekolah);
 
-      if (!match) return res.render('login', { error: 'Password salah!' });
+      if (!match) return res.render('/', { error: 'Password salah!' },
+        console.log('pass salah')
+      );
 
-      // ✅ Session untuk Sekolah
       req.session.user = {
         id_sekolah: sekolah.id_sekolah,
         nama: sekolah.nama_sekolah,
-        email: sekolah.email,
+        email: sekolah.email_sekolah,
         role: 'sekolah',
       };
 
-      console.log('✅ Login sebagai SEKOLAH:', sekolah.email);
+      console.log('✅ Login sebagai SEKOLAH:', sekolah.email_sekolah);
       return res.redirect('/');
     }
 
@@ -136,7 +137,7 @@ app.post('/login', async (req, res) => {
     const { data: sppgData, error: sppgError } = await supabase
       .from('satuan_gizi')
       .select('*')
-      .eq('id_sppg', email) 
+      .eq('email_sppg', email) 
       .limit(1);
 
     if (sppgError) throw sppgError;
@@ -144,16 +145,20 @@ app.post('/login', async (req, res) => {
     if (sppgData && sppgData.length > 0) {
 
       const sppg = sppgData[0];
-      if (sppg.password_sppg !== password)
-        return res.render('login', { error: 'Password salah!' });
+      const match = await bcrypt.compare(password, sppg.password_sppg);
 
+      if (!match) return res.render('/', { error: 'Password salah!' },
+        console.log('pass salah')
+      );
+      
       req.session.user = {
         id_sppg: sppg.id_sppg,
         nama: sppg.nama_sppg,
+        email: sppg.email_sppg,
         role: 'sppg',
       };
 
-      console.log('✅ Login sebagai SPPG:', sppg.id_sppg);
+      console.log('✅ Login sebagai SPPG:', sppg.email_sppg);
       return res.redirect('/');
     }
 
@@ -175,7 +180,7 @@ app.use('/siswa', siswaRoutes);
 const sekolahRoutes = require('./routes/sekolahroutes');
 app.use('/sekolah', sekolahRoutes);
 
-const supplierRoutes = require('./routes/supplierroutes');
+const supplierRoutes = require('./routes/supplierroutes');  
 app.use('/supplier', supplierRoutes);
 
 const sppgRoutes = require('./routes/sppgroutes');
@@ -183,9 +188,7 @@ app.use('/sppg', sppgRoutes);
 
 
 
-app.get('/tes', isAuthenticated, (req, res) => res.render('detail_siswa'));
-app.get('/supplier', isAuthenticated, (req, res) => res.render('supplier'));
-app.get('/tray', isAuthenticated, (req, res) => res.render('tray/tray'));
+app.get('/tes', isSekolah, (req, res) => res.render('dashjour'));
 app.get('/laporan', isAuthenticated, (req, res) => res.render('laporan'));
 
 

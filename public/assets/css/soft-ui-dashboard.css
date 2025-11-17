@@ -24616,7 +24616,7 @@ html {
 }
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
-  background-image: linear-gradient(310deg, #f97316 0%, #f97316 100%);
+  background-image: linear-gradient(310deg, #0ea5e9 0%, #f97316 100%);
   color: #fff;
 }
 
@@ -27933,6 +27933,34 @@ pre[class*=language-] {
   width: 11px;
 }
 
+.upload-area {
+  width: 100%;
+  height: 100%;
+  min-height: 250px; /* Atur tinggi minimum sesuai kebutuhan */
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #f8f9fa;
+}
+
+.upload-area:hover {
+  background-color: #e9ecef;
+}
+.error-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #dc3545;
+}
+.error-message {
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+.btn-home {
+  margin-top: 20px;
+}
 /* MS supports */
 @supports (-ms-overflow-style: none) {
   .ps {

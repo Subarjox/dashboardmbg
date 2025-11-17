@@ -23,8 +23,8 @@ app.get("/supplier", (req, res) => {
   res.render("supplier");
 });
 
-app.get("/siswa", (req, res) => {
-  res.render("siswa");
+app.get("/analitik", (req, res) => {
+  res.render("analitik");
 });
 
 app.get("/tray", (req, res) => {

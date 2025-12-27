@@ -117,7 +117,7 @@
              <!-- Laporan -->
             <div class="col-lg-3 col-md-6 col-12">
               <div class="card">
-                <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+                <span class="mask bg-dark opacity-10 border-radius-lg "></span>
                 <div class="card-body p-3 position-relative">
                   <div class="row">
                     <div class="col-8 text-start">
@@ -130,8 +130,6 @@
                       <span class="text-white text-sm">Tingkat Laporan</span>
                     </div>
                     <div class="col-4">
-                      <div class="dropdown text-end mb-6">
-                      </div>
                       <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
                     </div>
                   </div>
@@ -302,14 +300,14 @@
         siswaTableBody.appendChild(tr);
       });
   
-      // --- Render pagination ---
+
       paginationContainer.innerHTML = '';
       const totalPages = data.totalPages || 1;
   
       for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.textContent = i;
-        btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'}`;
+        btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-info' : 'btn-outline-info'}`;
         btn.addEventListener('click', () => {
           currentPage = i;
           fetchSiswa(currentPage);

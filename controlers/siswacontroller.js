@@ -1,4 +1,3 @@
-// controllers/siswaController.js
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -8,7 +7,7 @@ const supabase = createClient(
 );
 
 const siswaController = {
-  // 📘 READ: semua siswa
+
   getAll: async (req, res) => {
     const { data, error } = await supabase
       .from('siswa')
@@ -78,7 +77,6 @@ const siswaController = {
     }
   },  
 
-  // 📗 READ: satu siswa
   getOne: async (req, res) => {
     const { id } = req.params;
     const { data, error } = await supabase
@@ -109,7 +107,6 @@ const siswaController = {
     });
   },
 
-  // 📙 FORM TAMBAH SISWA
   addForm: async (req, res) => {
     const { data: sekolah, error } = await supabase.from('sekolah').select('*');
     if (error) return res.send('Error: ' + error.message);
@@ -123,7 +120,6 @@ const siswaController = {
     });
   },
 
-  // 🟢 CREATE SISWA BARU
   create: async (req, res) => {
     const { nisn, nama, sekolah_id, orangtua, kategori_alergi, deskripsi_alergi } = req.body;
 
@@ -160,7 +156,6 @@ const siswaController = {
     res.redirect('/siswa');
   },
 
-  // 🟡 FORM EDIT SISWA
   editForm: async (req, res) => {
     const { id } = req.params;
     const { data: siswa, error } = await supabase.from('siswa').select('*').eq('nisn', id).single();
@@ -178,7 +173,6 @@ const siswaController = {
     });
   },
 
-  // 🧩 UPDATE SISWA
   update: async (req, res) => {
     const { id } = req.params;
     const { nama, sekolah_id, orangtua, kategori_alergi, deskripsi_alergi, foto_lama } = req.body;
@@ -212,7 +206,6 @@ const siswaController = {
     res.redirect('/siswa');
   },
 
-  // 🔴 DELETE SISWA
   delete: async (req, res) => {
     const { id } = req.params;
     const { error } = await supabase.from('siswa').delete().eq('nisn', id);

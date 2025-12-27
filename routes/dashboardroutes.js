@@ -5,5 +5,6 @@ const DashboardController = require('../controlers/dashboardcontroller');
 
 // GET /dashboard
 router.get('/', isAuthenticated, DashboardController.dashboard);
+router.get('/datalaporan', isAuthenticated, DashboardController.getAllAjax,);
 
 module.exports = router;

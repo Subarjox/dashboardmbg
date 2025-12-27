@@ -1,10 +1,10 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const session = require('express-session');
-const { createClient } = require('@supabase/supabase-js');
-const { isAuthenticated, isSekolah } = require('./middleware/authmiddleware');
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
+const { createClient } = require("@supabase/supabase-js");
+const { isAuthenticated, isSekolah } = require("./middleware/authmiddleware");
 
 const app = express();
 
@@ -80,9 +80,7 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
 
   res.locals.pageTitle = "Dashboard";
-  res.locals.pageBreadcrumb = [
-    { name: "Dashboard", href: "/dashboard" }
-  ];
+  res.locals.pageBreadcrumb = [{ name: "Dashboard", href: "/dashboard" }];
 
   next();
 });
@@ -113,21 +111,21 @@ app.post('/register', async (req, res) => {
 
   if (error) {
     console.log(error);
-    return res.render('register', { error: error.message });
+    return res.render("register", { error: error.message });
   }
 
-  res.render('login', { message: 'Register berhasil! Silakan login.' });
+  res.render("login", { message: "Register berhasil! Silakan login." });
 });
 
-app.post('/login', async (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   //user_admin
+  //user_admin
   try {
-
     const { data: adminData, error: adminError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('email', email)
+      .from("users")
+      .select("*")
+      .eq("email", email)
       .limit(1);
 
     if (adminError) throw adminError;
@@ -142,7 +140,7 @@ app.post('/login', async (req, res) => {
         id: admin.id,
         nama: admin.nama,
         email: admin.email,
-        role: 'admin',
+        role: "admin",
       };
 
       console.log('✅ Login sebagai ADMIN:', admin.email);
@@ -152,9 +150,9 @@ app.post('/login', async (req, res) => {
 
     //User_Sekolah
     const { data: sekolahData, error: sekolahError } = await supabase
-      .from('sekolah')
-      .select('*')
-      .eq('email_sekolah', email)
+      .from("sekolah")
+      .select("*")
+      .eq("email_sekolah", email)
       .limit(1);
 
     if (sekolahError) throw sekolahError;
@@ -171,7 +169,7 @@ app.post('/login', async (req, res) => {
         id_sekolah: sekolah.id_sekolah,
         nama: sekolah.nama_sekolah,
         email: sekolah.email_sekolah,
-        role: 'sekolah',
+        role: "sekolah",
       };
 
       console.log('✅ Login sebagai SEKOLAH:', sekolah.email_sekolah);
@@ -189,7 +187,6 @@ app.post('/login', async (req, res) => {
     if (sppgError) throw sppgError;
 
     if (sppgData && sppgData.length > 0) {
-
       const sppg = sppgData[0];
       const match = await bcrypt.compare(password, sppg.password_sppg);
 
@@ -201,7 +198,7 @@ app.post('/login', async (req, res) => {
         id_sppg: sppg.id_sppg,
         nama: sppg.nama_sppg,
         email: sppg.email_sppg,
-        role: 'sppg',
+        role: "sppg",
       };
 
       console.log('✅ Login sebagai SPPG:', sppg.email_sppg);
@@ -210,14 +207,16 @@ app.post('/login', async (req, res) => {
       return res.redirect('/');
     }
 
-    return res.render('login', { error: 'Akun tidak ditemukan!' });
-
+    return res.render("login", { error: "Akun tidak ditemukan!" });
   } catch (err) {
-    console.error(' Error saat login:', err);
-    res.render('login', { error: 'Terjadi kesalahan server.' });
+    console.error(" Error saat login:", err);
+    res.render("login", { error: "Terjadi kesalahan server." });
   }
 });
 
+app.get("/analitik", (req, res) => {
+  res.render("analitik");
+});
 
 const dashboardRoutes = require('./routes/dashboardroutes');
 app.use('/dashboard', dashboardRoutes);
@@ -228,8 +227,8 @@ app.use('/masalah', masalahRoutes);
 const siswaRoutes = require('./routes/siswaroutes');
 app.use('/siswa', siswaRoutes);
 
-const sekolahRoutes = require('./routes/sekolahroutes');
-app.use('/sekolah', sekolahRoutes);
+const sekolahRoutes = require("./routes/sekolahroutes");
+app.use("/sekolah", sekolahRoutes);
 
 const supplierRoutes = require('./routes/supplierroutes');
 app.use('/supplier', supplierRoutes);
@@ -252,20 +251,19 @@ app.get('/laporan', isAuthenticated, (req, res) => res.render('laporan'));
 
 
 // LOGOUT
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/');
+    res.redirect("/");
   });
 });
 
 // handle 404
 app.use((req, res, next) => {
-  res.status(404).render('404', {
-    pageTitle: '404 - Halaman Tidak Ditemukan',
-    pageCrumb: 'Error 404'
+  res.status(404).render("404", {
+    pageTitle: "404 - Halaman Tidak Ditemukan",
+    pageCrumb: "Error 404",
   });
 });
-
 
 // Start server
 const PORT = process.env.PORT || 3000;

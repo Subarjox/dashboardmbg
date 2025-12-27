@@ -52,7 +52,7 @@
                       <h5 class="text-white font-weight-bolder mb-0 mt-3">
                         1600
                       </h5>
-                      <span class="text-white text-sm">Total Sekolah</span>
+                      <span class="text-white text-sm">Total Siswa</span>
                     </div>
                     <div class="col-4">
                       <div class="dropdown text-end mb-6">
@@ -301,7 +301,7 @@
       for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.textContent = i;
-        btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'}`;
+        btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-info' : 'btn-outline-info'}`;
         btn.addEventListener('click', () => {
           currentPage = i;
           fetchSupplier(currentPage);

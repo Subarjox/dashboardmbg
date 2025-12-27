@@ -7,6 +7,7 @@ const supabase = createClient(
 );
 
 const userSekolahController = {
+
   dashboard: async (req, res) => {
     const sekolahId = req.session.user?.id_sekolah;
 
@@ -19,18 +20,38 @@ const userSekolahController = {
 
       if (sekolahError) throw sekolahError;
 
+      //ambil data satuan gizi
+      const { data: sppg, error: sppgError } = await supabase
+        .from('satuan_gizi')
+        .select('nama_sppg')
+        .eq('id_sppg', sekolah.id_sppg)
+        .single();
+
+      if (sppgError) throw sppgError;
+
+      //ambil data menu makanan
+      const { data: menu_makanan, error: menu_makananError } = await supabase
+        .from('menu_makanan')
+        .select('nama_makanan')
+        .eq('id_sppg', sekolah.id_sppg)
+        .limit(1)
+        .single();
+
       // Ambil siswa milik sekolah tersebut
-      const { data: siswa, error: siswaError } = await supabase
+      const { count: TotalSiswa, error: TotalSiswaError } = await supabase
         .from('siswa')
-        .select('*')
+        .select('*', { count: 'exact', head: true })
         .eq('sekolah_id', sekolahId);
 
-      if (siswaError) throw siswaError;
+      if (TotalSiswaError) throw TotalSiswaError;
 
-      res.render('usersekolah/dashboard', {
+      res.render('users/pihak_sekolah/pihak_sekolah', {
         user: req.session.user,
         sekolah,
-        siswa,
+        TotalSiswa,
+        sppg,
+        menu_makanan,
+        pageCrumb: 'Dashboard',
         pageTitle: 'Dashboard Sekolah',
         breadcrumb: ['Dashboard Sekolah'],
       });
@@ -46,12 +67,20 @@ const userSekolahController = {
     try {
       const { data, error } = await supabase
         .from('siswa')
-        .select('*')
+        .select(`
+        nisn,
+        nama,
+        orang_tua,
+        kategori_alergi,
+        deskripsi_alergi,
+        foto_siswa,
+        sekolah:sekolah_id(nama_sekolah, kota, provinsi)
+      `)
         .eq('sekolah_id', sekolahId);
 
       if (error) throw error;
 
-      res.render('usersekolah/siswa', {
+      res.render('users/pihak_sekolah/siswa_sekolah', {
         user: req.session.user,
         siswa: data,
         pageTitle: 'Siswa Saya',
@@ -63,7 +92,51 @@ const userSekolahController = {
     }
   },
 
-  // ➕ Form tambah siswa
+  getAllSiswaAjax: async (req, res) => {
+    const sekolahId = req.session.user?.id_sekolah;
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10; // jumlah data per halaman
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
+
+      const search = req.query.search || '';
+      const provinsi = req.query.provinsi || '';
+
+      let query = supabase.from('siswa')
+        .select(`
+          nisn,
+          nama,
+          orang_tua,
+          kategori_alergi,
+          deskripsi_alergi,
+          foto_siswa,
+          sekolah:sekolah_id(nama_sekolah, kota, provinsi)
+        `, { count: 'exact' })
+        .eq('sekolah_id', sekolahId);
+
+
+      if (search) query = query.ilike('nama', `%${search}%`);
+      if (provinsi) query = query.eq('sekolah.provinsi', provinsi);
+
+      query = query.range(from, to).order('nisn', { ascending: true });
+
+      const { data, count, error } = await query;
+
+      if (error) return res.json({ error: error.message });
+
+      res.json({
+        data,
+        currentPage: page,
+        totalPages: Math.ceil(count / limit),
+        totalData: count
+      });
+
+    } catch (err) {
+      res.json({ error: err.message });
+    }
+  },
+
   addSiswaForm: async (req, res) => {
     res.render('usersekolah/tambah_siswa', {
       user: req.session.user,
@@ -73,7 +146,6 @@ const userSekolahController = {
     });
   },
 
-  // 🧩 Tambah siswa baru
   createSiswa: async (req, res) => {
     const sekolahId = req.session.user?.id_sekolah;
     const { nisn, nama, orang_tua, kategori_alergi, deskripsi_alergi } = req.body;
@@ -115,7 +187,6 @@ const userSekolahController = {
     }
   },
 
-  // ✏️ Edit siswa
   editSiswaForm: async (req, res) => {
     const sekolahId = req.session.user?.id_sekolah;
     const { id } = req.params;
@@ -183,7 +254,6 @@ const userSekolahController = {
     }
   },
 
-  // 🗑️ Hapus siswa (dibolehkan)
   deleteSiswa: async (req, res) => {
     const sekolahId = req.session.user?.id_sekolah;
     const { id } = req.params;
@@ -203,7 +273,6 @@ const userSekolahController = {
     }
   },
 
-  // ⚙️ Edit data sekolah sendiri (tidak bisa hapus)
   editSekolahForm: async (req, res) => {
     const sekolahId = req.session.user?.id_sekolah;
 
@@ -267,6 +336,8 @@ const userSekolahController = {
       res.send('Gagal mengupdate data sekolah: ' + err.message);
     }
   },
+
+
 };
 
 module.exports = userSekolahController;

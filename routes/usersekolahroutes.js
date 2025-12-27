@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const userSekolahController = require('../controllers/usersekolahcontroller');
+const userSekolahController = require('../controlers/usersekolahcontroller');
 const multer = require('multer');
 const storage = multer.memoryStorage(); // simpan di memory dulu
 const upload = multer({ storage });
 const { isSekolah } = require('../middleware/authmiddleware');
 
 // Dashboard sekolah
-router.get('/user/sekolah/dashboard', isSekolah, userSekolahController.dashboard);
+router.get('/', isSekolah, userSekolahController.dashboard);
+router.get('/getallsiswa', isSekolah, userSekolahController.getAllSiswaAjax);
 
 // CRUD siswa
 router.get('/siswa', isSekolah, userSekolahController.getSiswa);

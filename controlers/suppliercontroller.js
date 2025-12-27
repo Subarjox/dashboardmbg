@@ -1,4 +1,3 @@
-// controllers/supplierController.js
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -9,7 +8,6 @@ const supabase = createClient(
 
 const supplierController = {
 
-  // 📘 READ: semua supplier
   getAll: async (req, res) => {
     const { data, error } = await supabase
       .from('supplier')
@@ -30,7 +28,6 @@ const supplierController = {
     });
   },
 
-  // 📘 READ: AJAX (pagination + filter)
   getAllAjax: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
@@ -64,7 +61,6 @@ const supplierController = {
     }
   },
 
-  // 📗 READ: satu supplier
   getOne: async (req, res) => {
     const { id } = req.params;
 
@@ -85,7 +81,6 @@ const supplierController = {
     });
   },
 
-  // 📙 FORM TAMBAH SUPPLIER
   addForm: async (req, res) => {
     res.render('supplier/tambah_supplier', {
       user: req.session.user,
@@ -95,7 +90,6 @@ const supplierController = {
     });
   },
 
-  // 🟢 CREATE SUPPLIER BARU
   create: async (req, res) => {
     const { id_supplier, nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, no_telp, alamat_supplier, nama_pemilik } = req.body;
     let foto_supplier = null;
@@ -123,7 +117,7 @@ const supplierController = {
     res.redirect('/supplier');
   },
 
-  // 🟡 FORM EDIT SUPPLIER
+
   editForm: async (req, res) => {
     const { id } = req.params;
     const { data: supplier, error } = await supabase.from('supplier').select('*').eq('id_supplier', id).single();
@@ -139,7 +133,6 @@ const supplierController = {
     });
   },
 
-  // 🧩 UPDATE SUPPLIER
   update: async (req, res) => {
     const { id } = req.params;
     const { nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, no_telp, alamat_supplier, nama_pemilik, foto_lama } = req.body;
@@ -176,7 +169,6 @@ const supplierController = {
     res.redirect('/supplier');
   },
 
-  // 🔴 DELETE SUPPLIER
   delete: async (req, res) => {
     const { id } = req.params;
     const { error } = await supabase.from('supplier').delete().eq('id_supplier', id);

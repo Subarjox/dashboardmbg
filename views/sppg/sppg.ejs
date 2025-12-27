@@ -294,11 +294,11 @@
 
         let paginationHTML = '';
         if (res.currentPage > 1)
-          paginationHTML += `<button class="btn btn-sm btn-outline-primary" onclick="loadPage(${res.currentPage - 1})">Previous</button>`;
+          paginationHTML += `<button class="btn btn-sm btn-outline-info" onclick="loadPage(${res.currentPage - 1})">Previous</button>`;
         for (let i = 1; i <= res.totalPages; i++)
-          paginationHTML += `<button class="btn btn-sm ${res.currentPage === i ? 'btn-primary' : 'btn-outline-primary'}" onclick="loadPage(${i})">${i}</button>`;
+          paginationHTML += `<button class="btn btn-sm ${res.currentPage === i ? 'btn-info' : 'btn-outline-info'}" onclick="loadPage(${i})">${i}</button>`;
         if (res.currentPage < res.totalPages)
-          paginationHTML += `<button class="btn btn-sm btn-outline-primary" onclick="loadPage(${res.currentPage + 1})">Next</button>`;
+          paginationHTML += `<button class="btn btn-sm btn-outline-info" onclick="loadPage(${res.currentPage + 1})">Next</button>`;
 
         paginationContainer.html(paginationHTML);
       });

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    FoodGuard PRO 
+    FoodGuard PRO
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -21,257 +21,287 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+    id="sidenav-main">
     <%- include('partials/sidehead') %>
-    <hr class="horizontal dark mt-0">
-    <%- include('partials/sidebar') %>
+      <hr class="horizontal dark mt-0">
+      <%- include('partials/sidebar') %>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <%- include('partials/navbar') %>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <!-- card section -->
-        <div class="col-lg-6 col-12">
-          <div class="row">
-            <!-- Total siswa -->
-            <div class="col-lg-6 col-md-6 col-12 mb-2">
-              <div class="card">
-                <span class="mask bg-info opacity-10 border-radius-lg"></span>
-                <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
-                      <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="CurrentColor"><path d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z"/></svg>
-                      </div>
-                      <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        <%- totalSiswa %>
-                      </h5>
-                      <span class="text-white text-sm">Total Siswa</span>
-                    </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-6">
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Total Sekolah -->
-            <div class="col-lg-6 col-md-6 col-12">
-              <div class="card">
-                <span class="mask bg-primary opacity-10 border-radius-lg"></span>
-                <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
-                      <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="CurrentColor"><path d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z"/></svg>
-                      </div>
-                      <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        <%- totalSekolah %>
-                      </h5>
-                      <span class="text-white text-sm">Total Sekolah</span>
-                    </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-6">
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-
-            <!-- Total siswa -->
-            <div class="col-lg-6 col-md-6 col-12 mb-2">
-              <div class="card">
-                <span class="mask bg-warning opacity-10 border-radius-lg"></span>
-                <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
-                      <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="CurrentColor"><path d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z"/></svg>
-                      </div>
-                      <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        <%- totalSiswa %>
-                      </h5>
-                      <span class="text-white text-sm">Total Siswa</span>
-                    </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-6">
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Total Sekolah -->
-            <div class="col-lg-6 col-md-6 col-12">
-              <div class="card">
-                <span class="mask bg-success opacity-10 border-radius-lg"></span>
-                <div class="card-body p-3 position-relative">
-                  <div class="row">
-                    <div class="col-8 text-start">
-                      <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="CurrentColor"><path d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z"/></svg>
-                      </div>
-                      <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                        <%- totalSekolah %>
-                      </h5>
-                      <span class="text-white text-sm">Total Sekolah</span>
-                    </div>
-                    <div class="col-4">
-                      <div class="dropdown text-end mb-6">
-                      </div>
-                      <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-          <div class="card shadow h-100">
-            <div class="card-header pb-0 p-3">
-              <h6 class="mb-0">Masalah</h6>
-            </div>
-            <div class="card-body pb-0 p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
-                  <div class="w-100">
-                    <div class="d-flex mb-2">
-                      <span class="me-2 text-sm font-weight-bold text-dark">Masalah Sistem : </span>
-                      <span class="ms-auto text-sm font-weight-bold"><%- sekolahNonaktif %> dari <%- totalSekolah %> Sekolah</span>
-                    </div>
-                    <div>
-                      <div class="progress progress-md bg-danger">
-                        <div class="progress-bar bg-success w-80" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="w-100">
-                    <div class="d-flex mb-2">
-                      <span class="me-2 text-sm font-weight-bold text-dark">Kasus Keracunan: </span>
-                      <span class="ms-auto text-sm font-weight-bold"> <span class="text-danger"><%- kasusBahaya %> Kasus</span> Keracunan</span>
-                    </div>
-                    <div>
-                      <div class="progress progress-md bg-danger">
-                        <div class="progress-bar bg-success w-95" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer pt-0 p-3 d-flex align-items-center">
-              <div class="w-100">
-                <p class="text-sm">
-                  Ada <b><%- sekolahNonaktif %></b> dari <b><%- totalSekolah %></b> Sekolah yang memiliki masalah sistem, dan ada <b><%- kasusBahaya %></b> kasus keracunan yang terjadi, segera lakukan penanganan.
-                </p>
-                <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/sekolah">
-                  Lihat Sekolah
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-12 col-md-6 col-12 mt-4">
-        <div class="card">
-          <span class="mask bg-danger opacity-10 border-radius-lg"></span>
-          <div class="card-body p-3 position-relative">
+      <!-- End Navbar -->
+      <div class="container-fluid py-4">
+        <div class="row">
+          <!-- card section -->
+          <div class="col-lg-6 col-12">
             <div class="row">
-              <div class="col-8 text-start">
-                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="CurrentColor"><path d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z"/></svg>
+              <!-- Total siswa -->
+              <div class="col-lg-6 col-md-6 col-12 mb-2">
+                <div class="card">
+                  <span class="mask bg-info opacity-10 border-radius-lg"></span>
+                  <div class="card-body p-3 position-relative">
+                    <div class="row">
+                      <div class="col-8 text-start">
+                        <div
+                          class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                          style="width:60px; height:60px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="CurrentColor">
+                            <path
+                              d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                          </svg>
+                        </div>
+                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                          <%- totalSiswa %>
+                        </h5>
+                        <span class="text-white text-sm">Total Siswa</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                  <%- totalkasus %> Masalah terjadi di <%- totalSekolah %> Sekolah
-                </h5>
-                <span class="text-white text-sm">Segera Lakukan Penganganan</span>
               </div>
-              <div class="col-4">
-                <div class="dropdown text-end mb-6">
+
+              <!-- Total Sekolah -->
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="card">
+                  <span class="mask bg-primary opacity-10 border-radius-lg"></span>
+                  <div class="card-body p-3 position-relative">
+                    <div class="row">
+                      <div class="col-8 text-start">
+                        <div
+                          class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                          style="width:60px; height:60px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="CurrentColor">
+                            <path
+                              d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                          </svg>
+                        </div>
+                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                          <%- totalSekolah %>
+                        </h5>
+                        <span class="text-white text-sm">Total Sekolah</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-           <!-- table -->
-           <div class="row my-4">
-            <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-              <div class="card">
-                <div class="card-header pb-0">
-                  <div class="row align-items-center">
-                    <div class="col-lg-6 col-7">
-                      <h6>Daftar Laporan</h6>
-                      <p class="text-sm mb-0">
-                        <i class="fa fa-check text-info" aria-hidden="true"></i>
-                        <span class="font-weight-bold ms-1" id="totalSupplier"><%= laporan_belum_dibaca %></span> Laporan Masuk, belum dibaca
-                      </p>
+            <div class="row mt-2">
+
+              <!-- Total siswa -->
+              <div class="col-lg-6 col-md-6 col-12 mb-2">
+                <div class="card">
+                  <span class="mask bg-warning opacity-10 border-radius-lg"></span>
+                  <div class="card-body p-3 position-relative">
+                    <div class="row">
+                      <div class="col-8 text-start">
+                        <div
+                          class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                          style="width:60px; height:60px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="CurrentColor">
+                            <path
+                              d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                          </svg>
+                        </div>
+                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                          <%- totalSupplier %>
+                        </h5>
+                        <span class="text-white text-sm">Total supplier terdaftar</span>
+                      </div>
                     </div>
-                    <div class="col-lg-6 col-5 text-end">
-                      <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/sekolah">
-                        Lihat Laporan
-                        <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total Sekolah -->
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="card">
+                  <span class="mask bg-success opacity-10 border-radius-lg"></span>
+                  <div class="card-body p-3 position-relative">
+                    <div class="row">
+                      <div class="col-8 text-start">
+                        <div
+                          class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                          style="width:60px; height:60px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="CurrentColor">
+                            <path
+                              d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                          </svg>
+                        </div>
+                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                          <%- totalSPPG %>
+                        </h5>
+                        <span class="text-white text-sm">Total SPPG Terdaftar</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <% const sistemBar=totalSekolah> 0
+            ? Math.round(((sekolahNonaktif / totalSekolah) * 100) / 5) * 5
+            : 0;
+
+            let sistemdesc;
+            if (sekolahNonaktif === 0) {
+            sistemdesc = "Tidak ada masalah sistem";
+            } else {
+            sistemdesc = `${sekolahNonaktif} dari ${totalSekolah} Sekolah`;
+            }
+            %>
+            <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+              <div class="card shadow h-100">
+                <div class="card-header pb-0 p-3">
+                  <h6 class="mb-0">Masalah</h6>
+                </div>
+                <div class="card-body pb-0 p-3">
+                  <ul class="list-group mt-3">
+                    <li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
+                      <div class="w-100">
+                        <div class="d-flex mb-2">
+                          <span class="me-2 text-sm font-weight-bold text-dark">Masalah Sistem : </span>
+                          <span class="ms-auto text-sm font-weight-bold">
+                            <%= sistemdesc %>
+                          </span>
+                        </div>
+                        <div>
+                          <div class="progress progress-md bg-success h-100">
+                            <div class="progress-bar bg-danger w-<%= sistemBar %>" role="progressbar"
+                              aria-valuenow="<%= sistemBar %>" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <% const keracunanBar=totalSekolah> 0
+                      ? Math.round(((kasusBahaya / totalSekolah) * 100) / 5) * 5
+                      : 0;
+
+                      let keracunandesc;
+                      let keracunantext;
+                      if (kasusBahaya === 0) {
+                      keracunandesc = "Tidak ada masalah keracunan";
+                      keracunantext = "text-success"
+                      } else {
+                      keracunandesc = `${kasusBahaya} kasus`;
+                      keracunantext = "text-danger"
+                      }
+                      %>
+                      <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                        <div class="w-100">
+                          <div class="d-flex mb-2">
+                            <span class="me-2 text-sm font-weight-bold text-dark">Kasus Keracunan: </span>
+                            <span class="ms-auto text-sm font-weight-bold"> <span class="<%= keracunantext %>"><%-
+                                  keracunandesc %></span> Keracunan</span>
+                          </div>
+                          <div>
+                            <div class="progress progress-md bg-success h-100">
+                              <div class="progress-bar bg-danger w-<%= keracunanBar %>" role="progressbar"
+                                aria-valuenow="<%= keracunanBar %>" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                  </ul>
+                </div>
+
+                <% let concsistem; let concsistemtext; let conckeracunan; let conckeracunantext; if
+                  (sekolahNonaktif===0) { concsistem="Tidak ada" ; concsistemtext="text-success text-bold" } else {
+                  concsistem=`Ada ${sekolahNonaktif} dari ${totalSekolah}`; concsistemtext="text-danger text-bold" } if
+                  (kasusBahaya===0) { conckeracunan="Tidak ada" ; conckeracunantext="text-success text-bold" } else {
+                  conckeracunan=`Ada ${kasusBahaya} kasus`; conckeracunantext="text-danger text-bold" } %>
+
+                  <div class="card-footer pt-0 p-3 d-flex align-items-center mt-3">
+                    <div class="w-100">
+                      <p class="text-sm">
+                        <span class="<%= concsistemtext %>"><%- concsistem %></span> sekolah yang memiliki
+                        masalah
+                        sistem, dan ada <span class="<%= conckeracunantext %>"><%- conckeracunan %></span> keracunan
+                        yang terjadi, segera lakukan
+                        penanganan.
+                      </p>
+                      <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/masalah">
+                        <span class="text-info">Lihat Semua Masalah -></span>
                       </a>
                     </div>
                   </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- table -->
+        <div class="row my-4">
+          <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+            <div class="card">
+              <div class="card-header pb-0">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-7">
+                    <h6>Daftar Laporan</h6>
+                    <p class="text-sm mb-0">
+                      <i class="fa fa-check text-info" aria-hidden="true"></i>
+                      <span class="font-weight-bold ms-1" id="totalSupplier">
+                        <%= laporan_belum_dibaca %>
+                      </span> Laporan Masuk, belum dibaca
+                    </p>
+                  </div>
+                  <div class="col-lg-6 col-5 text-end">
+                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/sekolah">
+                      Lihat Laporan
+                      <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                    </a>
+                  </div>
                 </div>
+              </div>
 
-                <div class="card-body px-0 pb-2">
-                  <div class="table-responsive">
-                    <table class="table align-items-center mb-0" id="LaporanTable">
-                      <thead>
-                        <tr>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">ID Laporan</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pelapor</th>
-                          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul Laporan</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jenis Laporan</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tanggal Laporan</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Laporan</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status Baca</th>
-                        </tr>
-                      </thead>
-                      <tbody id="LaporanTableBody">
-                        <!-- Data akan dimuat via AJAX -->
-                      </tbody>
-                    </table>
+              <div class="card-body px-0 pb-2">
+                <div class="table-responsive">
+                  <table class="table align-items-center mb-0" id="LaporanTable">
+                    <thead>
+                      <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">ID Laporan
+                        </th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pelapor</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Judul
+                          Laporan</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          Jenis Laporan</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          Tanggal Laporan</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          Status Laporan</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                          Status Baca</th>
+                      </tr>
+                    </thead>
+                    <tbody id="LaporanTableBody">
+                      <!-- Data akan dimuat via AJAX -->
+                    </tbody>
+                  </table>
 
-                    <!-- Pagination -->
-                    <div id="paginationContainer" class="mt-3 d-flex justify-content-center"></div>
+                  <!-- Pagination -->
+                  <div id="paginationContainer" class="mt-3 d-flex justify-content-center"></div>
 
-                    <!-- Empty state -->
-                    <div id="emptyState" class="text-center py-4 d-none">
-                      <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
-                      <p class="text-muted mb-0">Belum ada laporan masuk</p>
-                    </div>
+                  <!-- Empty state -->
+                  <div id="emptyState" class="text-center py-4 d-none">
+                    <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
+                    <p class="text-muted mb-0">Belum ada laporan masuk</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-    </div>
+        </div>
+      </div>
   </main>
-  
+
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -282,18 +312,18 @@
     const laporanTableBody = document.getElementById('LaporanTableBody');
     const paginationContainer = document.getElementById('paginationContainer');
     const emptyState = document.getElementById('emptyState');
-  
+
     let currentPage = 1;
-  
+
     async function fetchLaporan(page = 1) {
       const url = `/dashboard/datalaporan?page=${page}`;
       const res = await fetch(url);
       const data = await res.json();
-  
+
       if (data.error) return console.error(data.error);
-  
+
       laporanTableBody.innerHTML = '';
-  
+
       // Jika tidak ada data
       if (!data.data.length) {
         emptyState.classList.remove('d-none');
@@ -302,7 +332,7 @@
       } else {
         emptyState.classList.add('d-none');
       }
-  
+
       // ---- Render Baris Laporan ----
       data.data.forEach(l => {
         const tr = document.createElement('tr');
@@ -324,42 +354,43 @@
         `;
         laporanTableBody.appendChild(tr);
       });
-  
+
       // ---- Pagination ----
       paginationContainer.innerHTML = '';
       const totalPages = data.totalPages || 1;
-  
+
       for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.textContent = i;
         btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-info' : 'btn-outline-info'}`;
-  
+
         btn.addEventListener('click', () => {
           currentPage = i;
           fetchLaporan(currentPage);
         });
-  
+
         paginationContainer.appendChild(btn);
       }
     }
-  
+
     // Initial load
     document.addEventListener('DOMContentLoaded', () => {
       fetchLaporan();
     });
   </script>
   <script>
-  function formatDateTime(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleString('id-ID', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-    hour12: false,
-    timeZone: 'Asia/Jakarta' 
-  });}
+    function formatDateTime(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('id-ID', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour12: false,
+        timeZone: 'Asia/Jakarta'
+      });
+    }
   </script>
- 
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

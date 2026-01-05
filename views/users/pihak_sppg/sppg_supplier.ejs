@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <title>
+        FoodGuard PRO - SPPG
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <%- include('../../partials/sppgsidehead') %>
+            <hr class="horizontal dark mt-0">
+            <%- include('../../partials/sppgsidebar') %>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+            navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        <!-- LI pertama: Dashboard -->
+                        <li class="breadcrumb-item text-sm">
+                            <a class="opacity-5 text-dark" href="/dashboard">Dashboard</a>
+                        </li>
+
+                        <!-- LI kedua: halaman saat ini -->
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+                            <%= pageCrumb || 'Dashboard' %>
+                        </li>
+                    </ol>
+
+                    <!-- Judul halaman -->
+                    <h6 class="font-weight-bolder mb-0">
+                        <%= pageTitle || 'Dashboard' %>
+                    </h6>
+                </nav>
+
+
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item pe-2 d-flex align-items-center">
+                        <span class="badge badge-sm bg-gradient-success opacity-9">SPPG</span>
+                    </li>
+
+                    <li class="nav-item ps-5 d-flex align-items-center">
+                        <span class="text-sm text-dark text-bold">
+                            <%= user ? user.nama || user.email : 'Guest' %>
+                        </span>
+                    </li>
+
+                    <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
+                        <a href="#" class="nav-link text-body font-weight-bold px-0 dropdown-toggle"
+                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar avatar-sm me-sm-1" src="/assets/img/team-2.jpg" alt="user">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/profile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="CurrentColor">
+                                        <path
+                                            d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+                                    </svg>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/logout">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="#EA3323">
+                                        <path
+                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                    </svg>
+                                    <span class="text-danger">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item d-xl-none d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- End Navbar -->
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="row g-3">
+
+                        <!-- Total Sekolah -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card">
+                                <span class="mask bg-info opacity-10 border-radius-lg"></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                style="width:60px; height:60px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                    viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                    <path
+                                                        d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                                                </svg>
+                                            </div>
+                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                1600
+                                            </h5>
+                                            <span class="text-white text-sm">Total Siswa</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="dropdown text-end mb-6">
+                                            </div>
+                                            <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sekolah Aktif -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card">
+                                <span class="mask bg-warning opacity-10 border-radius-lg"></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                style="width:60px; height:60px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                    viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                    <path
+                                                        d="M599.21-96Q584-96 573.5-106.35T563-132l1-38q-25-4-47.5-13T474-206l-37.69 39.22Q425-156 410.5-156q-14.5 0-25.5-11t-11-25.67q0-14.66 11-25.33l39-39q-4-5-6.67-10.84-2.66-5.85-5.33-11.16l-28-55-48 48q-11 11-25.5 11T285-285.93q-11-10.93-11-25.5T285-337l48-48-54-26q-3.85-1.71-6.92-3.86Q269-417 266-419l-40 40q-11 11-25.5 11T175-378.93q-11-10.93-11-25.5T175-430l37-37q-17.16-21.45-27.58-45.73Q174-537 170.44-564h-38.3q-15.14 0-25.64-10.29T96-599.79q0-15.21 10.42-25.71t25.82-10.5H173q5.17-19.28 12.4-36.52 7.23-17.25 18.6-33.48l-37-37q-11-10.64-11-24.82T167-793q11-11 25.18-11T217-793l38 36q16-11 33-18t36-12v-40.76q0-15.4 10.29-25.82t25.5-10.42q15.21 0 25.71 10.25 10.5 10.26 10.5 25.41V-790q26.15 4.18 49.57 13.59Q469-767 489-752l32.77-32.77Q533-796 547.67-796q14.66 0 25.33 11 11 10.91 11 25.45 0 14.55-11.27 25.82L538-699q3 5 5.58 9.13 2.58 4.12 4.64 9.28L574-629l45-45q10.67-11 25.33-11Q659-685 670-674q11 11 11 25.67 0 14.66-11 25.33l-46 46 57 28q7 3 13 6.5t12 8.5l36.92-36.92Q754-582 768.18-582q14.18 0 24.82 11 11 10.67 11 25.33 0 14.67-10.85 25.96L757-483q14 20 22 42t11.5 45h37.63Q843-396 853-385.71q10 10.29 10 25.5t-10.28 25.71Q842.44-324 827.24-324H787q-5 19-12.5 36.5T756-254l37 37q11 10.67 11 25.33 0 14.67-11 26.15Q782-155 767.5-155T742-166l-37-37q-16 11-33 18t-36 12l-1 41q0 15.3-10.29 25.65Q614.42-96 599.21-96Zm-7.09-144Q652-240 690-285.5q38-45.5 28.36-104.82Q713-421 695.22-445.39 677.44-469.77 649-484l-65-33q-21.85-11.02-39.42-28.01Q527-562 516-584l-32-65q-17-33-47.97-52-30.98-19-68.15-19Q308-720 270-675q-38 45-28.36 104.32Q247-540 265.06-515.23 283.11-490.45 312-476l63.78 31.78Q398-433 415.37-415.42 432.73-397.85 444-376l32 65q17 33 47.97 52 30.98 19 68.15 19ZM372-528q25 0 42.5-17.5T432-588q0-25-17.5-42.5T372-648q-25 0-42.5 17.5T312-588q0 25 17.5 42.5T372-528Zm203.89 216Q596-312 610-325.89q14-13.88 14-34Q624-380 610.11-394q-13.88-14-34-14Q556-408 542-394.11q-14 13.88-14 34Q528-340 541.89-326q13.88 14 34 14ZM480-480Z" />
+                                                </svg>
+                                            </div>
+                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                1600
+                                            </h5>
+                                            <span class="text-white text-sm">Siswa Alergi</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="dropdown text-end mb-6">
+                                            </div>
+                                            <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Device Bermasalah -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card">
+                                <span class="mask bg-danger opacity-10 border-radius-lg"></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                style="width:60px; height:60px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                    viewBox="0 -960 960 960" width="24px" fill="CurentColor">
+                                                    <path
+                                                        d="M87-556q26-140 135.5-232T480-880q74 0 139.5 24T737-788q-14 26-22.5 44.5T703-709q-44-42-101-66.5T480-800q-101 0-181 56.5T183-599q-27-1-52.5 10T87-556ZM480-80q-148 0-257.5-92T87-404q17 22 42.5 33.5T183-360q36 88 116 144t181 56q133 0 226.5-93.5T800-480q0-17-1.5-34t-5.5-34q11 4 22.5 6t24.5 2q9 0 18-1t17-3q2 16 3.5 31.5T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80ZM336-496l84-84-85-85-42 42 43 42-43 43 43 42Zm504-104q-33 0-56.5-23.5T760-680q0-27 15-57.5T840-840q50 72 65 102.5t15 57.5q0 33-23.5 56.5T840-600ZM625-495l43-43-43-43 42-42-42-42-85 85 85 85Zm-145 75q-26 0-50.5 6T383-397l-143-83q0-16-8-30t-22-22q-22-12-45.5-5.5T128-510q-12 22-5.5 45.5T150-428q14 8 30 8t30-8l119 69q-17 17-30.5 36.5T276-280h66q21-36 57-58t81-22q45 0 81 22t57 58h66q-24-62-78.5-101T480-420Zm0-60Z" />
+                                                </svg>
+                                            </div>
+                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                2
+                                            </h5>
+                                            <span class="text-white text-sm">Siswa Keracunan</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="dropdown text-end mb-6">
+                                            </div>
+                                            <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Laporan -->
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="card">
+                                <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                style="width:60px; height:60px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                    viewBox="0 -960 960 960" width="24px" fill="CurentColor">
+                                                    <path
+                                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM200-200v-560 560Z" />
+                                                </svg>
+                                            </div>
+                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                1600
+                                            </h5>
+                                            <span class="text-white text-sm">Tingkat Laporan</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="dropdown text-end mb-6">
+                                            </div>
+                                            <p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <% if (flash) { %>
+                            <script>
+                                Swal.fire({
+                                    icon: '<%= flash.type %>',
+                                    title: 'INFO',
+                                    text: '<%= flash.message %>',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                })
+                            </script>
+                            <% } %>
+
+
+
+                                <!-- table -->
+                                <div class="row my-4">
+                                    <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+                                        <div class="card">
+                                            <div class="card-header pb-0">
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-6 col-7">
+                                                        <h6>Daftar Supplier</h6>
+                                                        <p class="text-sm mb-0">
+                                                            <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                                            <span class="font-weight-bold ms-1" id="totalSupplier">
+                                                                <%= supplier.length %>
+                                                            </span> Total supplier
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-5 text-end">
+                                                        <a class="btn btn-success mt-3"
+                                                            href="/user/sppg/supplier/tambah">
+                                                            <i class="fa fa-plus me-1"></i> Tambah Supplier
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Filter Section -->
+                                                <div class="row mt-4 g-3">
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-bold">Search</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text bg-white border-end-0">
+                                                                <i class="fas fa-search"></i>
+                                                            </span>
+                                                            <input type="text" class="form-control border-start-0"
+                                                                placeholder="Cari Nama Supplier" id="searchInput" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="form-label fw-bold">Provinsi</label>
+                                                        <select class="form-select" id="filterProvinsi">
+                                                            <option value="">Semua Provinsi</option>
+                                                            <% const provinsiList=[...new Set(supplier.map(s=>
+                                                                s.provinsi_supplier))];
+                                                                provinsiList.forEach(prov => {
+                                                                %>
+                                                                <option value="<%= prov %>">
+                                                                    <%= prov %>
+                                                                </option>
+                                                                <% }) %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-body px-0 pb-2">
+                                                <div class="table-responsive">
+                                                    <table class="table align-items-center mb-0" id="supplierTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th
+                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">
+                                                                    ID
+                                                                    Supplier</th>
+                                                                <th
+                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Nama
+                                                                    Supplier</th>
+                                                                <th
+                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                                    Kota
+                                                                    & Provinsi</th>
+                                                                <th
+                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    No Telp</th>
+                                                                <th
+                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Pemilik</th>
+                                                                <th
+                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    SPPG</th>
+                                                                <th
+                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                    Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="supplierTableBody">
+                                                            <!-- Data akan dimuat via AJAX -->
+                                                        </tbody>
+                                                    </table>
+
+                                                    <!-- Pagination -->
+                                                    <div id="paginationContainer"
+                                                        class="mt-3 d-flex justify-content-center"></div>
+
+                                                    <!-- Empty state -->
+                                                    <div id="emptyState" class="text-center py-4 d-none">
+                                                        <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
+                                                        <p class="text-muted mb-0">Belum ada data supplier.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <footer class="sticky-bottom footer pt-3  ">
+                                    <div class="container-fluid">
+                                        <div class="row align-items-center justify-content-lg-between">
+                                            <div class="col-lg-6 mb-lg-0 mb-4">
+                                                <div class="copyright text-center text-sm text-muted text-lg-start">
+                                                    ©
+                                                    <script>
+                                                        document.write(new Date().getFullYear())
+                                                    </script>,
+                                                    Irostech
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
+
+                    </div>
+    </main>
+
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        const supplierTableBody = document.getElementById('supplierTableBody');
+        const paginationContainer = document.getElementById('paginationContainer');
+        const searchInput = document.getElementById('searchInput');
+        const filterProvinsi = document.getElementById('filterProvinsi');
+        const emptyState = document.getElementById('emptyState');
+
+        let currentPage = 1;
+
+        async function fetchSupplier(page = 1) {
+            const search = searchInput ? searchInput.value.trim() : '';
+            const provinsi = filterProvinsi ? filterProvinsi.value.trim() : '';
+
+            const url = `/user/sppg/getallsupplier?page=${page}&search=${search}&provinsi=${provinsi}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.error) return console.error(data.error);
+
+            supplierTableBody.innerHTML = '';
+
+            // --- Render data supplier ---
+            if (!data.data.length) {
+                emptyState.classList.remove('d-none');
+                paginationContainer.innerHTML = '';
+                return;
+            } else {
+                emptyState.classList.add('d-none');
+            }
+
+            data.data.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+          <td class="ps-3"><h6 class="mb-0 text-sm">${s.id_supplier}</h6></td>
+          <td><h6 class="mb-0 text-sm">${s.nama_supplier}</h6></td>
+          <td>
+            <h6 class="mb-0 text-sm">${s.kota_supplier}</h6>
+            <span class="text-xxs text-secondary">${s.provinsi_supplier} </span>
+          </td>
+          <td class="text-center"><h6 class="mb-0 text-sm">${s.no_telp || '-'}</h6></td>
+          <td class="text-center"><h6 class="mb-0 text-sm">${s.nama_pemilik || '-'}</h6></td>
+          <td class="text-center"><h6 class="mb-0 text-sm">${s.satuan_gizi.nama_sppg || '-'}</h6></td>
+          <td class="text-center">
+            <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/user/sppg/supplier/detail/${s.id_supplier}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor">
+                <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z"/>
+              </svg>
+            </a>
+          </td>
+        `;
+                supplierTableBody.appendChild(tr);
+            });
+
+            // --- Render pagination ---
+            paginationContainer.innerHTML = '';
+            const totalPages = data.totalPages || 1;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `btn btn-sm mx-1 ${i === currentPage ? 'btn-info' : 'btn-outline-info'}`;
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    fetchSupplier(currentPage);
+                });
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        // --- Event listeners ---
+        searchInput?.addEventListener('input', () => {
+            currentPage = 1;
+            fetchSupplier();
+        });
+
+        filterProvinsi?.addEventListener('change', () => {
+            currentPage = 1;
+            fetchSupplier();
+        });
+
+        // --- Initial load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSupplier();
+        });
+    </script>
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

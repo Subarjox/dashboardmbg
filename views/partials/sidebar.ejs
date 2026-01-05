@@ -4,7 +4,7 @@
 
     <!-- Dashboard -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/dashboard', { exact: true }) ? 'active' : '' %>" href="/dashboard">
+      <a class="nav-link <%= isActive('/dashboard') ? 'active' : '' %>" href="/dashboard">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
@@ -19,7 +19,7 @@
 
     <!-- Masalah -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/masalah', { exact: true }) ? 'active' : '' %>" href="/masalah">
+      <a class="nav-link <%= isActive('/masalah') ? 'active' : '' %>" href="/masalah">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -34,7 +34,7 @@
 
     <!-- Sekolah -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/sekolah', { exact: true }) ? 'active' : '' %>" href="/sekolah">
+      <a class="nav-link <%= isActive('/sekolah') ? 'active' : '' %>" href="/sekolah">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -49,7 +49,7 @@
 
     <!-- Siswa -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/siswa', { exact: true }) ? 'active' : '' %>" href="/siswa">
+      <a class="nav-link <%= isActive('/siswa') ? 'active' : '' %>" href="/siswa">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -64,7 +64,7 @@
 
     <!-- Supplier -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/supplier', { exact: true }) ? 'active' : '' %>" href="/supplier">
+      <a class="nav-link <%= isActive('/supplier') ? 'active' : '' %>" href="/supplier">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -79,7 +79,7 @@
 
     <!-- SPPG -->
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/sppg', { exact: true }) ? 'active' : '' %>" href="/sppg">
+      <a class="nav-link <%= isActive('/sppg') ? 'active' : '' %>" href="/sppg">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -93,7 +93,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/laporan', { exact: true }) ? 'active' : '' %>" href="/laporan">
+      <a class="nav-link <%= isActive('/laporan') ? 'active' : '' %>" href="/laporan">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -106,19 +106,6 @@
       </a>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link <%= isActive('/analitik', { exact: true }) ? 'active' : '' %>" href="/analitik">
-        <div
-          class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
-            fill="CurrentColor">
-            <path
-              d="M480.28-96Q401-96 331-126t-122.5-82.5Q156-261 126-330.96t-30-149.5Q96-560 126-629.5q30-69.5 82.5-122T330.96-834q69.96-30 149.5-30t149.04 30q69.5 30 122 82.5T834-629.28q30 69.73 30 149Q864-401 834-331t-82.5 122.5Q699-156 629.28-126q-69.73 30-149 30ZM260-701l220 221v-312q-63 0-119.5 23.5T260-701Z" />
-          </svg>
-        </div>
-        <span class="nav-link-text ms-1">Analitik</span>
-      </a>
-    </li>
 
     <!-- Account pages header -->
     <li class="nav-item mt-3">
@@ -126,7 +113,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link <%= isActive('/profile', { exact: true }) ? 'active' : '' %>" href="/profile">
+      <a class="nav-link <%= isActive('/profile') ? 'active' : '' %>" href="/profile">
         <div
           class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -143,7 +130,7 @@
 </div>
 
 <div class="sidenav-footer mx-3 mt-3">
-  <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
+  <div class="card card-background shadow-none card-background-mask-indigo" id="sidenavCard">
     <div class="full-background" style="background-image: url('../assets/img/curved-images/white-curved.jpg')"></div>
     <div class="card-body text-start p-4 w-100">
       <div
@@ -154,9 +141,9 @@
         </svg>
       </div>
       <div class="docs-info">
-        <h6 class="text-dark up mb-0">Butuh Bantuan?</h6>
-        <p class="text-xs text-dark font-weight-bold">Hubungi Developer</p>
-        <a href="" class="btn btn-info btn-sm w-100 mb-0">Kontak</a>
+        <h6 class="text-dark up mb-0">Join Discord</h6>
+        <p class="text-xs text-dark font-weight-bold">Untuk Notifikasi & Update</p>
+        <a href="https://discord.gg/wsPqKXNF" class="btn btn-indigo btn-sm w-100 mb-0">Discord</a>
       </div>
     </div>
   </div>

@@ -33,61 +33,223 @@
         <!-- Navbar -->
         <%- include('../partials/navbar') %>
             <!-- End Navbar -->
-
             <div class="container-fluid py-4">
                 <div class="row">
+
                     <div class="col-lg-12 col-12">
                         <div class="row g-3">
-                            <% data.forEach(function(item) { %>
-                                <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Sistem -->
+
+                            <%let sistembg; if (TotalMasalahSistem> 0) {
+                                sistembg = 'bg-danger';
+                                } else {
+                                sistembg = 'bg-success';
+                                }
+                                %>
+
+                                <div class="col-lg-3 col-md-6 col-12">
                                     <div class="card">
-                                        <span class="mask bg-danger opacity-10 border-radius-lg"></span>
+                                        <span class="mask <%= sistembg %> opacity-10 border-radius-lg"></span>
                                         <div class="card-body p-3 position-relative">
                                             <div class="row">
-                                                <div class="col-12 text-start">
-                                                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
-                                                        style="height:80px;">
+                                                <div class="col-8 text-start">
+                                                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                        style="width:60px; height:60px;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                                                             viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
                                                             <path
-                                                                d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                                                                d="M40-120v-80h880v80H40Zm120-120q-33 0-56.5-23.5T80-320v-440q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v440q0 33-23.5 56.5T800-240H160Zm0-80h640v-440H160v440Zm0 0v-440 440Zm216-60 104-104 104 104 56-56-104-104 104-104-56-56-104 104-104-104-56 56 104 104-104 104 56 56Z" />
                                                         </svg>
                                                     </div>
-                                                    <h5 class="text-dark font-weight-bolder mb-0 mt-3">
-                                                        <%= item.nama_sekolah %>
-                                                    </h5>
                                                     <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                                        Status Sistem : <%= item.kasus_keracunan %>
+                                                        <%= TotalMasalahSistem %>
                                                     </h5>
-                                                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                                        Status Sistem : <%= item.status_sistem %>
-                                                    </h5>
-                                                    <a href="/masalah/<%= item.id %>"
-                                                        class="btn btn-dark mt-3 w-100">Lihat Detail</a>
+                                                    <span class="text-white text-sm">Total Masalah Sistem Saat
+                                                        ini</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <% } ) %>
-                                    <footer class="sticky-bottom footer pt-3  ">
-                                        <div class="container-fluid">
-                                            <div class="row align-items-center justify-content-lg-between">
-                                                <div class="col-lg-6 mb-lg-0 mb-4">
-                                                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                                                        ©
-                                                        <script>
-                                                            document.write(new Date().getFullYear())
-                                                        </script>,
-                                                        Irostech
+
+                                <!--sistem maintenance -->
+
+                                <div class="col-lg-3 col-md-6 col-12">
+                                    <div class="card">
+                                        <span class="mask bg-warning opacity-10 border-radius-lg"></span>
+                                        <div class="card-body p-3 position-relative">
+                                            <div class="row">
+                                                <div class="col-8 text-start">
+                                                    <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                        style="width:60px; height:60px;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                            viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                            <path
+                                                                d="M686-132 444-376q-20 8-40.5 12t-43.5 4q-100 0-170-70t-70-170q0-36 10-68.5t28-61.5l146 146 72-72-146-146q29-18 61.5-28t68.5-10q100 0 170 70t70 170q0 23-4 43.5T584-516l244 242q12 12 12 29t-12 29l-84 84q-12 12-29 12t-29-12Zm29-85 27-27-256-256q18-20 26-46.5t8-53.5q0-60-38.5-104.5T386-758l74 74q12 12 12 28t-12 28L332-500q-12 12-28 12t-28-12l-74-74q9 57 53.5 95.5T360-440q26 0 52-8t47-25l256 256ZM472-488Z" />
+                                                        </svg>
+                                                    </div>
+                                                    <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                        <%= TotalMaintenanceSistem %>
+                                                    </h5>
+                                                    <span class="text-white text-sm">Sistem Yang Sedang
+                                                        Diperbaiki</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Keracunan -->
+                                <%let racunbg; if (TotalKasusKeracunan> 0) {
+                                    racunbg = 'bg-danger';
+                                    } else {
+                                    racunbg = 'bg-success';
+                                    }
+                                    %>
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <div class="card">
+                                            <span class="mask <%= racunbg %> opacity-10 border-radius-lg"></span>
+                                            <div class="card-body p-3 position-relative">
+                                                <div class="row">
+                                                    <div class="col-8 text-start">
+                                                        <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                            style="width:60px; height:60px;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                                viewBox="0 -960 960 960" width="24px"
+                                                                fill="CurrentColor">
+                                                                <path
+                                                                    d="M87-556q26-140 135.5-232T480-880q74 0 139.5 24T737-788q-14 26-22.5 44.5T703-709q-44-42-101-66.5T480-800q-101 0-181 56.5T183-599q-27-1-52.5 10T87-556ZM480-80q-148 0-257.5-92T87-404q17 22 42.5 33.5T183-360q36 88 116 144t181 56q133 0 226.5-93.5T800-480q0-17-1.5-34t-5.5-34q11 4 22.5 6t24.5 2q9 0 18-1t17-3q2 16 3.5 31.5T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80ZM336-496l84-84-85-85-42 42 43 42-43 43 43 42Zm504-104q-33 0-56.5-23.5T760-680q0-27 15-57.5T840-840q50 72 65 102.5t15 57.5q0 33-23.5 56.5T840-600ZM625-495l43-43-43-43 42-42-42-42-85 85 85 85Zm-145 75q-26 0-50.5 6T383-397l-143-83q0-16-8-30t-22-22q-22-12-45.5-5.5T128-510q-12 22-5.5 45.5T150-428q14 8 30 8t30-8l119 69q-17 17-30.5 36.5T276-280h66q21-36 57-58t81-22q45 0 81 22t57 58h66q-24-62-78.5-101T480-420Zm0-60Z" />
+                                                            </svg>
+                                                        </div>
+                                                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                            <%= TotalKasusKeracunan %>
+                                                        </h5>
+                                                        <span class="text-white text-sm">Total Kasus Keracunan saat
+                                                            ini</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </footer>
+                                    </div>
 
+
+                                    <!-- Sistem -->
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <div class="card">
+                                            <span class="mask bg-info opacity-10 border-radius-lg "></span>
+                                            <div class="card-body p-3 position-relative">
+                                                <div class="row">
+                                                    <div class="col-8 text-start">
+                                                        <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                            style="width:60px; height:60px;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                                viewBox="0 -960 960 960" width="24px"
+                                                                fill="CurrentColor">
+                                                                <path
+                                                                    d="M440-800v-160h80v160h-80Zm-177 57L143-863l57-57 120 120-57 57ZM160-40q-17 0-28.5-11.5T120-80v-320l84-240q6-18 21.5-29t34.5-11h100v-80h131q-24 34-37.5 74.5T440-600H274l-59 160h276q17 24 38 44.5t47 35.5H200v160h560v-123q21-3 41-9t39-15v267q0 17-11.5 28.5T800-40h-40q-17 0-28.5-11.5T720-80v-40H240v40q0 17-11.5 28.5T200-40h-40Zm80-200h120q17 0 28.5-11.5T400-280q0-17-11.5-28.5T360-320H240v80Zm480 0v-80H600q-17 0-28.5 11.5T560-280q0 17 11.5 28.5T600-240h120ZM200-360v160-160Zm491-150 139-138-42-42-97 95-39-39-42 43 81 81Zm29-290q83 0 141.5 58.5T920-600q0 83-58.5 141.5T720-400q-83 0-141.5-58.5T520-600q0-83 58.5-141.5T720-800Z" />
+                                                            </svg>
+                                                        </div>
+                                                        <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                            <%= TotalMaintenanceKeracunan %>
+                                                        </h5>
+                                                        <span class="text-white text-sm">Keracunan Yang Sedang
+                                                            Ditangani</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
+
+                        <div class="col-12 mt-4">
+                            <h6 class="col-lg-6 font-weight-bolder text-start">
+                                Masalah yang terjadi :
+                            </h6>
+                        </div>
+
+
+                        <div class="col-lg-12 col-12">
+                            <div class="row g-3">
+                                <% data.forEach(function(item) { const statusBermasalah=item.status_sistem !=='aktif' ;
+                                    const kasusBermasalah=item.kasus_keracunan !=='aman' ; if (!statusBermasalah &&
+                                    !kasusBermasalah) return; const statusClass=item.status_sistem==='nonaktif'
+                                    ? 'text-danger' : 'text-warning' ; const kasusClass=item.kasus_keracunan==='bahaya'
+                                    ? 'text-danger' : 'text-warning' ; %>
+                                    <div class="col-lg-4 col-md-6 col-12">
+                                        <div class="card">
+                                            <span class="mask bg-danger opacity-10 border-radius-lg"></span>
+                                            <div class="card-body p-3 position-relative">
+                                                <div class="row">
+                                                    <div class="col-12 text-start">
+
+                                                        <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
+                                                            style="height:80px;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" height="36px"
+                                                                viewBox="0 -960 960 960" width="36px" fill="#EA3323">
+                                                                <path
+                                                                    d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z" />
+                                                            </svg>
+                                                        </div>
+
+                                                        <div class="card d-flex flex-column bg-white justify-content-center align-items-center text-center w-100 mt-3"
+                                                            style="min-height: 150px;">
+
+                                                            <h5 class="text-dark font-weight-bolder mb-3 mt-3">
+                                                                <%= item.nama_sekolah %>
+                                                            </h5>
+
+                                                            <% if (kasusBermasalah) { %>
+                                                                <h5
+                                                                    class="text-sm text-uppercase font-weight-bolder mb-2 <%= kasusClass %>">
+                                                                    Kasus Keracunan : <%= item.kasus_keracunan %>
+                                                                </h5>
+                                                                <% } %>
+
+                                                                    <% if (statusBermasalah) { %>
+                                                                        <h5
+                                                                            class="text-sm text-uppercase font-weight-bolder mb-4 <%= statusClass %>">
+                                                                            Status Sistem : <%= item.status_sistem %>
+                                                                        </h5>
+                                                                        <% } %>
+                                                        </div>
+
+                                                        <a href="masalah/detail/<%= item.id_sekolah %>"
+                                                            class="btn btn-secondary mt-3 w-100">
+                                                            Lihat Detail
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+
+                                        <footer class="sticky-bottom footer pt-3  ">
+                                            <div class="container-fluid">
+                                                <div class="row align-items-center justify-content-lg-between">
+                                                    <div class="col-lg-6 mb-lg-0 mb-4">
+                                                        <div
+                                                            class="copyright text-center text-sm text-muted text-lg-start">
+                                                            ©
+                                                            <script>
+                                                                document.write(new Date().getFullYear())
+                                                            </script>,
+                                                            Irostech
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </footer>
+
+                            </div>
     </main>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -4181,6 +4181,24 @@ fieldset:disabled .btn {
   text-decoration: none;
 }
 
+.btn-indigo {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #6366f1;
+  --bs-btn-border-color: #6366f1;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #6366f1;
+  --bs-btn-hover-border-color: #6366f1;
+  --bs-btn-focus-shadow-rgb: 99, 99, 241;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #6366f1;
+  --bs-btn-active-border-color: #6366f1;
+  --bs-btn-active-shadow: none;
+  --bs-btn-disabled-color: #6366f1;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #6366f1;
+  --bs-gradient: none;
+}
+
 .btn-link:hover,
 .btn-link:focus-visible {
   text-decoration: none;
@@ -27936,7 +27954,8 @@ pre[class*=language-] {
 .upload-area {
   width: 100%;
   height: 100%;
-  min-height: 250px; /* Atur tinggi minimum sesuai kebutuhan */
+  min-height: 250px;
+  /* Atur tinggi minimum sesuai kebutuhan */
   border: 2px dashed #ccc;
   border-radius: 12px;
   display: flex;
@@ -27949,18 +27968,22 @@ pre[class*=language-] {
 .upload-area:hover {
   background-color: #e9ecef;
 }
+
 .error-code {
   font-size: 6rem;
   font-weight: 700;
   color: #dc3545;
 }
+
 .error-message {
   font-size: 1.5rem;
   color: #6c757d;
 }
+
 .btn-home {
   margin-top: 20px;
 }
+
 /* MS supports */
 @supports (-ms-overflow-style: none) {
   .ps {

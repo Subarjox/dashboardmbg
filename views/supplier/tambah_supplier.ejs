@@ -23,23 +23,24 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
-  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+    id="sidenav-main">
     <%- include('../partials/sidehead') %>
-    <hr class="horizontal dark mt-0">
-    <%- include('../partials/sidebar') %>
+      <hr class="horizontal dark mt-0">
+      <%- include('../partials/sidebar') %>
 
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
     <%- include('../partials/navbar') %>
-    <!-- End Navbar -->
+      <!-- End Navbar -->
 
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-lg-12 col-12">
-          <div class="row">
-            
-            <div class="col-12 mb-lg-0 mb-4">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            <div class="row">
+
+              <div class="col-12 mb-lg-0 mb-4">
                 <div class="card">
                   <div class="card-body p-4">
                     <form id="supplierForm" enctype="multipart/form-data" action="/supplier/tambah" method="POST">
@@ -49,21 +50,23 @@
                           <div class="d-flex flex-column h-100">
 
                             <div class="mb-3">
-                                <label for="rating" class="form-label">ID Supplier</label>
-                                <input type="text" class="form-control" id="id_supplier" name="id_supplier" required>
-                              </div>
-              
+                              <label for="rating" class="form-label">ID Supplier</label>
+                              <input type="text" class="form-control" id="id_supplier" name="id_supplier" required>
+                            </div>
+
                             <div class="row">
                               <div class="col-md-6 mb-3">
                                 <label for="nama_supplier" class="form-label">Nama Supplier</label>
-                                <input type="text" class="form-control" id="nama_supplier" name="nama_supplier" required>
+                                <input type="text" class="form-control" id="nama_supplier" name="nama_supplier"
+                                  required>
                               </div>
                               <div class="col-md-6 mb-3">
                                 <label for="pemilik_supplier" class="form-label">Nama Pemilik</label>
-                                <input type="text" class="form-control" id="pemilik_supplier" name="nama_pemilik" required>
+                                <input type="text" class="form-control" id="pemilik_supplier" name="nama_pemilik"
+                                  required>
                               </div>
                             </div>
-              
+
                             <div class="row">
                               <div class="col-md-6 mb-3">
                                 <label for="no_telp" class="form-label">No Telp</label>
@@ -71,43 +74,57 @@
                               </div>
                               <div class="col-md-6 mb-3">
                                 <label for="jenis_makanan" class="form-label">Jenis Makanan</label>
-                                <input type="text" class="form-control" id="jenis_makanan" name="jenis_makanan" required>
+                                <input type="text" class="form-control" id="jenis_makanan" name="jenis_makanan"
+                                  required>
                               </div>
                             </div>
-              
+
+
+                            <div class="col-md-12 mb-3">
+                              <label for="id_sppg" class="form-label">ID Satuan Pelayanan Pemenuhan Gizi</label>
+                              <select class="form-select" id="id_sppg" name="id_sppg" required>
+                                <option value="" disabled selected>Pilih Satuan Pelayanan Pemenuhan Gizi</option>
+                                <% sppgList.forEach(sppg=> { %>
+                                  <option value="<%= sppg.id_sppg %>">
+                                    <%= sppg.id_sppg %> - <%= sppg.nama_sppg %>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                            </div>
+
+
                             <div class="mb-3">
                               <label for="provinsi_supplier" class="form-label">Provinsi</label>
-                              <input type="text" class="form-control" id="provinsi_supplier" name="provinsi_supplier" required>
+                              <input type="text" class="form-control" id="provinsi_supplier" name="provinsi_supplier"
+                                required>
                             </div>
-              
+
                             <div class="mb-3">
                               <label for="kota_supplier" class="form-label">Kota</label>
                               <input type="text" class="form-control" id="kota_supplier" name="kota_supplier" required>
                             </div>
-              
+
                             <div class="mb-3">
                               <label for="alamat_supplier" class="form-label">Alamat Lengkap</label>
-                              <textarea class="form-control" id="alamat_supplier" name="alamat_supplier" rows="3" placeholder="Tuliskan alamat lengkap supplier..." required></textarea>
+                              <textarea class="form-control" id="alamat_supplier" name="alamat_supplier" rows="3"
+                                placeholder="Tuliskan alamat lengkap supplier..." required></textarea>
                             </div>
-              
-                            <div class="mb-3">
-                              <label for="rating" class="form-label">Rating Supplier</label>
-                              <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" name="rating" required>
-                            </div>
-              
+
                           </div>
                         </div>
-              
+
                         <!-- Bagian Kanan: Upload Foto -->
                         <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
                           <div class="upload-area">
-                            <img id="preview" alt=" " class="img-fluid rounded mb-3 d-none" style="max-height: 200px; object-fit: cover; cursor: pointer;">
-                            <label for="foto-upload" id="upload-label" class="btn btn-outline-secondary">Upload Foto Disini</label>
+                            <img id="preview" alt=" " class="img-fluid rounded mb-3 d-none"
+                              style="max-height: 200px; object-fit: cover; cursor: pointer;">
+                            <label for="foto-upload" id="upload-label" class="btn btn-outline-secondary">Upload Foto
+                              Disini</label>
                             <input type="file" id="foto-upload" name="foto" accept="image/*" hidden>
                           </div>
                         </div>
                       </div>
-              
+
                       <div class="row mt-4">
                         <div class="col-12">
                           <button type="submit" class="btn btn-success w-100">Simpan Data Supplier</button>
@@ -117,23 +134,24 @@
                   </div>
                 </div>
               </div>
-                    
-      <footer class="sticky-bottom footer pt-3  ">
-        <div class="container-fluid">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-6 mb-lg-0 mb-4">
-              <div class="copyright text-center text-sm text-muted text-lg-start">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>,
-                Irostech
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
 
-    </div>
+              <footer class="sticky-bottom footer pt-3  ">
+                <div class="container-fluid">
+                  <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                      <div class="copyright text-center text-sm text-muted text-lg-start">
+                        ©
+                        <script>
+                          document.write(new Date().getFullYear())
+                        </script>,
+                        Irostech
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+
+            </div>
   </main>
 
   <!--   Core JS Files   -->
@@ -147,7 +165,7 @@
     const fotoUpload = document.getElementById('foto-upload');
     const preview = document.getElementById('preview');
     const uploadLabel = document.getElementById('upload-label');
-  
+
     uploadLabel.addEventListener('click', () => fotoUpload.click());
     fotoUpload.addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -160,7 +178,7 @@
       reader.readAsDataURL(file);
     });
   </script>
-  
+
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -22,6 +22,8 @@ const supplierController = {
     res.render('supplier/supplier', {
       user: req.session.user,
       supplier: data,
+      message: req.session.flash?.message || null,
+      type: req.session.flash?.type || null,
       pageCrumb: 'Supplier',
       pageTitle: 'Daftar Supplier',
       breadcrumb: ['Dashboard', 'Supplier'],
@@ -40,7 +42,9 @@ const supplierController = {
 
       let query = supabase
         .from('supplier')
-        .select('id_supplier, nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, foto_supplier, no_telp, alamat_supplier, nama_pemilik', { count: 'exact' });
+        .select(`*,
+        satuan_gizi(nama_sppg)
+      `, { count: 'exact' });
 
       if (search) query = query.ilike('nama_supplier', `%${search}%`);
       if (provinsi) query = query.eq('provinsi_supplier', provinsi);
@@ -66,7 +70,9 @@ const supplierController = {
 
     const { data, error } = await supabase
       .from('supplier')
-      .select('*')
+      .select(`*,
+      satuan_gizi(id_sppg, nama_sppg)
+    `)
       .eq('id_supplier', id)
       .single();
 
@@ -82,8 +88,15 @@ const supplierController = {
   },
 
   addForm: async (req, res) => {
+    const { data: sppgList, error } = await supabase
+      .from('satuan_gizi')
+      .select('id_sppg, nama_sppg');
+
+    if (error) return res.send('Error: ' + error.message);
+
     res.render('supplier/tambah_supplier', {
       user: req.session.user,
+      sppgList: sppgList || [],
       pageTitle: 'Tambah Supplier',
       pageCrumb: 'Supplier',
       breadcrumb: ['Dashboard', 'Supplier', 'Tambah'],
@@ -91,42 +104,89 @@ const supplierController = {
   },
 
   create: async (req, res) => {
-    const { id_supplier, nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, no_telp, alamat_supplier, nama_pemilik } = req.body;
-    let foto_supplier = null;
+    try {
+      const {
+        id_supplier,
+        nama_supplier,
+        provinsi_supplier,
+        kota_supplier,
+        jenis_makanan,
+        no_telp,
+        alamat_supplier,
+        nama_pemilik,
+        id_sppg
+      } = req.body;
 
-    if (req.file) {
-      const { data, error: uploadError } = await supabase.storage
-        .from('foto-supplier')
-        .upload(`supplier/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: req.file.mimetype,
-        });
+      let foto_supplier = null;
 
-      if (uploadError) return res.send('Gagal upload foto: ' + uploadError.message);
+      if (req.file) {
+        const { data, error: uploadError } = await supabase.storage
+          .from('foto-supplier')
+          .upload(`supplier/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: req.file.mimetype,
+          });
 
-      foto_supplier = supabase.storage.from('foto-supplier').getPublicUrl(data.path).data.publicUrl;
+        if (uploadError) {
+          req.session.flash = {
+            type: 'error',
+            message: 'Gagal upload foto supplier',
+          };
+          return res.redirect('/supplier');
+        }
+
+        foto_supplier = supabase
+          .storage
+          .from('foto-supplier')
+          .getPublicUrl(data.path).data.publicUrl;
+      }
+
+      const { error } = await supabase.from('supplier').insert([{
+        id_supplier,
+        nama_supplier,
+        provinsi_supplier,
+        kota_supplier,
+        jenis_makanan,
+        foto_supplier,
+        no_telp,
+        alamat_supplier,
+        nama_pemilik,
+        id_sppg
+      }]);
+
+      if (error) throw error;
+
+      req.session.flash = {
+        type: 'success',
+        message: 'Supplier berhasil ditambahkan',
+      };
+
+      res.redirect('/supplier');
+
+    } catch (err) {
+      req.session.flash = {
+        type: 'error',
+        message: err.message || 'Gagal menambahkan supplier',
+      };
+      res.redirect('/supplier');
     }
-
-    const { error } = await supabase.from('supplier').insert([
-      { id_supplier, nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, foto_supplier, no_telp, alamat_supplier, nama_pemilik },
-    ]);
-
-    if (error) return res.send('Gagal menambah supplier: ' + error.message);
-
-    res.redirect('/supplier');
   },
-
 
   editForm: async (req, res) => {
     const { id } = req.params;
     const { data: supplier, error } = await supabase.from('supplier').select('*').eq('id_supplier', id).single();
+
+    const { data: sppgList } = await supabase
+      .from('satuan_gizi')
+      .select('id_sppg, nama_sppg');
 
     if (error) return res.send('Gagal memuat data supplier: ' + error.message);
 
     res.render('supplier/update_supplier', {
       user: req.session.user,
       supplier,
+      sppgList,
       pageCrumb: 'Supplier',
       pageTitle: 'Edit Supplier',
       breadcrumb: ['Dashboard', 'Supplier', 'Edit'],
@@ -134,49 +194,100 @@ const supplierController = {
   },
 
   update: async (req, res) => {
-    const { id } = req.params;
-    const { nama_supplier, provinsi_supplier, kota_supplier, jenis_makanan, rating, no_telp, alamat_supplier, nama_pemilik, foto_lama } = req.body;
+    try {
+      const { id } = req.params;
+      const {
+        nama_supplier,
+        provinsi_supplier,
+        kota_supplier,
+        jenis_makanan,
+        no_telp,
+        alamat_supplier,
+        nama_pemilik,
+        foto_lama,
+        id_sppg
+      } = req.body;
 
-    let updateData = {
-      nama_supplier,
-      provinsi_supplier,
-      kota_supplier,
-      jenis_makanan,
-      rating,
-      no_telp,
-      alamat_supplier,
-      nama_pemilik,
-      foto_supplier: foto_lama,
-    };
+      let updateData = {
+        nama_supplier,
+        provinsi_supplier,
+        kota_supplier,
+        jenis_makanan,
+        no_telp,
+        alamat_supplier,
+        nama_pemilik,
+        foto_supplier: foto_lama,
+        id_sppg,
+      };
 
-    if (req.file) {
-      const { data, error: uploadError } = await supabase.storage
-        .from('foto-supplier')
-        .upload(`supplier/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: req.file.mimetype,
-        });
+      if (req.file) {
+        const { data, error: uploadError } = await supabase.storage
+          .from('foto-supplier')
+          .upload(`supplier/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: req.file.mimetype,
+          });
 
-      if (uploadError) return res.send('Gagal upload foto baru: ' + uploadError.message);
+        if (uploadError) throw uploadError;
 
-      updateData.foto_supplier = supabase.storage.from('foto-supplier').getPublicUrl(data.path).data.publicUrl;
+        updateData.foto_supplier = supabase
+          .storage
+          .from('foto-supplier')
+          .getPublicUrl(data.path).data.publicUrl;
+      }
+
+      const { error } = await supabase
+        .from('supplier')
+        .update(updateData)
+        .eq('id_supplier', id);
+
+      if (error) throw error;
+
+      req.session.flash = {
+        type: 'success',
+        message: 'Supplier berhasil diperbarui',
+      };
+
+      res.redirect('/supplier');
+
+    } catch (err) {
+      req.session.flash = {
+        type: 'error',
+        message: err.message || 'Gagal memperbarui supplier',
+      };
+      res.redirect('/supplier');
     }
-
-    const { error } = await supabase.from('supplier').update(updateData).eq('id_supplier', id);
-    if (error) return res.send('Gagal mengupdate supplier: ' + error.message);
-
-    res.redirect('/supplier');
   },
+
 
   delete: async (req, res) => {
-    const { id } = req.params;
-    const { error } = await supabase.from('supplier').delete().eq('id_supplier', id);
+    try {
+      const { id } = req.params;
 
-    if (error) return res.send('Gagal menghapus supplier: ' + error.message);
+      const { error } = await supabase
+        .from('supplier')
+        .delete()
+        .eq('id_supplier', id);
 
-    res.redirect('/supplier');
+      if (error) throw error;
+
+      req.session.flash = {
+        type: 'success',
+        message: 'Supplier berhasil dihapus',
+      };
+
+      res.redirect('/supplier');
+
+    } catch (err) {
+      req.session.flash = {
+        type: 'error',
+        message: err.message || 'Gagal menghapus supplier',
+      };
+      res.redirect('/supplier');
+    }
   },
+
 };
 
 module.exports = supplierController;

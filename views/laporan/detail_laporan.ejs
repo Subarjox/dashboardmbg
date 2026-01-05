@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        FoodGuard PRO -
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <%- include('../partials/sidehead') %>
+            <hr class="horizontal dark mt-0">
+            <%- include('../partials/sidebar') %>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <%- include('../partials/navbar') %>
+            <!-- End Navbar -->
+            <div class="container-fluid py-4">
+                <div class="row">
+
+                    <div class="col-12 mb-lg-0 mb-4">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="row">
+
+                                    <!-- Bagian Kiri -->
+                                    <div class="col-lg-12">
+                                        <div class="d-flex flex-column h-100">
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Judul Laporan</label>
+                                                <input type="text" class="form-control"
+                                                    value="<%= laporan.judul_laporan || '-' %>" readonly>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Jenis Laporan</label>
+                                                <input type="text" class="form-control"
+                                                    value="<%= laporan.jenis_laporan || '-' %>" readonly>
+                                            </div>
+
+                                            <!-- Row 1 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">ID Laporan</label>
+                                                    <input type="text" class="form-control"
+                                                        value="<%= laporan.id_laporan %>" readonly>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Status Laporan</label>
+                                                    <input type="text" class="form-control"
+                                                        value="<%= laporan.status_laporan %>" readonly>
+                                                </div>
+                                            </div>
+
+                                            <!-- Row 2 -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Pelapor</label>
+                                                    <input type="text" class="form-control"
+                                                        value="<%= laporan.sekolah?.nama_sekolah || 'Tidak diketahui' %>"
+                                                        readonly>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Tanggal Dibuat</label>
+                                                    <input type="text" class="form-control"
+                                                        value="<%=laporan.created_at %>" readonly>
+                                                </div>
+                                            </div>
+
+                                            <!-- Judul -->
+
+
+                                            <!-- Isi -->
+                                            <div class="mb-3">
+                                                <label class="form-label">Isi Laporan</label>
+                                                <textarea class="form-control" rows="5"
+                                                    readonly><%= laporan.isi_laporan %></textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+    </main>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

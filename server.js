@@ -6,7 +6,10 @@ const session = require("express-session");
 const { createClient } = require("@supabase/supabase-js");
 const { isAuthenticated, isSekolah } = require("./middleware/authmiddleware");
 
+
+
 const app = express();
+app.use('/vendor', express.static('node_modules'));
 
 // Supabase client
 const supabase = createClient(
@@ -49,6 +52,45 @@ async function sendDiscordNotification(user, role) {
   }
 }
 
+async function sendRequestNotification(data) {
+  const webhookUrl = process.env.DISCORD_ACCOUNT_REQUEST_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.log('⚠️ DISCORD_ACCOUNT_REQUEST_WEBHOOK_URL not set, skipping notification.');
+    return;
+  }
+
+  const embed = {
+    title: "Account Request Notification",
+    color: 0x00FF00,
+    fields: [
+      { name: "Nama Akun", value: data.nama || "Unknown", inline: true },
+      { name: "ID Akun / NPSN ", value: data.id || "Unknown", inline: true },
+      { name: "No Telp", value: data.no_telp || "Unknown", inline: true },
+      { name: "Alamat", value: data.alamat || "Unknown", inline: true },
+      { name: "Email", value: data.email || "Unknown", inline: true },
+      { name: "Jenis Akun", value: data.jenis_akun || "Unknown", inline: true },
+      { name: "Time", value: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }), inline: false }
+    ],
+    footer: { text: "FoodGuard System - Account Request" },
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ embeds: [embed] })
+    });
+
+    if (!response.ok) {
+      console.error(`Failed to send Discord notification: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Error sending Discord notification:", error);
+  }
+}
+
+app.use('/vendor', express.static('node_modules'));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -63,6 +105,12 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
+
+app.use((req, res, next) => {
+  res.locals.flash = req.session.flash;
+  delete req.session.flash;
+  next();
+});
 
 app.use((req, res, next) => {
   const path = req.path.replace(/\/$/, "");
@@ -97,31 +145,37 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => res.render('register'));
-
-
-
 app.post('/register', async (req, res) => {
   const { nama, email, username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('users')
-    .insert([{ nama, email, username, password: hashedPassword }])
-    .select();
+    .insert([{ nama, email, username, password: hashedPassword }]);
 
   if (error) {
     console.log(error);
-    return res.render("register", { error: error.message });
+    req.session.flash = {
+      type: 'error',
+      message: error.message
+    };
+    return res.redirect('/register');
   }
 
-  res.render("login", { message: "Register berhasil! Silakan login." });
+  req.session.flash = {
+    type: 'success',
+    message: 'Register berhasil! Silakan login.'
+  };
+
+  res.redirect('/login');
 });
+
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  //user_admin
-  //user_admin
+
   try {
+    // ================= ADMIN =================
     const { data: adminData, error: adminError } = await supabase
       .from("users")
       .select("*")
@@ -130,11 +184,17 @@ app.post("/login", async (req, res) => {
 
     if (adminError) throw adminError;
 
-    if (adminData && adminData.length > 0) {
+    if (adminData?.length) {
       const admin = adminData[0];
       const match = await bcrypt.compare(password, admin.password);
 
-      if (!match) return res.render('login', { error: 'Password salah!' });
+      if (!match) {
+        req.session.flash = {
+          type: 'error',
+          message: 'Password salah'
+        };
+        return res.redirect('/');
+      }
 
       req.session.user = {
         id: admin.id,
@@ -143,12 +203,11 @@ app.post("/login", async (req, res) => {
         role: "admin",
       };
 
-      console.log('✅ Login sebagai ADMIN:', admin.email);
       sendDiscordNotification({ nama: admin.nama, email: admin.email }, 'admin');
       return res.redirect('/dashboard');
     }
 
-    //User_Sekolah
+    // ================= SEKOLAH =================
     const { data: sekolahData, error: sekolahError } = await supabase
       .from("sekolah")
       .select("*")
@@ -157,13 +216,17 @@ app.post("/login", async (req, res) => {
 
     if (sekolahError) throw sekolahError;
 
-    if (sekolahData && sekolahData.length > 0) {
+    if (sekolahData?.length) {
       const sekolah = sekolahData[0];
       const match = await bcrypt.compare(password, sekolah.password_sekolah);
 
-      if (!match) return res.render('login', { error: 'Password salah!' },
-        console.log('pass salah')
-      );
+      if (!match) {
+        req.session.flash = {
+          type: 'error',
+          message: 'Password salah'
+        };
+        return res.redirect('/');
+      }
 
       req.session.user = {
         id_sekolah: sekolah.id_sekolah,
@@ -172,12 +235,15 @@ app.post("/login", async (req, res) => {
         role: "sekolah",
       };
 
-      console.log('✅ Login sebagai SEKOLAH:', sekolah.email_sekolah);
-      sendDiscordNotification({ nama_sekolah: sekolah.nama_sekolah, email_sekolah: sekolah.email_sekolah }, 'sekolah');
+      sendDiscordNotification(
+        { nama_sekolah: sekolah.nama_sekolah, email_sekolah: sekolah.email_sekolah },
+        'sekolah'
+      );
+
       return res.redirect('/user/sekolah');
     }
 
-    //User_SPPG
+    // ================= SPPG =================
     const { data: sppgData, error: sppgError } = await supabase
       .from('satuan_gizi')
       .select('*')
@@ -186,13 +252,17 @@ app.post("/login", async (req, res) => {
 
     if (sppgError) throw sppgError;
 
-    if (sppgData && sppgData.length > 0) {
+    if (sppgData?.length) {
       const sppg = sppgData[0];
       const match = await bcrypt.compare(password, sppg.password_sppg);
 
-      if (!match) return res.render('login', { error: 'Password salah!' },
-        console.log('pass salah')
-      );
+      if (!match) {
+        req.session.flash = {
+          type: 'error',
+          message: 'Password salah'
+        };
+        return res.redirect('/');
+      }
 
       req.session.user = {
         id_sppg: sppg.id_sppg,
@@ -201,21 +271,52 @@ app.post("/login", async (req, res) => {
         role: "sppg",
       };
 
-      console.log('✅ Login sebagai SPPG:', sppg.email_sppg);
-      // Send notification (non-blocking)
-      sendDiscordNotification({ nama_sppg: sppg.nama_sppg, email_sppg: sppg.email_sppg }, 'sppg');
-      return res.redirect('/');
+      sendDiscordNotification(
+        { nama_sppg: sppg.nama_sppg, email_sppg: sppg.email_sppg },
+        'sppg'
+      );
+
+      return res.redirect('/user/sppg');
     }
 
-    return res.render("login", { error: "Akun tidak ditemukan!" });
+    // ================= AKUN TIDAK DITEMUKAN =================
+    req.session.flash = {
+      type: 'error',
+      message: 'Akun tidak ditemukan!'
+    };
+    res.redirect('/');
+
   } catch (err) {
-    console.error(" Error saat login:", err);
-    res.render("login", { error: "Terjadi kesalahan server." });
+    console.error("Error saat login:", err);
+
+    req.session.flash = {
+      type: 'error',
+      message: 'Terjadi kesalahan server.'
+    };
+    res.redirect('/');
   }
 });
 
 app.get("/analitik", (req, res) => {
   res.render("analitik");
+});
+
+
+//request
+app.get('/request', async (req, res) => {
+  res.render('request');
+});
+
+app.post('/request', async (req, res) => {
+  const data = req.body;
+  await sendRequestNotification(data);
+
+  req.session.flash = {
+    type: 'success',
+    message: 'Permohonan berhasil dikirim!'
+  };
+
+  res.redirect('/');
 });
 
 const dashboardRoutes = require('./routes/dashboardroutes');
@@ -230,6 +331,9 @@ app.use('/siswa', siswaRoutes);
 const sekolahRoutes = require("./routes/sekolahroutes");
 app.use("/sekolah", sekolahRoutes);
 
+const laporanRoutes = require("./routes/laporanroutes");
+app.use("/laporan", laporanRoutes);
+
 const supplierRoutes = require('./routes/supplierroutes');
 app.use('/supplier', supplierRoutes);
 
@@ -241,8 +345,8 @@ app.use('/sppg', sppgRoutes);
 const usersekolahRoutes = require('./routes/usersekolahroutes');
 app.use('/user/sekolah', usersekolahRoutes);
 
-// const usersppgRoutes = require('./routes/usersppgroutes');
-// app.use('/user/sppg', usersppgRoutes);
+const usersppgRoutes = require('./routes/usersppgroutes');
+app.use('/user/sppg', usersppgRoutes);
 
 
 

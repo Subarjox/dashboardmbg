@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        FoodGuard PRO -
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <%- include('../partials/sidehead') %>
+            <hr class="horizontal dark mt-0">
+            <%- include('../partials/sidebar') %>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <%- include('../partials/navbar') %>
+            <!-- End Navbar -->
+            <div class="container-fluid py-4">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12">
+                        <div class="row g-3">
+                            <!-- Sistem -->
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="card">
+                                    <span class="mask bg-warning opacity-10 border-radius-lg"></span>
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100 mb-4"
+                                                    style="width:60px; height:60px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                        <path
+                                                            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h404q-4 20-4 40t4 40H160l320 200 146-91q14 13 30.5 22.5T691-572L480-440 160-640v400h640v-324q23-5 43-14t37-22v360q0 33-23.5 56.5T800-160H160Zm0-560v480-480Zm600 80q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-white text-sm">Total Laporan yang belum
+                                                    dibaca</span>
+                                                <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                    <%= TotalUnread %>
+                                                </h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--sistem maintenance -->
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="card">
+                                    <span class="mask bg-success opacity-10 border-radius-lg"></span>
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100 mb-4"
+                                                    style=" height:60px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                        <path
+                                                            d="M638-80 468-250l56-56 114 114 226-226 56 56L638-80ZM480-520l320-200H160l320 200Zm0 80L160-640v400h206l80 80H160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v174l-80 80v-174L480-440Zm0 0Zm0-80Zm0 80Z" />
+                                                    </svg>
+                                                </div>
+                                                <span class="text-white text-sm ">Total Laporan yang sudah
+                                                    dibaca</span>
+                                                <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                    <%= TotalRead %>
+                                                </h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <h6 class="col-lg-6 font-weight-bolder text-start">
+                                    Masalah yang terjadi :
+                                </h6>
+                            </div>
+
+
+                            <div class="row g-3">
+                                <% if (laporan.length===0) { %>
+                                    <div class="col-12 text-center">
+                                        <p class="text-muted">Belum ada laporan</p>
+                                    </div>
+                                    <% } %>
+
+                                        <% laporan.forEach(item=> {
+                                            const bg = item.status_baca === 'belum dibaca'
+                                            ? 'bg-warning'
+                                            : 'bg-success';
+
+                                            const icon = item.status_baca === 'belum dibaca'
+                                            ? `<div
+                                                class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100 mb-4"
+                                                style=" height:60px;"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    height="24px" viewBox="0 -960 960 960" width="24px"
+                                                    fill="CurrentColor">
+                                                    <path
+                                                        d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h404q-4 20-4 40t4 40H160l320 200 146-91q14 13 30.5 22.5T691-572L480-440 160-640v400h640v-324q23-5 43-14t37-22v360q0 33-23.5 56.5T800-160H160Zm0-560v480-480Zm600 80q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Z" />
+                                                </svg></div>`
+                                            : `<div
+                                                class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100 mb-4"
+                                                style=" height:60px;"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    height="24px" viewBox="0 -960 960 960" width="24px"
+                                                    fill="CurrentColor">
+                                                    <path
+                                                        d="M638-80 468-250l56-56 114 114 226-226 56 56L638-80ZM480-520l320-200H160l320 200Zm0 80L160-640v400h206l80 80H160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v174l-80 80v-174L480-440Zm0 0Zm0-80Zm0 80Z" />
+                                                </svg></div>`;
+                                            %>
+
+
+                                            <div class="col-lg-4 col-md-6 col-12">
+                                                <div class="card <%= bg %>">
+                                                    <div class="card-body text-center">
+                                                        <%- icon %>
+                                                            <h5 class="text-white font-weight-bolder mb-2">
+                                                                Judul : <%= item.judul_laporan || 'Tanpa Judul' %>
+                                                            </h5>
+
+                                                            <p class="text-sm text-white font-weight-bold mb-3">
+                                                                <%= item.sekolah?.nama_sekolah || 'Tidak diketahui' %>
+                                                            </p>
+
+                                                            <span
+                                                                class="badge <%= item.status_laporan === 'urgent' ? 'bg-danger' : 'bg-success' %> mb-3">
+                                                                <%= item.status_laporan %>
+                                                            </span>
+                                                            <form action="/laporan/baca/<%= item.id_laporan %>"
+                                                                method="POST">
+                                                                <button type="submit" class="btn btn-secondary w-100">
+                                                                    Baca Laporan
+                                                                </button>
+                                                            </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <% }) %>
+                            </div>
+
+
+                            <footer class="sticky-bottom footer pt-3  ">
+                                <div class="container-fluid">
+                                    <div class="row align-items-center justify-content-lg-between">
+                                        <div class="col-lg-6 mb-lg-0 mb-4">
+                                            <div class="copyright text-center text-sm text-muted text-lg-start">
+                                                ©
+                                                <script>
+                                                    document.write(new Date().getFullYear())
+                                                </script>,
+                                                Irostech
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+
+                        </div>
+    </main>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script>
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour12: false,
+                timeZone: 'Asia/Jakarta'
+            });
+        }
+    </script>
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

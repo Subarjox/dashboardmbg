@@ -27,7 +27,7 @@
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href="/dashboard" target="_blank">
-        <img src="../../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="../../assets/img/testlo.png" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold">FoodGuard Pro</span>
       </a>
     </div>
@@ -177,9 +177,13 @@
           </li>
 
           <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
-            <a href="#" class="nav-link text-body font-weight-bold px-0 dropdown-toggle" id="navbarDropdownMenuLink"
+            <a href="#" class="nav-link text-body font-weight-bold px-0" id="navbarDropdownMenuLink"
               data-bs-toggle="dropdown" aria-expanded="false">
               <img class="avatar avatar-sm me-sm-1" src="/assets/img/team-2.jpg" alt="user">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="CurrentColor">
+                <path d="M480-360 280-560h400L480-360Z" />
+              </svg>
             </a>
             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="navbarDropdownMenuLink">
               <li>
@@ -270,7 +274,7 @@
                       </div>
                       <span class="text-white text-sm">Menu Makanan Hari ini: </span>
                       <h5 class="text-white font-weight-bolder mb-0 mt-2">
-                        <%= menu_makanan.nama_makanan %>
+
                       </h5>
                     </div>
                   </div>
@@ -395,7 +399,7 @@
             cardColor='bg-danger' ; description='Sistem sedang down, Petugas sudah diberi peringatan' ;
             btncolor='btn-secondary' ; btndesc=' 🔔 Beri Notifikasi Ulang 🔔' } else if (sekolah.status_sistem==='aktif'
             ) { cardColor='bg-success' ; description='Sistem sedang aktif dan berjalan dengan baik' ;
-            btncolor='btn-success' ; btndesc='❌ UBAH STATUS ❌' } else if (sekolah.status_sistem==='ready' ) {
+            btncolor='btn-success' ; btndesc=' UBAH STATUS ' } else if (sekolah.status_sistem==='ready' ) {
             cardColor='bg-info' ;
             description='Sistem sudah selesai diperbaiki, mohon untuk membuat laporan sebelum mengaktifkan sistem kembali'
             ; btncolor='btn-success' ; btndesc='Buat laporan dan ubah status' } else if
@@ -442,7 +446,7 @@
               cardColor2='bg-danger' ; description2='Keracunan Telah Terjadi, Petugas Medis akan segera dikirim' ;
               btncolor2='btn-secondary' ; btndesc2=' 🔔 Beri Notifikasi Ulang 🔔' } else if
               (sekolah.kasus_keracunan==='aman' ) { cardColor2='bg-success' ; description2='Semua siswa aman dan sehat'
-              ; btncolor2='btn-success' ; btndesc2='❌ UBAH STATUS ❌' } else { cardColor2='bg-warning' ;
+              ; btncolor2='btn-danger' ; btndesc2=' UBAH STATUS ' } else { cardColor2='bg-warning' ;
               description2='Masalah keracunan sedang ditangani' ; btncolor2='btn-warning' ;
               btndesc2='Petugas medis sedang mengobati siswa' } %>
 

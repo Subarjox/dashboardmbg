@@ -95,7 +95,7 @@
 
                             <div class="col-12 mt-4">
                                 <h6 class="col-lg-6 font-weight-bolder text-start">
-                                    Masalah yang terjadi :
+                                    Daftar Laporan :
                                 </h6>
                             </div>
 
@@ -103,7 +103,7 @@
                             <div class="row g-3">
                                 <% if (laporan.length===0) { %>
                                     <div class="col-12 text-center">
-                                        <p class="text-muted">Belum ada laporan</p>
+                                        <p class="text-muted text-uppercase">Belum ada laporan</p>
                                     </div>
                                     <% } %>
 
@@ -133,10 +133,11 @@
 
 
                                             <div class="col-lg-4 col-md-6 col-12">
-                                                <div class="card <%= bg %>">
+                                                <div class="card <%= bg %> h-100" style="min-height: 300px;">
                                                     <div class="card-body text-center">
                                                         <%- icon %>
-                                                            <h5 class="text-white font-weight-bolder mb-2">
+                                                            <h5
+                                                                class="text-white text-uppercase font-weight-bolder mb-2">
                                                                 Judul : <%= item.judul_laporan || 'Tanpa Judul' %>
                                                             </h5>
 

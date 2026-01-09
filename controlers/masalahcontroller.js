@@ -164,6 +164,7 @@ const MasalahController = {
     SendSPPGTeam: async (req, res) => {
         const sekolahId = req.params.id;
         const adminId = req.session.user?.id;
+
         try {
             const { data: sekolah, error } = await supabase
                 .from('sekolah')
@@ -171,11 +172,11 @@ const MasalahController = {
                 .eq('id_sekolah', sekolahId)
                 .single();
 
-            if (error || !sekolah) throw error;
+            if (error) throw error;
+            if (!sekolah) throw new Error('Data sekolah tidak ditemukan');
 
-            console.error(err);
             req.session.flash = {
-                message: 'Ini Cuma Test ibarat ngirim notif ke discord',
+                message: 'SPPG sudah diperingati',
                 type: 'success'
             };
 
@@ -184,13 +185,14 @@ const MasalahController = {
         } catch (err) {
             console.error(err);
             req.session.flash = {
-                message: 'Gagal mengupdate status sistem',
+                message: 'Gagal mengirim notif ke discord SPPG Team',
                 type: 'error'
             };
 
             return res.redirect('/masalah/detail/' + sekolahId);
         }
     },
+
 
     SendDevTeam: async (req, res) => {
         const sekolahId = req.params.id;

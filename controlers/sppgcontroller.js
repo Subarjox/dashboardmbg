@@ -184,11 +184,30 @@ const sppgController = {
         foto_sppg
       };
 
-      const { error } = await supabase
+      const menudata = {
+        id_menu: id_sppg,
+        id_sppg: id_sppg,
+        nama_makanan: "Menu belum diisi",
+        protein: null,
+        total_lemak: null,
+        karbohidrat: null,
+        kalori: null,
+        deskripsi_menu: null,
+        tanggal_menu: null,
+        foto_makanan: null
+      };
+
+      const { data, error } = await supabase
         .from('satuan_gizi')
         .insert([insertData]);
 
       if (error) throw error;
+
+      const { menu, error: menuError } = await supabase
+        .from('menu_makanan')
+        .insert([menudata]);
+
+      if (menuError) throw menuError;
 
       req.session.flash = {
         type: 'success',
@@ -305,6 +324,13 @@ const sppgController = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
+
+      const { error: menuError } = await supabase
+        .from('menu_makanan')
+        .delete()
+        .eq('id_menu', id);
+
+      if (menuError) throw menuError;
 
       const { error } = await supabase
         .from('satuan_gizi')

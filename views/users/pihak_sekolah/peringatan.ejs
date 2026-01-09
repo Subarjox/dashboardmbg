@@ -28,7 +28,7 @@
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="/dashboard" target="_blank">
-                <img src="../../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="../../assets/img/testlo.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold">FoodGuard Pro</span>
             </a>
         </div>
@@ -182,9 +182,13 @@
                     </li>
 
                     <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
-                        <a href="#" class="nav-link text-body font-weight-bold px-0 dropdown-toggle"
-                            id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="nav-link text-body font-weight-bold px-0" id="navbarDropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="avatar avatar-sm me-sm-1" src="/assets/img/team-2.jpg" alt="user">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="CurrentColor">
+                                <path d="M480-360 280-560h400L480-360Z" />
+                            </svg>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
                             aria-labelledby="navbarDropdownMenuLink">
@@ -308,13 +312,16 @@
                         <script>
                             document.getElementById('submitSistemBtn')?.addEventListener('click', function () {
                                 Swal.fire({
-                                    title: 'INFO',
-                                    text: 'Admin sudah diperingati',
-                                    icon: 'info',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                }).then(() => {
-                                    document.getElementById('sistemDownForm').submit();
+                                    title: 'Yakin?',
+                                    text: 'Apakah anda yakin ingin melanjutkan? Ini akan mengubah status sistem',
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, lanjutkan',
+                                    cancelButtonText: 'Batal'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        document.getElementById('sistemDownForm').submit();
+                                    }
                                 });
                             });
                         </script>
@@ -325,10 +332,17 @@
                             description2='Keracunan Telah Terjadi, Petugas Medis akan segera dikirim' ;
                             btncolor2='btn-secondary' ; btndesc2=' 🔔 Beri Notifikasi Ulang 🔔' } else if
                             (peringatan.kasus_keracunan==='aman' ) { cardColor2='bg-success' ;
-                            description2='Semua siswa aman dan sehat' ; btncolor2='btn-success' ;
-                            btndesc2='❌ UBAH STATUS ❌' } else { cardColor2='bg-warning' ;
-                            description2='Masalah keracunan sedang ditangani' ; btncolor2='btn-warning' ;
-                            btndesc2='Petugas medis sedang mengobati siswa' } %>
+                            description2='Semua siswa aman dan sehat' ; btncolor2='btn-danger' ;
+                            btndesc2=' UBAH STATUS ' } else if (peringatan.kasus_keracunan==='resolved' ) {
+                            cardColor2='bg-info' ;
+                            description2='Masalah keracunan sudah diatasi, mohon untuk membuat laporan' ;
+                            btncolor2='btn-success' ; btndesc2='Buat laporan dan ubah status' }else if
+                            (peringatan.kasus_keracunan==='dispatched' ) { cardColor2='bg-warning' ;
+                            description2='Tim medis sedang dalam perjalanan ke lokasi masalah' ; btncolor2='btn-info' ;
+                            btndesc2='Petugas Sedang Dalam Perjalanan' } else if
+                            (peringatan.kasus_keracunan==='on_treatment' ) { cardColor2='bg-info' ;
+                            description2='Masalah keracunan sedang ditangani' ; btncolor2='btn-success' ;
+                            btndesc2='Selesaikan Pengobatan' } %>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <form id="keracunanForm" enctype="multipart/form-data"
                                     action="/user/sekolah/peringatan/keracunan" method="POST" class="h-100">
@@ -358,7 +372,7 @@
                                                 </div>
 
                                                 <% if (peringatan.kasus_keracunan==='bahaya' ||
-                                                    peringatan.kasus_keracunan==='ready' ||
+                                                    peringatan.kasus_keracunan==='resolved' ||
                                                     peringatan.kasus_keracunan==='aman' ) { %>
                                                     <button type="button"
                                                         class="btn <%= btncolor2 %> mt-3 w-100 justify-content-end"
@@ -376,7 +390,7 @@
             document.getElementById('submitKeracunanBtn')?.addEventListener('click', function () {
                 Swal.fire({
                     title: 'Yakin?',
-                    text: 'Apakah anda yakin ingin melanjutkan? Pastikan kondisi sudah benar',
+                    text: 'Apakah anda yakin ingin melanjutkan? Ini akan mengubah status keracunan ',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Ya, lanjutkan',

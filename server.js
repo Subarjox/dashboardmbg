@@ -167,7 +167,7 @@ app.post('/register', async (req, res) => {
     message: 'Register berhasil! Silakan login.'
   };
 
-  res.redirect('/login');
+  res.redirect('/');
 });
 
 
@@ -200,6 +200,7 @@ app.post("/login", async (req, res) => {
         id: admin.id,
         nama: admin.nama,
         email: admin.email,
+        foto: admin.foto,
         role: "admin",
       };
 
@@ -232,6 +233,7 @@ app.post("/login", async (req, res) => {
         id_sekolah: sekolah.id_sekolah,
         nama: sekolah.nama_sekolah,
         email: sekolah.email_sekolah,
+        foto: sekolah.foto_sekolah,
         role: "sekolah",
       };
 
@@ -268,6 +270,7 @@ app.post("/login", async (req, res) => {
         id_sppg: sppg.id_sppg,
         nama: sppg.nama_sppg,
         email: sppg.email_sppg,
+        foto: sppg.foto_sppg,
         role: "sppg",
       };
 
@@ -297,10 +300,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/analitik", (req, res) => {
-  res.render("analitik");
-});
-
 
 //request
 app.get('/request', async (req, res) => {
@@ -313,7 +312,7 @@ app.post('/request', async (req, res) => {
 
   req.session.flash = {
     type: 'success',
-    message: 'Permohonan berhasil dikirim!'
+    message: 'Permohonan berhasil dikirim!. Akun akan dikirim lewat email dalam 1 x 24 Jam'
   };
 
   res.redirect('/');
@@ -340,6 +339,9 @@ app.use('/supplier', supplierRoutes);
 const sppgRoutes = require('./routes/sppgroutes');
 app.use('/sppg', sppgRoutes);
 
+const profileRoutes = require('./routes/profileroutes');
+app.use('/profile', profileRoutes);
+
 
 //user routes
 const usersekolahRoutes = require('./routes/usersekolahroutes');
@@ -347,11 +349,6 @@ app.use('/user/sekolah', usersekolahRoutes);
 
 const usersppgRoutes = require('./routes/usersppgroutes');
 app.use('/user/sppg', usersppgRoutes);
-
-
-
-app.get('/tes', isSekolah, (req, res) => res.render('users/pihak_sekolah/pihak_sekolah'));
-app.get('/laporan', isAuthenticated, (req, res) => res.render('laporan'));
 
 
 // LOGOUT
@@ -366,6 +363,13 @@ app.use((req, res, next) => {
   res.status(404).render("404", {
     pageTitle: "404 - Halaman Tidak Ditemukan",
     pageCrumb: "Error 404",
+  });
+});
+
+app.use((req, res, next) => {
+  res.status(500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510).render("500", {
+    pageTitle: "500 - Internal Server Error",
+    pageCrumb: "Error 500",
   });
 });
 

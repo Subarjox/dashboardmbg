@@ -566,10 +566,6 @@ const userSekolahController = {
         return res.redirect('/user/sekolah/peringatan');
       }
 
-      if (sekolah.status_sistem !== 'aktif') {
-        return res.redirect('/user/sekolah/peringatan');
-      }
-
       await supabase
         .from('sekolah')
         .update({ kasus_keracunan: 'bahaya' })
@@ -586,7 +582,7 @@ const userSekolahController = {
     } catch (err) {
       console.error(err);
       req.session.flash = {
-        message: 'Gagal mengupdate status sistem',
+        message: 'Gagal mengupdate kasus keracunan',
         type: 'error'
       };
       return res.redirect('/user/sekolah/peringatan');
@@ -749,17 +745,38 @@ const userSekolahController = {
           judul_laporan,
           isi_laporan,
           jenis_laporan,
-          status_laporan: 'pending'
+          status_baca: 'belum dibaca',
+          status_laporan: 'urgent'
         });
 
       if (error) throw error;
+
+      if (jenis_laporan === 'Kasus Keracunan') {
+        await supabase
+          .from('sekolah')
+          .update({ kasus_keracunan: 'aman' })
+          .eq('id_sekolah', sekolahId);
+
+      } else if (jenis_laporan === 'Sistem Down') {
+        await supabase
+          .from('sekolah')
+          .update({ status_sistem: 'aktif' })
+          .eq('id_sekolah', sekolahId);
+
+      } else {
+        req.session.flash = {
+          type: 'error',
+          message: 'Jenis laporan tidak dikenali'
+        };
+      }
 
       req.session.flash = {
         type: 'success',
         message: 'Laporan berhasil dikirim'
       };
 
-      res.redirect('/users/pihak_sekolah/laporan_sekolah');
+
+      res.redirect('/user/sekolah/peringatan');
     } catch (err) {
       res.send(err.message);
     }

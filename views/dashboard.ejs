@@ -339,7 +339,7 @@
         tr.innerHTML = `
           <td class="ps-3"><h6 class="mb-0 text-sm">${l.id_laporan}</h6></td>
           <td><h6 class="mb-0 text-sm">${l.id_pelapor}</h6></td>
-          <td><h6 class="mb-0 text-sm">${l.judul_laporan}</h6></td>
+          <td><h6 class="mb-0 text-sm">${l.judul_laporan || 'Tidak ada judul'} </h6></td>
           <td><h6 class="text-center"><span class="text-sm">${l.jenis_laporan}</span></td>
           <td><h6 class="text-center"><span class="text-sm">${formatDateTime(l.created_at)}</span></td>\
           <td><h6 class="text-center">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,25 +15,30 @@
       height: 100vh;
       flex-direction: column;
     }
+
     .error-code {
       font-size: 6rem;
       font-weight: 700;
       color: #dc3545;
     }
+
     .error-message {
       font-size: 1.5rem;
       color: #6c757d;
     }
+
     .btn-home {
       margin-top: 20px;
     }
   </style>
 </head>
+
 <body>
   <div class="text-center">
     <div class="error-code">404</div>
     <div class="error-message">Halaman yang kamu cari tidak ditemukan</div>
-    <a href="/dashboard" class="btn btn-danger btn-home">Kembali ke Dashboard</a>
+    <a href="javascript:history.back()" class="btn btn-danger btn-home">Kembali</a>
   </div>
 </body>
+
 </html>

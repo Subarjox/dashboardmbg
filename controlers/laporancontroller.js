@@ -17,7 +17,8 @@ const laporanController = {
         nama_sekolah
       )
     `)
-            .order('id_laporan', { ascending: true });
+            .order('status_laporan', { ascending: false })
+            .order('created_at', { ascending: true });
 
         if (error) {
             return res.render('laporan/laporan', {

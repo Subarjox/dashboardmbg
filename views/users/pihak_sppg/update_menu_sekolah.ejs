@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <title>
+        FoodGuard PRO - SPPG
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <%- include('../../partials/sppgsidehead') %>
+            <hr class="horizontal dark mt-0">
+            <%- include('../../partials/sppgsidebar') %>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+            navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        <li class="breadcrumb-item text-sm">
+                            <a class="opacity-5 text-dark" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+                            <%= pageCrumb || 'Dashboard' %>
+                        </li>
+                    </ol>
+
+                    <!-- Judul halaman -->
+                    <h6 class="font-weight-bolder mb-0">
+                        <%= pageTitle || 'Dashboard' %>
+                    </h6>
+                </nav>
+
+
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item pe-2 d-flex align-items-center">
+                        <span class="badge badge-sm bg-gradient-success opacity-9">SPPG</span>
+                    </li>
+
+                    <li class="nav-item ps-5 d-flex align-items-center">
+                        <span class="text-sm text-dark text-bold">
+                            <%= user ? user.nama || user.email : 'Guest' %>
+                        </span>
+                    </li>
+
+                    <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
+                        <a href="#" class="nav-link text-body font-weight-bold px-0" id="navbarDropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar avatar-sm me-sm-1"
+                                src="<%= user.foto ? user.foto : '/assets/img/basic.png' %>" alt="user">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="CurrentColor">
+                                <path d="M480-360 280-560h400L480-360Z" />
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/profile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="CurrentColor">
+                                        <path
+                                            d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+                                    </svg>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/logout">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="#EA3323">
+                                        <path
+                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                    </svg>
+                                    <span class="text-danger">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item d-xl-none d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- End Navbar -->
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="row">
+                        <div class="col-12 mb-lg-0 mb-4">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <form id="updateMenuForm" enctype="multipart/form-data"
+                                        action="/user/sppg/menu/edit/<%= makanan.id_menu %>" method="POST">
+
+                                        <div class="row">
+                                            <!-- KIRI -->
+                                            <div class="col-lg-7">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Nama Makanan</label>
+                                                        <input type="text" class="form-control" name="nama_makanan"
+                                                            value="<%= makanan.nama_makanan %>" required>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">ID Menu</label>
+                                                        <input type="text" class="form-control"
+                                                            value="<%= makanan.id_menu %>" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tanggal Menu</label>
+                                                    <input type="date" class="form-control" name="tanggal_menu"
+                                                        value="<%= makanan.tanggal_menu %>" readonly>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">SPPG</label>
+                                                    <input type="text" class="form-control"
+                                                        value="<%= makanan.satuan_gizi.nama_sppg %>" readonly>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Protein (g)</label>
+                                                        <input type="text" class="form-control" name="protein"
+                                                            value="<%= makanan.protein %>" required>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Karbohidrat (g)</label>
+                                                        <input type="text" class="form-control" name="karbohidrat"
+                                                            value="<%= makanan.karbohidrat %>" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Kalori (cal)</label>
+                                                        <input type="text" class="form-control" name="kalori"
+                                                            value="<%= makanan.kalori %>" required>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Lemak (g)</label>
+                                                        <input type="text" class="form-control" name="lemak"
+                                                            value="<%= makanan.lemak %>" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Deskripsi Menu</label>
+                                                    <textarea class="form-control" name="deskripsi_menu" rows="3"
+                                                        required><%= makanan.deskripsi_menu %></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- KANAN -->
+                                            <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                                                <div class="upload-area" style="position: relative; cursor: pointer;">
+                                                    <!-- Preview foto lama atau placeholder -->
+                                                    <img id="preview"
+                                                        src="<%= makanan.foto_makanan ? makanan.foto_makanan : '' %>"
+                                                        alt="Update Foto Menu Makanan"
+                                                        class="img-fluid rounded mb-3 <%= makanan.foto_makanan ? '' : 'btn border border-secondary d-flex justify-content-center align-items-center' %>"
+                                                        style="max-height: 250px; object-fit: cover; min-height: 250px;">
+
+                                                    <!-- Input file -->
+                                                    <input type="file" id="foto-upload" name="foto" accept="image/*"
+                                                        hidden>
+
+                                                    <!-- Input hidden untuk menyimpan URL foto lama -->
+                                                    <input type="hidden" name="foto_lama"
+                                                        value="<%= makanan.foto_makanan %>">
+                                                </div>
+                                                <span class="text-xs text-muted">*Klik foto untuk mengganti foto</span>
+                                            </div>
+
+                                    </form>
+                                    <div class="text-center mt-4">
+                                        <button class="btn btn-info w-50 mb-3"
+                                            onclick="confirmupdate('<%= makanan.id_menu %>')" type="button">
+                                            Update Menu
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="sticky-bottom footer pt-3  ">
+                    <div class="container-fluid">
+                        <div class="row align-items-center justify-content-lg-between">
+                            <div class="col-lg-6 mb-lg-0 mb-4">
+                                <div class="copyright text-center text-sm text-muted text-lg-start">
+                                    ©
+                                    <script>
+                                        document.write(new Date().getFullYear())
+                                    </script>,
+                                    Irostech
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+    </main>
+
+    </div>
+    <script>
+        function confirmupdate(id_makanan) {
+            Swal.fire({
+                title: 'Yakin ingin mengubah?',
+                text: 'Data menu makanan akan diubah!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Ganti data',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('updateMenuForm').submit();
+                }
+            });
+        }
+    </script>
+
+    <script>
+        const fileInput = document.getElementById('foto-upload');
+        const preview = document.getElementById('preview');
+
+        // Jika preview kosong, beri style placeholder
+        if (!preview.src || preview.src.trim() === '') {
+            preview.style.background = '#f0f0f0';
+            preview.style.display = 'flex';
+            preview.style.justifyContent = 'center';
+            preview.style.alignItems = 'center';
+            preview.innerText = 'Klik untuk upload foto';
+        }
+
+        // Klik preview untuk pilih/ganti foto
+        preview.addEventListener('click', () => fileInput.click());
+
+        // Event ketika file baru dipilih
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.background = 'none';
+                    preview.innerText = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+
+
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <!--   Core JS Files   -->
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="/assets/js/plugins/chartjs.min.js"></script>
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

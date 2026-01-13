@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <title>
-        FoodGuard PRO - Sekolah
+        FoodGuard PRO -
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
@@ -17,7 +17,9 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
-    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -53,7 +55,7 @@
 
                 <!-- Siswa -->
                 <li class="nav-item">
-                    <a class="nav-link <%= isActive('/user/sekolah/siswa') ? 'active' : '' %>"
+                    <a class="nav-link <%= isActive('/user/sekolah/siswa', { exact: true }) ? 'active' : '' %>"
                         href="/user/sekolah/siswa">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -70,7 +72,7 @@
                 <!-- Supplier -->
                 <li class="nav-item">
                     <a class="nav-link <%= isActive('user/sekolah/peringatan') ? 'active' : '' %>"
-                        href="user/sekolah/peringatan">
+                        href="/user/sekolah/peringatan">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -99,7 +101,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <%= isActive('user/sekolah/laporan') ? 'active' : '' %>"
+                    <a class="nav-link <%= isActive('/user/sekolah/laporan') ? 'active' : '' %>"
                         href="/user/sekolah/laporan">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -162,7 +164,6 @@
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
@@ -210,7 +211,7 @@
                         <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
                             aria-labelledby="navbarDropdownMenuLink">
                             <li>
-                                <a class="dropdown-item border-radius-md" href="/user/sekolah/profile">
+                                <a class="dropdown-item border-radius-md" href="/profile">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
                                         width="20px" fill="CurrentColor">
                                         <path
@@ -244,161 +245,88 @@
                 </ul>
             </div>
         </nav>
-
+        <!-- End Navbar -->
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-lg-12 col-12">
-                    <div class="row">
 
-                        <div class="col-12 mb-lg-0 mb-4">
-                            <div class="card">
-                                <div class="card-body p-4">
-                                    <form id="siswaForm" enctype="multipart/form-data"
-                                        action="/user/sekolah/siswa/tambah" method="POST">
+                <div class="col-12 mb-lg-0 mb-4 d-flex flex-column align-items-center">
+                    <div class="card w-100" style="max-width: 1200px;">
+                        <div class="card-body p-4">
+                            <div class="row">
+
+                                <!-- Bagian Kiri -->
+                                <div class="col-lg-12">
+                                    <div class="d-flex flex-column h-100">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Judul Laporan</label>
+                                            <input type="text" class="form-control"
+                                                value="<%= laporan.judul_laporan || '-' %>" readonly>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Jenis Laporan</label>
+                                            <input type="text" class="form-control"
+                                                value="<%= laporan.jenis_laporan || '-' %>" readonly>
+                                        </div>
+
+                                        <!-- Row 1 -->
                                         <div class="row">
-                                            <!-- Bagian Kiri -->
-                                            <div class="col-lg-7">
-                                                <div class="d-flex flex-column h-100">
-
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="nama" class="form-label">Nama</label>
-                                                            <input type="text" class="form-control" id="nama"
-                                                                name="nama" required>
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="nisn" class="form-label">NIS</label>
-                                                            <input type="text" class="form-control" id="nisn"
-                                                                name="nisn" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="orang_tua" class="form-label">Orang Tua</label>
-                                                            <input type="text" class="form-control" id="orang_tua"
-                                                                name="orang_tua">
-                                                        </div>
-                                                        <div class="col-md-6 mb-3">
-                                                            <label for="kategori-alergi" class="form-label">Kategori
-                                                                Alergi</label>
-                                                            <select class="form-select" id="kategori-alergi"
-                                                                name="kategori_alergi" required>
-                                                                <option value="" selected disabled>Pilih kategori...
-                                                                </option>
-                                                                <option value="tidak ada">Tidak Ada</option>
-                                                                <option value="ringan">Ringan</option>
-                                                                <option value="berat">Berat</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Sekolah</label>
-
-                                                        <!-- Tampilan (tidak bisa diubah user) -->
-                                                        <input type="text" class="form-control"
-                                                            value="<%= sekolah.nama_sekolah %> - <%= sekolah.kota %>"
-                                                            readonly>
-
-                                                        <!-- Data yang dikirim ke server -->
-                                                        <input type="hidden" name="sekolah_id"
-                                                            value="<%= sekolah.id_sekolah %>">
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="deskripsi" class="form-label">Deskripsi
-                                                            Alergi</label>
-                                                        <textarea class="form-control" id="deskripsi"
-                                                            name="deskripsi_alergi" rows="4"
-                                                            placeholder="Tuliskan deskripsi alergi / riwayat kesehatan siswa..."></textarea>
-                                                    </div>
-
-                                                </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">ID Laporan</label>
+                                                <input type="text" class="form-control"
+                                                    value="<%= laporan.id_laporan %>" readonly>
                                             </div>
 
-                                            <!-- Bagian Kanan: Upload Foto -->
-                                            <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
-                                                <div class="upload-area">
-                                                    <img id="preview" alt=" " class="img-fluid rounded mb-3 d-none"
-                                                        style="max-height: 200px; object-fit: cover; cursor: pointer;">
-                                                    <label for="foto-upload" id="upload-label"
-                                                        class="btn btn-outline-secondary">Upload Foto Disini</label>
-                                                    <input type="file" id="foto-upload" name="foto" accept="image/*"
-                                                        hidden>
-                                                </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Status Laporan</label>
+                                                <input type="text" class="form-control"
+                                                    value="<%= laporan.status_laporan %>" readonly>
                                             </div>
                                         </div>
 
-                                        <div class="row mt-4">
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-success w-100">Simpan Data</button>
+                                        <!-- Row 2 -->
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Pelapor - ID Pelapor</label>
+                                                <input type="text" class="form-control"
+                                                    value="<%= laporan.sekolah?.nama_sekolah || 'Tidak diketahui' %> - <%= laporan.id_pelapor || 'Tidak diketahui' %>"
+                                                    readonly>
+                                                <a href="/user/sekolah/profile">
+                                                    <span class="form-label" style="text-decoration: underline;">klik
+                                                        disini untuk melihat detail
+                                                        sekolah</span></a>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Tanggal Dibuat</label>
+                                                <input type="text" class="form-control" value="<%=laporan.created_at %>"
+                                                    readonly>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
-
-
-
-                        <footer class="sticky-bottom footer pt-3  ">
-                            <div class="container-fluid">
-                                <div class="row align-items-center justify-content-lg-between">
-                                    <div class="col-lg-6 mb-lg-0 mb-4">
-                                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                                            ©
-                                            <script>
-                                                document.write(new Date().getFullYear())
-                                            </script>,
-                                            Irostech
+                                        <!-- Isi -->
+                                        <div class="mb-3">
+                                            <label class="form-label">Isi Laporan</label>
+                                            <textarea class="form-control" rows="5"
+                                                readonly><%= laporan.isi_laporan %></textarea>
                                         </div>
+
                                     </div>
                                 </div>
+
                             </div>
-                        </footer>
+                        </div>
                     </div>
+                </div>
     </main>
-
-    </div>
     <!--   Core JS Files   -->
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
-    <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="/assets/js/plugins/chartjs.min.js"></script>
-
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="/assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
-    <script>
-        const fileInput = document.getElementById('foto-upload');
-        const preview = document.getElementById('preview');
-        const uploadLabel = document.getElementById('upload-label');
-
-        // Event ketika file dipilih
-        fileInput.addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none'); // tampilkan preview
-                    uploadLabel.classList.add('d-none'); // sembunyikan tombol upload
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Klik preview untuk ganti foto
-        preview.addEventListener('click', function () {
-            fileInput.click(); // buka dialog file
-        });
-    </script>
-
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -408,6 +336,21 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
+    <script>
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('id-ID', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                hour12: false,
+                timeZone: 'Asia/Jakarta'
+            });
+        }
+    </script>
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
 </body>
 
 </html>

@@ -342,6 +342,9 @@ app.use('/sppg', sppgRoutes);
 const profileRoutes = require('./routes/profileroutes');
 app.use('/profile', profileRoutes);
 
+const makananRoutes = require('./routes/makananroutes');
+app.use('/menu', makananRoutes);
+
 
 //user routes
 const usersekolahRoutes = require('./routes/usersekolahroutes');

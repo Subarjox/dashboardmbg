@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const { SendNotification } = require('../controlers/usersekolahcontroller')
 require('dotenv').config();
 
 const supabase = createClient(
@@ -175,6 +176,7 @@ const MasalahController = {
             if (error) throw error;
             if (!sekolah) throw new Error('Data sekolah tidak ditemukan');
 
+            SendNotification(sekolah, 'keracunan')
             req.session.flash = {
                 message: 'SPPG sudah diperingati',
                 type: 'success'

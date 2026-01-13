@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const { SendNotification } = require('../controlers/usersekolahcontroller')
 require('dotenv').config();
 
 const supabase = createClient(
@@ -161,6 +162,14 @@ const userSppgController = {
                 .eq('id_sppg', sppgId);
 
             if (totalSekolahError) throw totalSekolahError;
+            // Kasus Keracunan
+            const [
+                { count: kasusKeracunan },
+                { count: kasusSistem },
+            ] = await Promise.all([
+                supabase.from('sekolah').select('*', { count: 'exact', head: true }).eq('status_sistem', 'nonaktif').eq('id_sppg', sppgId),
+                supabase.from('sekolah').select('*', { count: 'exact', head: true }).eq('kasus_keracunan', 'bahaya').eq('id_sppg', sppgId),
+            ]);
 
             // Ambil total supplier milik sppg tersebut
             const { count: totalSupplier, error: totalSupplierError } = await supabase
@@ -174,6 +183,8 @@ const userSppgController = {
                 user: req.session.user,
                 sppg,
                 menu_makanan,
+                kasusKeracunan,
+                kasusSistem,
                 totalSekolah,
                 totalSupplier,
                 pageCrumb: 'Dashboard',
@@ -191,13 +202,41 @@ const userSppgController = {
     getSekolahSPPG: async (req, res) => {
         const [
             { count: totalSekolah },
-            { count: sekolahAktif },
-            { count: sekolahNonaktif }] =
-            await Promise.all([
-                supabase.from('sekolah').select('*', { count: 'exact', head: true }).eq('id_sppg', req.session.user?.id_sppg),
-                supabase.from('sekolah').select('*', { count: 'exact', head: true }).eq('status_sistem', 'aktif').eq('id_sppg', req.session.user?.id_sppg),
-                supabase.from('sekolah').select('*', { count: 'exact', head: true }).eq('status_sistem', 'nonaktif').eq('id_sppg', req.session.user?.id_sppg),
-            ]);
+            { count: sekolahBahaya },
+            { count: sekolahNonaktif },
+            { count: sekolahBahayaonhold },
+            { count: sekolahnonaktifonhold },
+        ] = await Promise.all([
+
+            supabase
+                .from('sekolah')
+                .select('*', { count: 'exact', head: true })
+                .eq('id_sppg', req.session.user?.id_sppg),
+
+            supabase
+                .from('sekolah')
+                .select('*', { count: 'exact', head: true })
+                .eq('kasus_keracunan', 'bahaya')
+                .eq('id_sppg', req.session.user?.id_sppg),
+
+            supabase
+                .from('sekolah')
+                .select('*', { count: 'exact', head: true })
+                .eq('status_sistem', 'nonaktif')
+                .eq('id_sppg', req.session.user?.id_sppg),
+
+            supabase
+                .from('sekolah')
+                .select('*', { count: 'exact', head: true })
+                .not('kasus_keracunan', 'in', '("aman","bahaya")')
+                .eq('id_sppg', req.session.user?.id_sppg),
+
+            supabase
+                .from('sekolah')
+                .select('*', { count: 'exact', head: true })
+                .not('status_sistem', 'in', '("nonaktif","aktif")')
+                .eq('id_sppg', req.session.user?.id_sppg),
+        ]);
 
         const { data, error } = await supabase
             .from('sekolah')
@@ -213,10 +252,12 @@ const userSppgController = {
         res.render('users/pihak_sppg/sppg_sekolah', {
             user: req.session.user,
             totalSekolah,
-            sekolahAktif,
+            sekolahBahaya,
+            sekolahNonaktif,
+            sekolahBahayaonhold,
+            sekolahnonaktifonhold,
             message: req.session.flash?.message || null,
             type: req.session.flash?.type || null,
-            sekolahNonaktif,
             sekolah: data,
             provinsiList,
             kotaList,
@@ -712,7 +753,17 @@ const userSppgController = {
     },
 
     SendDevTeamNotification: async (req, res) => {
-        const { sekolahId } = req.params;
+        const sekolahId = req.params.id;
+        const sppgId = req.session.user?.id_sppg;
+
+        if (!sppgId) {
+            req.session.flash = {
+                message: 'Anda tidak memiliki akses',
+                type: 'error'
+            };
+
+            return res.redirect('/');
+        }
 
         try {
             const { data: sekolah, error } = await supabase
@@ -726,23 +777,12 @@ const userSppgController = {
                     message: 'Data sekolah tidak ditemukan',
                     type: 'error'
                 };
-                return res.redirect('/user/sppg/peringatan');
-            }
-
-            if (
-                sekolah.status_sistem === 'nonaktif'
-            ) {
-                req.session.flash = {
-                    message: 'Notifikasi sudah dikirim sebelumnya, mohon tunggu',
-                    type: 'error'
-                };
                 return res.redirect('/user/sppg/peringatan/' + sekolahId);
             }
 
-            await sendDevTeamNotification(sekolah);
-
+            SendNotification(sekolah, 'sistem')
             req.session.flash = {
-                message: 'Petugas sudah diperingati',
+                message: 'Petugas sudah diperingati, mohon tunggu sesaat untuk memberi notifikasi kembali',
                 type: 'success'
             };
 
@@ -761,42 +801,335 @@ const userSppgController = {
 
     getMenu: async (req, res) => {
         const sppgId = req.session.user?.id_sppg;
-        res.render('users/pihak_sppg/detail_menu_sekolah', {
-            user: req.session.user,
-            pageCrumb: 'Menu',
-            pageTitle: 'Menu',
-            breadcrumb: ['Dashboard SPPG', 'Menu'],
-        });
+        try {
+            const { data, error } = await supabase
+                .from('menu_makanan')
+                .select(`
+        *,
+        satuan_gizi (
+          id_sppg,
+          nama_sppg
+        )
+      `)
+                .eq('id_sppg', sppgId)
+                .single();
+
+            if (error) throw error;
+
+            res.render('users/pihak_sppg/detail_menu_sppg', {
+                user: req.session.user,
+                makanan: data,
+                pageTitle: 'Detail Menu',
+                pageCrumb: 'Menu',
+                breadcrumb: ['Dashboard SPPG', 'Menu', 'Detail'],
+            });
+
+        } catch (err) {
+            res.send('Error: ' + err.message);
+        }
+    },
+
+    updateMenuForm: async (req, res) => {
+        const { id } = req.params;
+        try {
+            const { data, error } = await supabase
+                .from('menu_makanan')
+                .select(`
+        *,
+        satuan_gizi (
+          id_sppg,
+          nama_sppg
+        )
+      `)
+                .eq('id_menu', id)
+                .single();
+
+            if (error) throw error;
+
+            res.render('users/pihak_sppg/update_menu_sekolah', {
+                user: req.session.user,
+                makanan: data,
+                pageTitle: 'Update Menu',
+                pageCrumb: 'Menu',
+                breadcrumb: ['Dashboard SPPG', 'Menu', 'Update'],
+            });
+
+        } catch (err) {
+            res.send('Error: ' + err.message);
+        }
     },
 
     updateMenu: async (req, res) => {
-        const sppgId = req.session.user?.id_sppg;
-        res.render('users/pihak_sppg/update_menu_sekolah', {
-            user: req.session.user,
-            pageCrumb: 'Menu',
-            pageTitle: 'Menu',
-            breadcrumb: ['Dashboard SPPG', 'Menu'],
-        });
+        try {
+            const { id } = req.params;
+            const {
+                nama_makanan,
+                protein,
+                lemak,
+                karbohidrat,
+                kalori,
+                tanggal_menu,
+                deskripsi_menu,
+                foto_lama,
+            } = req.body;
+
+
+            let updateData = {
+                nama_makanan,
+                protein,
+                lemak,
+                karbohidrat,
+                kalori,
+                tanggal_menu,
+                deskripsi_menu,
+                foto_makanan: foto_lama,
+            };
+
+            if (req.file) {
+                const { data, error: uploadError } = await supabase.storage
+                    .from('foto-menu')
+                    .upload(`menu/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
+                        cacheControl: '3600',
+                        upsert: false,
+                        contentType: req.file.mimetype,
+                    });
+
+                if (uploadError) throw uploadError;
+
+                updateData.foto_makanan = supabase
+                    .storage
+                    .from('foto-menu')
+                    .getPublicUrl(data.path).data.publicUrl;
+            }
+
+            const { error } = await supabase
+                .from('menu_makanan')
+                .update(updateData)
+                .eq('id_menu', id);
+
+            if (error) throw error;
+
+            req.session.flash = {
+                type: 'success',
+                message: 'Menu berhasil diperbarui',
+            };
+
+            res.redirect('/user/sppg/menu');
+
+        } catch (err) {
+            req.session.flash = {
+                type: 'error',
+                message: err.message || 'Gagal memperbarui menu',
+            };
+            res.redirect('/user/sppg/menu');
+        }
     },
 
     getLaporan: async (req, res) => {
         const sppgId = req.session.user?.id_sppg;
-        res.render('users/pihak_sppg/laporan_sekolah_sppg', {
-            user: req.session.user,
-            pageCrumb: 'Laporan',
-            pageTitle: 'Laporan',
-            breadcrumb: ['Dashboard SPPG', 'Laporan'],
-        });
+
+        try {
+            const { data, error } = await supabase
+                .from('laporan')
+                .select(`
+    *,
+    sekolah (
+      id_sekolah,
+      nama_sekolah,
+      id_sppg
+    )
+  `)
+                .eq('sekolah.id_sppg', sppgId);
+
+            const TotalReport = data.length;
+            const TotalRead = data.filter(i => i.status_baca === 'dibaca').length;
+            const TotalUnread = data.filter(i => i.status_baca === 'belum dibaca').length;
+
+            if (error) throw error;
+
+            res.render('users/pihak_sppg/laporan_sekolah_sppg', {
+                user: req.session.user,
+                laporan: data,
+                TotalReport,
+                TotalRead,
+                TotalUnread,
+                pageTitle: 'Laporan',
+                pageCrumb: 'Laporan',
+                breadcrumb: ['Dashboard Sekolah', 'Laporan'],
+            });
+        } catch (err) {
+            res.json({ error: err.message });
+        }
     },
 
     getOneLaporan: async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            const { data: laporan, error } = await supabase
+                .from('laporan')
+                .select(`
+        *,
+        sekolah (
+          nama_sekolah
+        )
+      `)
+                .eq('id_laporan', id)
+                .single();
+
+            if (error || !laporan) {
+                console.error('Laporan tidak ditemukan:', error);
+                return res.status(404).render('404', {
+                    message: 'Laporan tidak ditemukan'
+                });
+            }
+
+            res.render('users/pihak_sppg/detail_laporan_sekolah_sppg', {
+                user: req.session.user,
+                laporan,
+                pageTitle: 'Detail Laporan',
+                pageCrumb: 'Laporan',
+                breadcrumb: ['Dashboard Sekolah', 'Laporan', 'Detail'],
+            });
+
+        } catch (err) {
+            console.error('Error getOne Laporan:', err);
+            res.status(500).send('Terjadi kesalahan server.');
+        }
+    },
+
+    profileSPPG: async (req, res) => {
+        try {
+            const sppgId = req.session.user?.id_sppg;
+
+            const { data: sppg, error } = await supabase
+                .from('satuan_gizi')
+                .select('*')
+                .eq('id_sppg', sppgId)
+                .single();
+
+            if (error || !sppg) {
+                console.error(error);
+                return res.send('SPPG tidak ditemukan.');
+            }
+
+            const { count, error: countError } = await supabase
+                .from('sekolah')
+                .select('id_sppg', { count: 'exact' })
+                .eq('id_sppg', sppgId);
+
+            if (countError) {
+                console.error(countError);
+                return res.send('Gagal menghitung jumlah sekolah.');
+            }
+
+            res.render('users/pihak_sppg/sppg_user_settings', {
+                user: req.session.user,
+                sppg,
+                jumlah_sekolah: count || 0,
+                pageTitle: 'Profile SPPG',
+                pageCrumb: 'Profile',
+                breadcrumb: ['Dashboard', 'SPPG', 'Detail'],
+            });
+        } catch (err) {
+            console.error('Error getOne SPPG:', err);
+            res.send('Terjadi kesalahan server.');
+        }
+    },
+
+    FormUpdateProfileSPPG: async (req, res) => {
         const sppgId = req.session.user?.id_sppg;
-        res.render('users/pihak_sppg/detail_laporan_sekolah_sppg', {
+        const { data: sppg, error } = await supabase
+            .from('satuan_gizi')
+            .select('*')
+            .eq('id_sppg', sppgId)
+            .single();
+
+        if (error) return res.send('Gagal memuat data SPPG: ' + error.message);
+
+        const { count, error: countError } = await supabase
+            .from('sekolah')
+            .select('id_sppg', { count: 'exact' })
+            .eq('id_sppg', sppgId);
+
+        if (countError) {
+            console.error(countError);
+            return res.send('Gagal menghitung jumlah sekolah.');
+        }
+
+        res.render('users/pihak_sppg/sppg_user_settings_edit', {
             user: req.session.user,
-            pageCrumb: 'Laporan',
-            pageTitle: 'Laporan',
-            breadcrumb: ['Dashboard SPPG', 'Laporan'],
+            sppg,
+            jumlah_sekolah: count || 0,
+            pageCrumb: 'SPPG',
+            pageTitle: 'Edit SPPG',
+            breadcrumb: ['Dashboard', 'SPPG', 'Edit'],
         });
+    },
+
+    UpdateProfileSPPG: async (req, res) => {
+        try {
+            const sppgId = req.session.user?.id_sppg;
+            const {
+                nama_sppg,
+                kota_sppg,
+                provinsi_sppg,
+                pemilik_sppg,
+                alamat_sppg,
+                status_sppg,
+                no_telpon_sppg,
+                foto_lama
+            } = req.body;
+
+            let updateData = {
+                nama_sppg,
+                kota_sppg,
+                provinsi_sppg,
+                pemilik_sppg,
+                alamat_sppg,
+                status_sppg,
+                no_telpon_sppg,
+                foto_sppg: foto_lama
+            };
+
+            if (req.file) {
+                const { data, error: uploadError } = await supabase.storage
+                    .from('foto-sppg')
+                    .upload(`sppg/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
+                        cacheControl: '3600',
+                        upsert: false,
+                        contentType: req.file.mimetype,
+                    });
+
+                if (uploadError) throw uploadError;
+
+                updateData.foto_sppg = supabase
+                    .storage
+                    .from('foto-sppg')
+                    .getPublicUrl(data.path).data.publicUrl;
+            }
+
+            const { error } = await supabase
+                .from('satuan_gizi')
+                .update(updateData)
+                .eq('id_sppg', sppgId);
+
+            if (error) throw error;
+
+            req.session.flash = {
+                type: 'success',
+                message: 'SPPG berhasil diperbarui',
+            };
+
+            res.redirect('/user/sppg/profile');
+
+        } catch (err) {
+            req.session.flash = {
+                type: 'error',
+                message: err.message || 'Gagal memperbarui SPPG',
+            };
+            res.redirect('/user/sppg/profile');
+        }
     },
 
 };

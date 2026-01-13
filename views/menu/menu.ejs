@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        FoodGuard PRO -
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 "
+        id="sidenav-main">
+        <%- include('../partials/sidehead') %>
+            <hr class="horizontal dark mt-0">
+            <%- include('../partials/sidebar') %>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <%- include('../partials/navbar') %>
+            <!-- End Navbar -->
+
+            <div class="container-fluid py-4">
+                <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="row g-3">
+
+
+                            <% if (flash) { %>
+                                <script>
+                                    Swal.fire({
+                                        icon: '<%= flash.type %>',
+                                        title: 'INFO',
+                                        text: '<%= flash.message %>',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    })
+                                </script>
+                                <% } %>
+
+
+                                    <div class="row my-4">
+                                        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+                                            <div class="card">
+                                                <div class="card-header pb-0">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-6 col-7">
+                                                            <h6>
+                                                                <%= pageTitle || 'Daftar Menu Makanan' %>
+                                                            </h6>
+                                                            <p class="text-sm mb-0">
+                                                                <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                                                <span class="font-weight-bold ms-1" id="totalMakanan">
+                                                                    <%= makanan.length %>
+                                                                </span> Total Menu
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Filter Section -->
+                                                    <div class="row mt-4 g-3 mb-4">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label fw-bold">Search</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-white border-end-0"><i
+                                                                        class="fas fa-search"></i></span>
+                                                                <input id="searchInput" type="text"
+                                                                    class="form-control border-start-0"
+                                                                    placeholder="Cari makanan..." />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card-body px-0 pb-2">
+                                                    <div class="table-responsive">
+                                                        <table id="makananTable" class="table align-items-center mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th
+                                                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">
+                                                                        ID Makanan
+                                                                    </th>
+                                                                    <th
+                                                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Nama
+                                                                        Makanan</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        SPPG</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Total Sekolah</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Tanggal Menu</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Aksi</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="makananTableBody">
+                                                                <!-- Data di-inject via AJAX -->
+                                                            </tbody>
+                                                        </table>
+                                                        <div id="paginationContainer"
+                                                            class="mt-4 d-flex justify-content-center gap-2">
+                                                            <!-- Pagination di-inject via AJAX -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <footer class="sticky-bottom footer pt-3  ">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center justify-content-lg-between">
+                                                <div class="col-lg-6 mb-lg-0 mb-4">
+                                                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                                                        ©
+                                                        <script>
+                                                            document.write(new Date().getFullYear())
+                                                        </script>,
+                                                        Irostech
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </footer>
+
+                        </div>
+    </main>
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const searchInput = $('#searchInput');
+        const tableBody = $('#makananTableBody');
+        const paginationContainer = $('#paginationContainer');
+
+        function loadPage(page = 1) {
+            const search = searchInput.val();
+
+            $.get('/menu/getallmenu', { page, search }, function (res) {
+                if (res.error) {
+                    alert(res.error);
+                    return;
+                }
+
+                let rows = '';
+
+                res.data.forEach(sppg => {
+                    const totalSekolah = sppg.total_sekolah ?? 0;
+
+                    sppg.menu_makanan.forEach(menu => {
+                        rows += `
+            <tr>
+              <td class="ps-3">
+                <h6 class="mb-0 text-sm">${menu.id_menu}</h6>
+              </td>
+              <td>
+                <h6 class="mb-0 text-sm">${menu.nama_makanan}</h6>
+              </td>
+              <td class="text-center">
+                <h6 class="mb-0 text-sm">${sppg.nama_sppg}</h6>
+              </td>
+              <td class="text-center">
+                <span class="badge bg-success">
+                  ${totalSekolah} Sekolah
+                </span>
+              </td>
+              <td class="text-center">
+                <h6 class="mb-0 text-sm">
+                  ${menu.tanggal_menu ?? '-'}
+                </h6>
+              </td>
+              <td class="text-center">
+                <a class="btn btn-outline-info btn-sm px-3 mb-0"
+                   href="/menu/detail/${menu.id_menu}">
+                   <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="CurrentColor"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                </a>
+              </td>
+            </tr>
+          `;
+                    });
+                });
+
+                tableBody.html(rows);
+
+                // Pagination
+                let paginationHTML = '';
+
+                if (res.currentPage > 1) {
+                    paginationHTML += `
+          <button class="btn btn-sm btn-outline-info"
+            onclick="loadPage(${res.currentPage - 1})">
+            Previous
+          </button>`;
+                }
+
+                for (let i = 1; i <= res.totalPages; i++) {
+                    paginationHTML += `
+          <button class="btn btn-sm
+            ${res.currentPage === i ? 'btn-info' : 'btn-outline-info'}"
+            onclick="loadPage(${i})">
+            ${i}
+          </button>`;
+                }
+
+                if (res.currentPage < res.totalPages) {
+                    paginationHTML += `
+          <button class="btn btn-sm btn-outline-info"
+            onclick="loadPage(${res.currentPage + 1})">
+            Next
+          </button>`;
+                }
+
+                paginationContainer.html(paginationHTML);
+            });
+        }
+
+        $(document).ready(function () {
+            loadPage();
+            searchInput.on('keyup', () => loadPage(1));
+        });
+    </script>
+
+
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

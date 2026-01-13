@@ -12,18 +12,22 @@ router.get('/getallsiswa', isSekolah, userSekolahController.getAllSiswaAjax);
 
 // CRUD siswa
 router.get('/siswa', isSekolah, userSekolahController.getSiswa);
-router.get('/siswa/:id', isSekolah, userSekolahController.getOne);
 router.get('/siswa/tambah', isSekolah, userSekolahController.addSiswaForm);
 router.post('/siswa/tambah', isSekolah, upload.single('foto'), userSekolahController.createSiswa);
+
 
 router.get('/siswa/edit/:id', isSekolah, userSekolahController.editSiswaForm);
 router.post('/siswa/edit/:id', isSekolah, upload.single('foto'), userSekolahController.updateSiswa);
 
-router.get('/siswa/hapus/:id', isSekolah, userSekolahController.deleteSiswa);
+router.get('/siswa/delete/:id', isSekolah, userSekolahController.deleteSiswa);
+
+router.get('/siswa/:id', isSekolah, userSekolahController.getOne);
 
 // Edit profil sekolah
-router.get('/edit', isSekolah, userSekolahController.editSekolahForm);
-router.post('/edit', isSekolah, upload.single('foto'), userSekolahController.updateSekolah);
+router.get('/profile', isSekolah, userSekolahController.profileSekolah);
+
+router.get('/profile/edit/:id', isSekolah, userSekolahController.FormUpdateProfileSekolah);
+router.post('/profile/edit/:id', isSekolah, upload.single('foto'), userSekolahController.UpdateProfileSekolah);
 
 //peringatan
 router.get('/peringatan', isSekolah, userSekolahController.getPeringatan);
@@ -34,5 +38,8 @@ router.post('/peringatan/sistem_down', isSekolah, userSekolahController.updateSt
 router.get('/laporan', isSekolah, userSekolahController.getLaporan);
 router.get('/laporan/buat', isSekolah, userSekolahController.BuatLaporanForm);
 router.post('/laporan/buat', isSekolah, userSekolahController.BuatLaporan);
+router.get('/laporan/baca/:id', isSekolah, userSekolahController.ReadOneLaporan);
+
+router.get('/menu', isSekolah, userSekolahController.getOneMenu);
 
 module.exports = router;

@@ -197,17 +197,19 @@
                                         </div>
                                 </div>
                             </div>
-
                             <script>
                                 document.getElementById('submitSistemBtn')?.addEventListener('click', function () {
                                     Swal.fire({
-                                        title: 'INFO',
-                                        text: 'Admin sudah diperingati',
-                                        icon: 'info',
-                                        timer: 2000,
-                                        showConfirmButton: false
-                                    }).then(() => {
-                                        document.getElementById('sistemDownForm').submit();
+                                        title: 'Yakin?',
+                                        text: 'Apakah anda yakin ingin melanjutkan?',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Ya, lanjutkan',
+                                        cancelButtonText: 'Batal'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            document.getElementById('sistemDownForm').submit();
+                                        }
                                     });
                                 });
                             </script>

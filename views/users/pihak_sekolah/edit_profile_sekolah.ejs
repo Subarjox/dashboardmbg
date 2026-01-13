@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <title>
+        FoodGuard PRO - Profile
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,800" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="https://demos.creative-tim.com/soft-ui-dashboard/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <!-- Nepcha Analytics (nepcha.com) -->
+
+</head>
+
+<body class="g-sidenav-show  bg-gray-100">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " <div
+        class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+            aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" href="/user/sekolah" target="_blank">
+            <img src="/assets/img/testlo.png" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-1 font-weight-bold">FoodGuard Pro</span>
+        </a>
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah', { exact: true }) ? 'active' : '' %>"
+                        href="/user/sekolah">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                                fill="CurrentColor">
+                                <path
+                                    d="M264-216h96v-240h240v240h96v-348L480-726 264-564v348Zm-72 72v-456l288-216 288 216v456H528v-240h-96v240H192Zm288-327Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Siswa -->
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah/siswa', { exact: true }) ? 'active' : '' %>"
+                        href="/user/sekolah/siswa">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                                fill="CurrentColor">
+                                <path
+                                    d="M280-80q-33 0-56.5-23.5T200-160v-320q0-85 44.5-152T360-732v-28q0-50 35-85t85-35q50 0 85 35t35 85v28q71 33 115.5 100T760-480v320q0 33-23.5 56.5T680-80H280Zm0-80h400v-320q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480v320Zm320-160q17 0 28.5-11.5T640-360v-120H320v80h240v40q0 17 11.5 28.5T600-320ZM440-756q11-2 20-3t20-1q11 0 20 1t20 3v-4q0-17-11.5-28.5T480-800q-17 0-28.5 11.5T440-760v4ZM280-160h400-400Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Siswa</span>
+                    </a>
+                </li>
+
+                <!-- Supplier -->
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah/peringatan') ? 'active' : '' %>"
+                        href="/user/sekolah/peringatan">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                                fill="CurrentColor">
+                                <path
+                                    d="M432-360h96v-96h96v-96h-96v-96h-96v96h-96v96h96v96Zm48 264q-135-33-223.5-152.84Q168-368.69 168-515v-229l312-120 312 120v229q0 146.31-88.5 266.16Q615-129 480-96Zm0-75q104-32.25 172-129t68-215v-180l-240-92-240 92v180q0 118.25 68 215t172 129Zm0-308Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Peringatan</span>
+                    </a>
+                </li>
+
+                <!-- Menu -->
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah/menu') ? 'active' : '' %>" href="/user/sekolah/menu">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                                fill="currentColor">
+                                <path
+                                    d="M480-40q-91 0-171-34.5T169-169q-60-60-94.5-140T40-480q0-91 34.5-171T169-791q60-60 140-94.5T480-920q91 0 171 34.5T791-791q60 60 94.5 140T920-480q0 91-34.5 171T791-169q-60 60-140 94.5T480-40Zm0-80q150 0 255-105t105-255q0-150-105-255T480-840q-150 0-255 105T120-480q0 150 105 255t255 105Zm0-80q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-29 0-54 12.5T384-712q-28-2-55 6t-47 28q-20 20-29 47t-5 55q-23 17-35.5 42T200-480q0 29 12.5 54t35.5 42q-4 28 5 55t29 47q20 20 47 29.5t55 4.5q17 23 42 35.5t54 12.5Zm0-80q-22 0-34-18.5T420-334q-22 3-44 7.5T338-338q-16-16-11.5-38t7.5-44q-17-13-35.5-25.5T280-480q0-22 18.5-34t35.5-26q-3-22-7.5-44t11.5-38q16-16 38-11.5t44 7.5q13-17 25.5-35.5T480-680v400Zm120-40-56-56 56-57 56 57-56 56Zm22-191-84-85q17-17 42-17.5t42 17.5q17 17 17.5 42.5T622-511Zm-142 31Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Detail Menu</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah/laporan') ? 'active' : '' %>"
+                        href="/user/sekolah/laporan">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                                fill="CurrentColor">
+                                <path
+                                    d="m787-145 28-28-75-75v-112h-40v128l87 87Zm-587 25q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v268q-19-9-39-15.5t-41-9.5v-243H200v560h242q3 22 9.5 42t15.5 38H200Zm0-120v40-560 243-3 280Zm80-40h163q3-21 9.5-41t14.5-39H280v80Zm0-160h244q32-30 71.5-50t84.5-27v-3H280v80Zm0-160h400v-80H280v80ZM720-40q-83 0-141.5-58.5T520-240q0-83 58.5-141.5T720-440q83 0 141.5 58.5T920-240q0 83-58.5 141.5T720-40Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Laporan</span>
+                    </a>
+                </li>
+
+                <!-- Account pages header -->
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account</h6>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link <%= isActive('/user/sekolah/profile') ? 'active' : '' %>"
+                        href="/user/sekolah/profile">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                                fill="CurrentColor">
+                                <path
+                                    d="M237-285q54-38 115.5-56.5T480-360q66 0 127.5 18.5T723-285q35-41 52-91t17-104q0-129.67-91.23-220.84-91.23-91.16-221-91.16Q350-792 259-700.84 168-609.67 168-480q0 54 17 104t52 91Zm243-123q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm.28 312Q401-96 331-126t-122.5-82.5Q156-261 126-330.96t-30-149.5Q96-560 126-629.5q30-69.5 82.5-122T330.96-834q69.96-30 149.5-30t149.04 30q69.5 30 122 82.5T834-629.28q30 69.73 30 149Q864-401 834-331t-82.5 122.5Q699-156 629.28-126q-69.73 30-149 30Zm-.28-72q52 0 100-16.5t90-48.5q-43-27-91-41t-99-14q-51 0-99.5 13.5T290-233q42 32 90 48.5T480-168Zm0-312q30 0 51-21t21-51q0-30-21-51t-51-21q-30 0-51 21t-21 51q0 30 21 51t51 21Zm0-72Zm0 319Z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile Settings</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="sidenav-footer mx-3 mt-3">
+            <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
+                <div class="full-background"
+                    style="background-image: url('/assets/img/curved-images/white-curved.jpg')">
+                </div>
+                <div class="card-body text-start p-4 w-100">
+                    <div
+                        class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px"
+                            fill="CurrentColor">
+                            <path
+                                d="M432-144v-72h312v-267q0-110-76.78-187.5t-187-77.5Q370-748 293-670.5T216-483v227h-48q-29.7 0-50.85-21.74Q96-299.48 96-330v-74q0-23 13-41t35-23l3-51q9-63 38-117.5t73.5-94.5q44.5-40 101.49-62.5 56.99-22.5 120-22.5t119.81 22.56q56.81 22.55 101.5 62.5Q746-691 775-637t38 117l3 52q21 5 34.5 21.5T864-408v84q0 22-13.5 38.5T816-264v48q0 29.7-21.15 50.85Q773.7-144 744-144H432Zm-59.79-264q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.29-25.71t25.5-10.5q15.21 0 25.71 10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5 10.5Zm216 0q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.29-25.71t25.5-10.5q15.21 0 25.71 10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5 10.5ZM265-458q-9-97 55.7-167.5T482-696q82 0 142.5 55T694-504q-85 0-154.5-46.5T432-672q-14 71-57.5 127.5T265-458Z" />
+                        </svg>
+                    </div>
+                    <div class="docs-info">
+                        <h6 class="text-dark up mb-0">Butuh Bantuan?</h6>
+                        <p class="text-xs text-dark font-weight-bold">Hubungi Developer</p>
+                        <a href="https://discord.gg/u3UWSxXC" class="btn btn-indigo btn-sm w-100 mb-0">
+                            Discord</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+            navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        <!-- LI pertama: Dashboard -->
+                        <li class="breadcrumb-item text-sm">
+                            <a class="opacity-5 text-dark" href="/dashboard">Dashboard</a>
+                        </li>
+
+                        <!-- LI kedua: halaman saat ini -->
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">
+                            <%= pageCrumb || 'Dashboard' %>
+                        </li>
+                    </ol>
+
+                    <!-- Judul halaman -->
+                    <h6 class="font-weight-bolder mb-0">
+                        <%= pageTitle || 'Dashboard' %>
+                    </h6>
+                </nav>
+
+
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item pe-2 d-flex align-items-center">
+                        <span class="badge badge-sm bg-gradient-success opacity-9">Sekolah</span>
+                    </li>
+
+                    <li class="nav-item ps-5 d-flex align-items-center">
+                        <span class="text-sm text-dark text-bold">
+                            <%= user ? user.nama || user.email : 'Guest' %>
+                        </span>
+                    </li>
+
+                    <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
+                        <a href="#" class="nav-link text-body font-weight-bold px-0" id="navbarDropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="avatar avatar-sm me-sm-1"
+                                src="<%= user.foto ? user.foto : '/assets/img/basic.png' %>" alt="user">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                                fill="CurrentColor">
+                                <path d="M480-360 280-560h400L480-360Z" />
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/user/sekolah/profile">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="CurrentColor">
+                                        <path
+                                            d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+                                    </svg>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item border-radius-md" href="/logout">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960"
+                                        width="20px" fill="#EA3323">
+                                        <path
+                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+                                    </svg>
+                                    <span class="text-danger">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item d-xl-none d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="row">
+
+                        <div class="col-12 mb-lg-0 mb-4">
+                            <div class="card">
+                                <div class="card-body p-4">
+                                    <form id="sekolahFormUpdate" enctype="multipart/form-data"
+                                        action="/user/sekolah/profile/edit/<%= sekolah.id_sekolah %>" method="POST">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <div class="d-flex flex-column h-100">
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="nama_sekolah" class="form-label">Nama
+                                                                Sekolah</label>
+                                                            <input type="text" class="form-control" id="nama_sekolah"
+                                                                name="nama_sekolah" value="<%= sekolah.nama_sekolah %>"
+                                                                required>
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="npsn" class="form-label">NPSN (Tidak Untuk
+                                                                Diubah)</label>
+                                                            <input type="text" class="form-control" id="npsn"
+                                                                name="id_sekolah" value="<%= sekolah.id_sekolah %>"
+                                                                readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="id_sppg" class="form-label">ID Satuan Pelayanan
+                                                            Pemenuhan Gizi</label>
+                                                        <select class="form-select" id="id_sppg" name="id_sppg"
+                                                            required>
+                                                            <option value="" disabled selected>Pilih Satuan Pelayanan
+                                                                Pemenuhan Gizi</option>
+                                                            <% sppgList.forEach(sppg=> { %>
+                                                                <option value="<%= sppg.id_sppg %>"
+                                                                    <%=sekolah.id_sppg===sppg.id_sppg ? 'selected' : ''
+                                                                    %>>
+                                                                    <%= sppg.id_sppg %> - <%= sppg.nama_sppg %>
+                                                                </option>
+                                                                <% }) %>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="kota" class="form-label">Kota /
+                                                                Kabupaten</label>
+                                                            <input type="text" class="form-control" id="kota"
+                                                                name="kota" value="<%= sekolah.kota %>" required>
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="provinsi" class="form-label">Provinsi</label>
+                                                            <input type="text" class="form-control" id="provinsi"
+                                                                name="provinsi" value="<%= sekolah.provinsi %>"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="email_sekolah" class="form-label">Email Sekolah
+                                                        </label>
+                                                        <input type="email" class="form-control" id="email_sekolah"
+                                                            name="email_sekolah" value="<%= sekolah.email_sekolah %>"
+                                                            required />
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="alamat" class="form-label">Alamat Lengkap</label>
+                                                        <textarea class="form-control" id="alamat" name="alamat"
+                                                            rows="3" required><%= sekolah.alamat %></textarea>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="jumlah_siswa" class="form-label">Jumlah
+                                                                Siswa</label>
+                                                            <input class="form-control" id="jumlah_siswa"
+                                                                name="jumlah_siswa" value="<%= sekolah.jumlah_siswa %>">
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="telepon" class="form-label">Telepon
+                                                                Sekolah</label>
+                                                            <input type="text" class="form-control" id="telepon"
+                                                                name="telepon_sekolah"
+                                                                value="<%= sekolah.telepon_sekolah %>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-4">
+                                                        <button type="submit" class="btn btn-success w-100">
+                                                            <i class="fa fa-save me-2"></i> Simpan Perubahan Data
+                                                            Sekolah
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                                                <div class="upload-area" style="position: relative; cursor: pointer;">
+                                                    <!-- Preview foto lama atau placeholder -->
+                                                    <img id="preview"
+                                                        src="<%= sekolah.foto_sekolah ? sekolah.foto_sekolah : '' %>"
+                                                        alt="Update Foto Sekolah"
+                                                        class="img-fluid rounded mb-3 <%= sekolah.foto_sekolah ? '' : 'btn border border-secondary d-flex justify-content-center align-items-center' %>"
+                                                        style="max-height: 250px; object-fit: cover; min-height: 250px;">
+
+                                                    <!-- Input file -->
+                                                    <input type="file" id="foto-upload" name="foto" accept="image/*"
+                                                        hidden>
+
+                                                    <!-- Input hidden untuk menyimpan URL foto lama -->
+                                                    <input type="hidden" name="foto_lama"
+                                                        value="<%= sekolah.foto_sekolah %>">
+                                                </div>
+                                                <span class="text-xs text-muted">*Klik foto untuk mengganti foto</span>
+                                            </div>
+
+
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+    </main>
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+
+    <script>
+        const fileInput = document.getElementById('foto-upload');
+        const preview = document.getElementById('preview');
+
+        // Jika preview kosong, beri style placeholder
+        if (!preview.src || preview.src.trim() === '') {
+            preview.style.background = '#f0f0f0';
+            preview.style.display = 'flex';
+            preview.style.justifyContent = 'center';
+            preview.style.alignItems = 'center';
+            preview.innerText = 'Klik untuk upload foto';
+        }
+
+        // Klik preview untuk pilih/ganti foto
+        preview.addEventListener('click', () => fileInput.click());
+
+        // Event ketika file baru dipilih
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.background = 'none';
+                    preview.innerText = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/soft-ui-dashboard.min.js?v=1.1.0"></script>
+</body>
+
+</html>

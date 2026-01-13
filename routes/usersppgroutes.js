@@ -33,15 +33,25 @@ router.get('/supplier/detail/:id', isSPPG, userSppgController.getOneSupplierSPPG
 router.get('/peringatan', isSPPG, userSppgController.getAllPeringatan);
 router.get('/peringatan/:id', isSPPG, userSppgController.getOnePeringatan);
 
-//Peringatan
+//Peringatan Action
 router.post('/peringatan/sendmedical/:id', isSPPG, userSppgController.SendMedTeam);
 router.post('/peringatan/notify/:id', isSPPG, userSppgController.SendDevTeamNotification);
 
-router.get('/menu', isSPPG, userSppgController.getMenu);
-router.post('/menu/edit/:id', isSPPG, userSppgController.updateMenu);
 
+//Menu
+router.get('/menu', isSPPG, userSppgController.getMenu);
+router.get('/menu/edit/:id', isSPPG, userSppgController.updateMenuForm);
+router.post('/menu/edit/:id', isSPPG, upload.single('foto'), userSppgController.updateMenu);
+
+//Laporan
 router.get('/laporan', isSPPG, userSppgController.getLaporan);
-router.get('/laporan/:id', isSPPG, userSppgController.getOneLaporan);
+router.get('/laporan/baca/:id', isSPPG, userSppgController.getOneLaporan);
+
+//profile SPPG
+router.get('/profile', isSPPG, userSppgController.profileSPPG);
+
+router.get('/profile/edit', isSPPG, userSppgController.FormUpdateProfileSPPG);
+router.post('/profile/edit', isSPPG, upload.single('foto'), userSppgController.UpdateProfileSPPG);
 
 
 

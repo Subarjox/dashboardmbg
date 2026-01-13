@@ -123,7 +123,7 @@
                                 <span class="mask bg-info opacity-10 border-radius-lg"></span>
                                 <div class="card-body p-3 position-relative">
                                     <div class="row">
-                                        <div class="col-8 text-start">
+                                        <div class="col-12 text-start">
                                             <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
                                                 style="width:60px; height:60px;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -143,220 +143,223 @@
                         </div>
 
                         <!-- Sekolah Aktif -->
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card">
-                                <span class="mask bg-success opacity-10 border-radius-lg"></span>
-                                <div class="card-body p-3 position-relative">
-                                    <div class="row">
-                                        <div class="col-8 text-start">
-                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
-                                                style="width:60px; height:60px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                                    viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
-                                                    <path
-                                                        d="M480-510ZM160-160v-375l-72 55-47-63 439-337 440 336-48 64-392-300-240 184v356h120v80H160Zm437 80L428-250l56-57 113 113 227-226 56 57L597-80Z" />
-                                                </svg>
-                                            </div>
-                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                                <%= sekolahAktif %>
-                                            </h5>
-                                            <span class="text-white text-sm">Sekolah Aktif</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Device Bermasalah -->
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card">
-                                <span class="mask bg-danger opacity-10 border-radius-lg"></span>
-                                <div class="card-body p-3 position-relative">
-                                    <div class="row">
-                                        <div class="col-8 text-start">
-                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
-                                                style="width:60px; height:60px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                                    viewBox="0 -960 960 960" width="24px" fill="CurrrentColor">
-                                                    <path
-                                                        d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v124q18 7 29 22t11 34v80q0 19-11 34t-29 22v404q0 33-23.5 56.5T680-40H280Zm0-80h400v-720H280v720Zm0 0v-720 720Zm106-210 94-94 94 94 56-56-94-94 94-94-56-56-94 94-94-94-56 56 94 94-94 94 56 56Z" />
-                                                </svg>
-                                            </div>
-                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                                <%= sekolahNonaktif %>
-                                            </h5>
-                                            <span class="text-white text-sm">Device Bermasalah</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Laporan -->
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <div class="card">
-                                <span class="mask bg-dark opacity-10 border-radius-lg"></span>
-                                <div class="card-body p-3 position-relative">
-                                    <div class="row">
-                                        <div class="col-8 text-start">
-                                            <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
-                                                style="width:60px; height:60px;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                                    viewBox="0 -960 960 960" width="24px" fill="CurentColor">
-                                                    <path
-                                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM200-200v-560 560Z" />
-                                                </svg>
-                                            </div>
-                                            <h5 class="text-white font-weight-bolder mb-0 mt-3">
-                                                1600
-                                            </h5>
-                                            <span class="text-white text-sm">Total Laporan dibuat</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <% if (flash) { %>
-                            <script>
-                                Swal.fire({
-                                    icon: '<%= flash.type %>',
-                                    title: 'INFO',
-                                    text: '<%= flash.message %>',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                })
-                            </script>
-                            <% } %>
-
-
-                                <div class="row my-4">
-                                    <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-                                        <div class="card">
-                                            <div class="card-header pb-0">
-                                                <div class="row align-items-center">
-                                                    <div class="col-lg-6 col-7">
-                                                        <h6>
-                                                            Mitra <%= pageTitle || 'Daftar Mitra Sekolah' %>
-                                                        </h6>
-                                                        <p class="text-sm mb-0">
-                                                            <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                                            <span class="font-weight-bold ms-1" id="totalSekolah">
-                                                                <%= sekolah ? sekolah.length : 0 %>
-                                                            </span> Total Sekolah
-                                                        </p>
-                                                    </div>
+                        <% const SekolahLapor=sekolahnonaktifonhold + sekolahBahayaonhold %>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="card">
+                                    <span class="mask bg-warning opacity-10 border-radius-lg"></span>
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-12 text-start">
+                                                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                    style="width:60px; height:60px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="CurrentColor">
+                                                        <path
+                                                            d="M480-510ZM160-160v-375l-72 55-47-63 439-337 440 336-48 64-392-300-240 184v356h120v80H160Zm437 80L428-250l56-57 113 113 227-226 56 57L597-80Z" />
+                                                    </svg>
                                                 </div>
+                                                <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                    <%= SekolahLapor %> Kasus
+                                                </h5>
+                                                <span class="text-white text-sm">Dalam perbaikan / Membuat
+                                                    laporan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                <!-- Filter Section -->
-                                                <div class="row mt-4 g-3">
-                                                    <div class="col-md-3">
-                                                        <label class="form-label fw-bold">Search</label>
-                                                        <div class="input-group">
-                                                            <span class="input-group-text bg-white border-end-0"><i
-                                                                    class="fas fa-search"></i></span>
-                                                            <input id="searchInput" type="text"
-                                                                class="form-control border-start-0"
-                                                                placeholder="Cari sekolah..." />
+                            <!-- Device Bermasalah -->
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="card">
+                                    <span class="mask bg-danger opacity-10 border-radius-lg"></span>
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-12 text-start">
+                                                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                    style="width:60px; height:60px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="CurrrentColor">
+                                                        <path
+                                                            d="M280-40q-33 0-56.5-23.5T200-120v-720q0-33 23.5-56.5T280-920h400q33 0 56.5 23.5T760-840v124q18 7 29 22t11 34v80q0 19-11 34t-29 22v404q0 33-23.5 56.5T680-40H280Zm0-80h400v-720H280v720Zm0 0v-720 720Zm106-210 94-94 94 94 56-56-94-94 94-94-56-56-94 94-94-94-56 56 94 94-94 94 56 56Z" />
+                                                    </svg>
+                                                </div>
+                                                <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                    <%= sekolahNonaktif %>
+                                                </h5>
+                                                <span class="text-white text-sm">Sekolah Dalam Masalah Sistem</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Laporan -->
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="card">
+                                    <span class="mask bg-dark opacity-10 border-radius-lg"></span>
+                                    <div class="card-body p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-12 text-start">
+                                                <div class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center"
+                                                    style="width:60px; height:60px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="CurentColor">
+                                                        <path
+                                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h168q13-36 43.5-58t68.5-22q38 0 68.5 22t43.5 58h168q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm80-80h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm200-190q13 0 21.5-8.5T510-820q0-13-8.5-21.5T480-850q-13 0-21.5 8.5T450-820q0 13 8.5 21.5T480-790ZM200-200v-560 560Z" />
+                                                    </svg>
+                                                </div>
+                                                <h5 class="text-white font-weight-bolder mb-0 mt-3">
+                                                    <%= sekolahBahaya %>
+                                                </h5>
+                                                <span class="text-white text-sm">Sekolah Dalam Masalah Keracunan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% if (flash) { %>
+                                <script>
+                                    Swal.fire({
+                                        icon: '<%= flash.type %>',
+                                        title: 'INFO',
+                                        text: '<%= flash.message %>',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    })
+                                </script>
+                                <% } %>
+
+
+                                    <div class="row my-4">
+                                        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+                                            <div class="card">
+                                                <div class="card-header pb-0">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-lg-6 col-7">
+                                                            <h6>
+                                                                Mitra <%= pageTitle || 'Daftar Mitra Sekolah' %>
+                                                            </h6>
+                                                            <p class="text-sm mb-0">
+                                                                <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                                                <span class="font-weight-bold ms-1" id="totalSekolah">
+                                                                    <%= sekolah ? sekolah.length : 0 %>
+                                                                </span> Total Sekolah
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label fw-bold">Provinsi</label>
-                                                        <select id="filterProvinsi" class="form-select">
-                                                            <option value="">Semua Provinsi</option>
-                                                            <% if (provinsiList) { provinsiList.forEach(p=> { %>
-                                                                <option value="<%= p %>">
-                                                                    <%= p %>
-                                                                </option>
-                                                                <% }) } %>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label fw-bold">Kota/Kabupaten</label>
-                                                        <select id="filterKota" class="form-select">
-                                                            <option value="">Semua Kota</option>
-                                                            <% if (kotaList) { kotaList.forEach(k=> { %>
-                                                                <option value="<%= k %>">
-                                                                    <%= k %>
-                                                                </option>
-                                                                <% }) } %>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label class="form-label fw-bold">Status</label>
-                                                        <select id="filterStatus" class="form-select">
-                                                            <option value="">Semua Status</option>
-                                                            <option value="aktif">Aktif</option>
-                                                            <option value="nonaktif">Tidak Aktif</option>
-                                                        </select>
+
+                                                    <!-- Filter Section -->
+                                                    <div class="row mt-4 g-3">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label fw-bold">Search</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text bg-white border-end-0"><i
+                                                                        class="fas fa-search"></i></span>
+                                                                <input id="searchInput" type="text"
+                                                                    class="form-control border-start-0"
+                                                                    placeholder="Cari sekolah..." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label fw-bold">Provinsi</label>
+                                                            <select id="filterProvinsi" class="form-select">
+                                                                <option value="">Semua Provinsi</option>
+                                                                <% if (provinsiList) { provinsiList.forEach(p=> { %>
+                                                                    <option value="<%= p %>">
+                                                                        <%= p %>
+                                                                    </option>
+                                                                    <% }) } %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label fw-bold">Kota/Kabupaten</label>
+                                                            <select id="filterKota" class="form-select">
+                                                                <option value="">Semua Kota</option>
+                                                                <% if (kotaList) { kotaList.forEach(k=> { %>
+                                                                    <option value="<%= k %>">
+                                                                        <%= k %>
+                                                                    </option>
+                                                                    <% }) } %>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label fw-bold">Status</label>
+                                                            <select id="filterStatus" class="form-select">
+                                                                <option value="">Semua Status</option>
+                                                                <option value="aktif">Aktif</option>
+                                                                <option value="nonaktif">Tidak Aktif</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="card-body px-0 pb-2">
-                                                <div class="table-responsive">
-                                                    <table id="sekolahTable" class="table align-items-center mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th
-                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">
-                                                                    ID
-                                                                    Sekolah</th>
-                                                                <th
-                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                                    Nama
-                                                                    Sekolah</th>
-                                                                <th
-                                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                                    Lokasi</th>
-                                                                <th
-                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                                    SPPG</th>
-                                                                <th
-                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                                    Status Sistem</th>
-                                                                <th
-                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                                    Kasus Keracunan</th>
-                                                                <th
-                                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                                    Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="sekolahTableBody">
-                                                            <!-- Data di-inject via AJAX -->
-                                                        </tbody>
-                                                    </table>
-                                                    <div id="paginationContainer"
-                                                        class="mt-4 d-flex justify-content-center gap-2">
-                                                        <!-- Pagination di-inject via AJAX -->
+                                                <div class="card-body px-0 pb-2">
+                                                    <div class="table-responsive">
+                                                        <table id="sekolahTable" class="table align-items-center mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th
+                                                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">
+                                                                        ID
+                                                                        Sekolah</th>
+                                                                    <th
+                                                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Nama
+                                                                        Sekolah</th>
+                                                                    <th
+                                                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                                        Lokasi</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        SPPG</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Status Sistem</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Kasus Keracunan</th>
+                                                                    <th
+                                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                                        Aksi</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="sekolahTableBody">
+                                                                <!-- Data di-inject via AJAX -->
+                                                            </tbody>
+                                                        </table>
+                                                        <div id="paginationContainer"
+                                                            class="mt-4 d-flex justify-content-center gap-2">
+                                                            <!-- Pagination di-inject via AJAX -->
+                                                        </div>
+                                                        <div id="emptyState" class="text-center py-4 d-none">
+                                                            <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
+                                                            <p class="text-muted mb-0">Data Sekolah Tidak Ditemukan.</p>
+                                                        </div>
                                                     </div>
-                                                    <div id="emptyState" class="text-center py-4 d-none">
-                                                        <i class="fas fa-user-slash fa-2x text-secondary mb-2"></i>
-                                                        <p class="text-muted mb-0">Data Sekolah Tidak Ditemukan.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <footer class="sticky-bottom footer pt-3  ">
-                                    <div class="container-fluid">
-                                        <div class="row align-items-center justify-content-lg-between">
-                                            <div class="col-lg-6 mb-lg-0 mb-4">
-                                                <div class="copyright text-center text-sm text-muted text-lg-start">
-                                                    ©
-                                                    <script>
-                                                        document.write(new Date().getFullYear())
-                                                    </script>,
-                                                    Irostech
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </footer>
+
+
+                                    <footer class="sticky-bottom footer pt-3  ">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center justify-content-lg-between">
+                                                <div class="col-lg-6 mb-lg-0 mb-4">
+                                                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                                                        ©
+                                                        <script>
+                                                            document.write(new Date().getFullYear())
+                                                        </script>,
+                                                        Irostech
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </footer>
 
                     </div>
     </main>
@@ -419,16 +422,27 @@
         <td class="text-center">
           <h6 class="mb-0 text-sm">${s.satuan_gizi?.nama_sppg || '-'}</h6>
         </td>
-        <td class="text-center">
-          <span class="badge ${s.status_sistem === 'aktif' ? 'bg-success' : 'bg-danger'}">
-            ${s.status_sistem}
-          </span>
-        </td>
-        <td class="text-center">
-          <span class="badge ${s.kasus_keracunan === 'aman' ? 'bg-success' : 'bg-danger'}">
-            ${s.kasus_keracunan}
-          </span>
-        </td>
+<td class="text-center">
+  <span class="badge ${s.status_sistem === 'aktif'
+                        ? 'bg-success'
+                        : s.status_sistem === 'nonaktif'
+                            ? 'bg-danger'
+                            : 'bg-warning'
+                    }">
+    ${s.status_sistem}
+  </span>
+</td>
+
+<td class="text-center">
+  <span class="badge ${s.kasus_keracunan === 'aman'
+                        ? 'bg-success'
+                        : s.kasus_keracunan === 'bahaya'
+                            ? 'bg-danger'
+                            : 'bg-warning'
+                    }">
+    ${s.kasus_keracunan}
+  </span>
+</td>
         <td class="text-center">
           <a class="btn btn-outline-info btn-sm px-3 mb-0" href="/user/sppg/sekolah/${s.id_sekolah}">
             <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor">

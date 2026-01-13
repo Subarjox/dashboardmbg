@@ -6,8 +6,8 @@ const laporanController = require('../controlers/laporancontroller');
 
 router.get("/", isAuthenticated, laporanController.getAll);
 
-router.post('/baca/:id', laporanController.markAsRead);
-router.get('/detail/:id', laporanController.getOne);
+router.post('/baca/:id', isAuthenticated, laporanController.markAsRead);
+router.get('/detail/:id', isAuthenticated, laporanController.getOne);
 
 
 module.exports = router;

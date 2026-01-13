@@ -189,7 +189,7 @@ const sppgController = {
         id_sppg: id_sppg,
         nama_makanan: "Menu belum diisi",
         protein: null,
-        total_lemak: null,
+        lemak: null,
         karbohidrat: null,
         kalori: null,
         deskripsi_menu: null,

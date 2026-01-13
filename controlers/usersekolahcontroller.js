@@ -1,6 +1,4 @@
 const { createClient } = require('@supabase/supabase-js');
-const { name } = require('ejs');
-const { getLaporan } = require('./usersppgcontroller');
 require('dotenv').config();
 
 const supabase = createClient(
@@ -162,9 +160,18 @@ const userSekolahController = {
 
       if (error) throw error;
 
+      const TotalSiswa = data.length;
+      const SiswaAlergiBerat = data.filter(i => i.kategori_alergi === 'berat').length;
+      const SiswaAlergiRingan = data.filter(i => i.kategori_alergi === 'ringan').length;
+      const SiswaTanpaAlergi = data.filter(i => i.kategori_alergi === 'tidak ada').length;
+
       res.render('users/pihak_sekolah/siswa_sekolah', {
         user: req.session.user,
         siswa: data,
+        TotalSiswa,
+        SiswaAlergiBerat,
+        SiswaAlergiRingan,
+        SiswaTanpaAlergi,
         message: req.session.flash?.message || null,
         type: req.session.flash?.type || null,
         pageTitle: 'Siswa Saya',
@@ -252,12 +259,19 @@ const userSekolahController = {
     }
   },
 
+
   addSiswaForm: async (req, res) => {
-    const { data: sekolah, error } = await supabase.from('sekolah').select('*').eq('id_sekolah', req.session.user?.id_sekolah).single();
+    const sekolahId = req.session.user?.id_sekolah;
+
+    const { data: sekolah, error } = await supabase
+      .from('sekolah')
+      .select('*')
+      .eq('id_sekolah', sekolahId)
+      .single();
+
     if (error) return res.send('Error: ' + error.message);
     res.render('users/pihak_sekolah/tambah_siswa_sekolah', {
       user: req.session.user,
-
       sekolah,
       pageTitle: 'Tambah Siswa',
       pageCrumb: 'Siswa',
@@ -335,11 +349,19 @@ const userSekolahController = {
         .eq('sekolah_id', sekolahId)
         .single();
 
-      if (error) throw error;
+      const { data: sekolah, error: sekolahError } = await supabase
+        .from('sekolah')
+        .select('*')
+        .eq('id_sekolah', sekolahId)
+        .single();
 
-      res.render('usersekolah/edit_siswa', {
+      if (error) throw error;
+      if (sekolahError) throw sekolahError;
+
+      res.render('users/pihak_sekolah/update_siswa_sekolah', {
         user: req.session.user,
         siswa,
+        sekolah,
         pageTitle: 'Edit Siswa',
         pageCrumb: 'Siswa',
         breadcrumb: ['Dashboard Sekolah', 'Edit Siswa'],
@@ -432,71 +454,6 @@ const userSekolahController = {
       res.redirect('/user/sekolah/siswa');
     }
   },
-
-  editSekolahForm: async (req, res) => {
-    const sekolahId = req.session.user?.id_sekolah;
-
-    try {
-      const { data: sekolah, error } = await supabase
-        .from('sekolah')
-        .select('*')
-        .eq('id_sekolah', sekolahId)
-        .single();
-
-      if (error) throw error;
-
-      res.render('usersekolah/edit_sekolah', {
-        user: req.session.user,
-        sekolah,
-        pageTitle: 'Edit Data Sekolah',
-        breadcrumb: ['Dashboard Sekolah', 'Edit Sekolah'],
-      });
-    } catch (err) {
-      res.send('Gagal memuat data sekolah: ' + err.message);
-    }
-  },
-
-  updateSekolah: async (req, res) => {
-    const sekolahId = req.session.user?.id_sekolah;
-    const { nama_sekolah, kota, provinsi, alamat, telpon_sekolah, email_sekolah, foto_lama } = req.body;
-
-    try {
-      let updateData = {
-        nama_sekolah,
-        kota,
-        provinsi,
-        alamat,
-        telpon_sekolah,
-        email_sekolah,
-        foto_sekolah: foto_lama,
-      };
-
-      if (req.file) {
-        const { data, error: uploadError } = await supabase.storage
-          .from('foto-sekolah')
-          .upload(`sekolah/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
-            cacheControl: '3600',
-            upsert: false,
-            contentType: req.file.mimetype,
-          });
-
-        if (uploadError) throw uploadError;
-        updateData.foto_sekolah = supabase.storage.from('foto-sekolah').getPublicUrl(data.path).data.publicUrl;
-      }
-
-      const { error } = await supabase
-        .from('sekolah')
-        .update(updateData)
-        .eq('id_sekolah', sekolahId);
-
-      if (error) throw error;
-
-      res.redirect('/user-sekolah');
-    } catch (err) {
-      res.send('Gagal mengupdate data sekolah: ' + err.message);
-    }
-  },
-
 
   //peringatan
   getPeringatan: async (req, res) => {
@@ -782,6 +739,217 @@ const userSekolahController = {
     }
   },
 
+  ReadOneLaporan: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const { data: laporan, error } = await supabase
+        .from('laporan')
+        .select(`
+        *,
+        sekolah (
+          nama_sekolah
+        )
+      `)
+        .eq('id_laporan', id)
+        .single();
+
+      if (error || !laporan) {
+        console.error('Laporan tidak ditemukan:', error);
+        return res.status(404).render('404', {
+          message: 'Laporan tidak ditemukan'
+        });
+      }
+
+      res.render('users/pihak_sekolah/detail_laporan_sekolah', {
+        user: req.session.user,
+        laporan,
+        pageTitle: 'Detail Laporan',
+        pageCrumb: 'Laporan',
+        breadcrumb: ['Dashboard Sekolah', 'Laporan', 'Detail'],
+      });
+
+    } catch (err) {
+      console.error('Error getOne Laporan:', err);
+      res.status(500).send('Terjadi kesalahan server.');
+    }
+  },
+
+  getOneMenu: async (req, res) => {
+    try {
+      const sekolahId = req.session.user?.id_sekolah;
+      if (!sekolahId) return res.send('Sekolah tidak ditemukan');
+
+      // 1️⃣ Ambil id_sppg dari sekolah
+      const { data: sekolah, error: sekolahError } = await supabase
+        .from('sekolah')
+        .select('id_sppg')
+        .eq('id_sekolah', sekolahId)
+        .single();
+
+      if (sekolahError) throw sekolahError;
+
+      // 2️⃣ Ambil menu berdasarkan id_sppg (BUKAN id_menu)
+      const { data, error } = await supabase
+        .from('menu_makanan')
+        .select(`
+        *,
+        satuan_gizi (
+          id_sppg,
+          nama_sppg
+        )
+      `)
+        .eq('id_sppg', sekolah.id_sppg)
+        .single();
+
+      if (error) throw error;
+
+      res.render('users/pihak_sekolah/detail_menu_sekolah', {
+        user: req.session.user,
+        makanan: data,
+        pageTitle: 'Detail Menu',
+        pageCrumb: 'Menu',
+        breadcrumb: ['Dashboard Sekolah', 'Menu', 'Detail'],
+      });
+
+    } catch (err) {
+      res.send('Error: ' + err.message);
+    }
+  },
+
+
+  profileSekolah: async (req, res) => {
+    const sekolahId = req.session.user.id_sekolah;
+    const { data, error } = await supabase
+      .from('sekolah')
+      .select(`
+        *,
+        satuan_gizi(id_sppg, nama_sppg)
+      `)
+      .eq('id_sekolah', sekolahId)
+      .single();
+
+    if (error) return res.send('Error: ' + error.message);
+
+    res.render('users/pihak_sekolah/profile_sekolah', {
+      user: req.session.user,
+      sekolah: data,
+      pageTitle: 'Detail Sekolah',
+      pageCrumb: 'Sekolah',
+      breadcrumb: ['Dashboard', 'Sekolah', 'Detail'],
+    });
+  },
+
+  FormUpdateProfileSekolah: async (req, res) => {
+    const { id } = req.params;
+
+    const { data: sekolah, error } = await supabase
+      .from('sekolah')
+      .select('*')
+      .eq('id_sekolah', id)
+      .single();
+
+    const { data: sppgList } = await supabase
+      .from('satuan_gizi')
+      .select('id_sppg, nama_sppg');
+
+    if (error) return res.send('Gagal memuat data sekolah: ' + error.message);
+
+    res.render('users/pihak_sekolah/edit_profile_sekolah', {
+      user: req.session.user,
+      sekolah,
+      sppgList,
+      pageCrumb: 'Sekolah',
+      pageTitle: 'Edit Sekolah',
+      breadcrumb: ['Dashboard', 'Sekolah', 'Edit'],
+    });
+  },
+
+  UpdateProfileSekolah: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        nama_sekolah,
+        kota,
+        provinsi,
+        jumlah_siswa,
+        status_sistem,
+        alamat,
+        telpon_sekolah,
+        id_sppg,
+        email_sekolah,
+        foto_lama
+      } = req.body;
+
+      const { data: existingEmail } = await supabase
+        .from('sekolah')
+        .select('id_sekolah')
+        .eq('email_sekolah', email_sekolah)
+        .neq('id_sekolah', id)
+        .limit(1);
+
+      if (existingEmail && existingEmail.length > 0) {
+        req.session.flash = {
+          type: 'error',
+          message: 'Email sudah digunakan sekolah lain',
+        };
+        return res.redirect('/user/sekolah/profile');
+      }
+
+      let updateData = {
+        nama_sekolah,
+        kota,
+        provinsi,
+        jumlah_siswa: parseInt(jumlah_siswa) || 0,
+        status_sistem,
+        alamat,
+        telpon_sekolah,
+        email_sekolah,
+        id_sppg: parseInt(id_sppg),
+        foto_sekolah: foto_lama,
+      };
+
+      if (req.file) {
+        const { data, error: uploadError } = await supabase.storage
+          .from('foto-sekolah')
+          .upload(`sekolah/${Date.now()}_${req.file.originalname}`, req.file.buffer, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: req.file.mimetype,
+          });
+
+        if (uploadError) throw uploadError;
+
+        updateData.foto_sekolah = supabase
+          .storage
+          .from('foto-sekolah')
+          .getPublicUrl(data.path).data.publicUrl;
+      }
+
+      const { error } = await supabase
+        .from('sekolah')
+        .update(updateData)
+        .eq('id_sekolah', id);
+
+      if (error) throw error;
+
+      req.session.flash = {
+        type: 'success',
+        message: 'Sekolah berhasil diperbarui',
+      };
+
+      res.redirect('/user/sekolah/profile');
+
+    } catch (err) {
+      req.session.flash = {
+        type: 'error',
+        message: err.message || 'Gagal memperbarui sekolah',
+      };
+      res.redirect('/user/sekolah/profile');
+    }
+  },
+
 };
 
 module.exports = userSekolahController;
+module.exports.SendNotification = SendNotification;

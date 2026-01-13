@@ -80,6 +80,20 @@
             <span class="nav-link-text ms-1">Peringatan</span>
           </a>
         </li>
+        <!-- Menu -->
+        <li class="nav-item">
+          <a class="nav-link <%= isActive('/user/sekolah/menu') ? 'active' : '' %>" href="/user/sekolah/menu">
+            <div
+              class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                fill="currentColor">
+                <path
+                  d="M480-40q-91 0-171-34.5T169-169q-60-60-94.5-140T40-480q0-91 34.5-171T169-791q60-60 140-94.5T480-920q91 0 171 34.5T791-791q60 60 94.5 140T920-480q0 91-34.5 171T791-169q-60 60-140 94.5T480-40Zm0-80q150 0 255-105t105-255q0-150-105-255T480-840q-150 0-255 105T120-480q0 150 105 255t255 105Zm0-80q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-29 0-54 12.5T384-712q-28-2-55 6t-47 28q-20 20-29 47t-5 55q-23 17-35.5 42T200-480q0 29 12.5 54t35.5 42q-4 28 5 55t29 47q20 20 47 29.5t55 4.5q17 23 42 35.5t54 12.5Zm0-80q-22 0-34-18.5T420-334q-22 3-44 7.5T338-338q-16-16-11.5-38t7.5-44q-17-13-35.5-25.5T280-480q0-22 18.5-34t35.5-26q-3-22-7.5-44t11.5-38q16-16 38-11.5t44 7.5q13-17 25.5-35.5T480-680v400Zm120-40-56-56 56-57 56 57-56 56Zm22-191-84-85q17-17 42-17.5t42 17.5q17 17 17.5 42.5T622-511Zm-142 31Z" />
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Detail Menu</span>
+          </a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link <%= isActive('user/sekolah/laporan') ? 'active' : '' %>" href="/user/sekolah/laporan">
@@ -101,7 +115,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link <%= isActive('/profile') ? 'active' : '' %>" href="/profile">
+          <a class="nav-link <%= isActive('/user/sekolah/profile') ? 'active' : '' %>" href="/user/sekolah/profile">
             <div
               class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
@@ -133,7 +147,8 @@
           <div class="docs-info">
             <h6 class="text-dark up mb-0">Butuh Bantuan?</h6>
             <p class="text-xs text-dark font-weight-bold">Hubungi Developer</p>
-            <a href="" class="btn btn-info btn-sm w-100 mb-0">Kontak</a>
+            <a href="https://discord.gg/u3UWSxXC" class="btn btn-indigo btn-sm w-100 mb-0">
+              Discord</a>
           </div>
         </div>
       </div>
@@ -179,7 +194,8 @@
           <li class="nav-item dropdown ps-2 pe-3 d-flex align-items-center">
             <a href="#" class="nav-link text-body font-weight-bold px-0" id="navbarDropdownMenuLink"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="avatar avatar-sm me-sm-1" src="/assets/img/team-2.jpg" alt="user">
+              <img class="avatar avatar-sm me-sm-1" src="<%= user.foto ? user.foto : '/assets/img/basic.png' %>"
+                alt="user">
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                 fill="CurrentColor">
                 <path d="M480-360 280-560h400L480-360Z" />
@@ -187,7 +203,7 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="navbarDropdownMenuLink">
               <li>
-                <a class="dropdown-item border-radius-md" href="/profile">
+                <a class="dropdown-item border-radius-md" href="/user/sekolah/profile">
                   <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
                     fill="CurrentColor">
                     <path
@@ -269,12 +285,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                           fill="CurrentColor">
                           <path
-                            d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                            d="M250-40v-160h-30q-42 0-71-29t-29-71q0-42 29-71t71-29h30v-40H120v-200h130v-40h-30q-42 0-71-29t-29-71q0-42 29-71t71-29h30v-40h60v40h30q42 0 71 29t29 71q0 42-29 71t-71 29h-30v40h130v200H310v40h30q42 0 71 29t29 71q0 42-29 71t-71 29h-30v160h-60Zm400 0v-160h-30q-42 0-71-29t-29-71q0-42 29-71t71-29h30v-40H520v-200h130v-40h-30q-42 0-71-29t-29-71q0-42 29-71t71-29h30v-40h60v40h30q42 0 71 29t29 71q0 42-29 71t-71 29h-30v40h130v200H710v40h30q42 0 71 29t29 71q0 42-29 71t-71 29h-30v160h-60ZM220-760h120q8 0 14-6t6-14q0-8-6-14t-14-6H220q-8 0-14 6t-6 14q0 8 6 14t14 6Zm400 0h120q8 0 14-6t6-14q0-8-6-14t-14-6H620q-8 0-14 6t-6 14q0 8 6 14t14 6ZM200-520h160v-40H200v40Zm400 0h160v-40H600v40ZM220-280h120q8 0 14-6t6-14q0-8-6-14t-14-6H220q-8 0-14 6t-6 14q0 8 6 14t14 6Zm400 0h120q8 0 14-6t6-14q0-8-6-14t-14-6H620q-8 0-14 6t-6 14q0 8 6 14t14 6ZM200-760v-40 40Zm400 0v-40 40ZM200-520v-40 40Zm400 0v-40 40ZM200-280v-40 40Zm400 0v-40 40Z" />
                         </svg>
                       </div>
                       <span class="text-white text-sm">Menu Makanan Hari ini: </span>
                       <h5 class="text-white font-weight-bolder mb-0 mt-2">
-
+                        <%= menu_makanan.nama_makanan %>
                       </h5>
                     </div>
                   </div>
@@ -314,77 +330,96 @@
 
         </div>
 
-        <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-          <div class="card shadow h-100">
-            <div class="card-header pb-0 p-3">
-              <h6 class="mb-0">Data Siswa</h6>
-            </div>
-            <div class="card-body pb-0 p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
-                  <div class="w-100">
-                    <div class="d-flex mb-2">
-                      <span class="me-2 text-sm font-weight-bold text-dark">Siswa Dengan Alergi Berat</span>
-                      <span class="ms-auto text-sm font-weight-bold">
-                        x Siswa
-                      </span>
-                    </div>
-                    <div>
-                      <div class="progress progress-md bg-danger">
-                        <div class="progress-bar bg-success w-80" role="progressbar" aria-valuenow="60"
-                          aria-valuemin="0" aria-valuemax="100"></div>
+        <% const AlergiBeratBar=TotalSiswa> 0
+          ? Math.round(((SiswaAlergiBerat / TotalSiswa) * 100) / 5) * 5
+          : 0;
+
+          const AlergiRinganBar=TotalSiswa> 0
+          ? Math.round(((SiswaAlergiRingan / TotalSiswa) * 100) / 5) * 5
+          : 0;
+
+          const TanpaAlergiBar=TotalSiswa> 0
+          ? Math.round(((SiswaTanpaAlergi / TotalSiswa) * 100) / 5) * 5
+          : 0;
+
+          %>
+
+          <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+            <div class="card shadow h-100">
+              <div class="card-header pb-0 p-3">
+                <h6 class="mb-0">Data Siswa</h6>
+              </div>
+              <div class="card-body pb-0 p-3">
+                <ul class="list-group">
+                  <li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
+                    <div class="w-100">
+                      <div class="d-flex mb-2">
+                        <span class="me-2 text-sm font-weight-bold text-dark">Siswa Dengan Alergi Berat</span>
+                        <span class="ms-auto text-sm font-weight-bold">
+                          <%= SiswaAlergiBerat %> Siswa
+                        </span>
+                      </div>
+                      <div>
+                        <div class="progress progress-md bg-info h-100">
+                          <div class="progress-bar bg-danger w-<%= AlergiBeratBar %>" role="progressbar"
+                            aria-valuenow="<%= AlergiBeratBar %>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="w-100">
-                    <div class="d-flex mb-2">
-                      <span class="me-2 text-sm font-weight-bold text-dark">Siswa dengan alergi ringan</span>
-                      <span class="ms-auto text-sm font-weight-bold">
-                        y Siswa
-                      </span>
-                    </div>
-                    <div>
-                      <div class="progress progress-md bg-danger">
-                        <div class="progress-bar bg-success w-95" role="progressbar" aria-valuenow="30"
-                          aria-valuemin="0" aria-valuemax="100"></div>
+                  </li>
+                  <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                    <div class="w-100">
+                      <div class="d-flex mb-2">
+                        <span class="me-2 text-sm font-weight-bold text-dark">Siswa dengan alergi ringan</span>
+                        <span class="ms-auto text-sm font-weight-bold">
+                          <%= SiswaAlergiRingan %> Siswa
+                        </span>
+                      </div>
+                      <div>
+                        <div class="progress progress-md bg-info h-100">
+                          <div class="progress-bar bg-warning w-<%= AlergiRinganBar %>" role="progressbar"
+                            aria-valuenow="<%= AlergiRinganBar %>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                  <div class="w-100">
-                    <div class="d-flex mb-2">
-                      <span class="me-2 text-sm font-weight-bold text-dark">Siswa Tanpa Alergi</span>
-                      <span class="ms-auto text-sm font-weight-bold">
-                        z Siswa
-                      </span>
-                    </div>
-                    <div>
-                      <div class="progress progress-md bg-danger">
-                        <div class="progress-bar bg-success w-95" role="progressbar" aria-valuenow="30"
-                          aria-valuemin="0" aria-valuemax="100"></div>
+                  </li>
+                  <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                    <div class="w-100">
+                      <div class="d-flex mb-2">
+                        <span class="me-2 text-sm font-weight-bold text-dark">Siswa Tanpa Alergi</span>
+                        <span class="ms-auto text-sm font-weight-bold">
+                          <%= SiswaTanpaAlergi %> Siswa
+                        </span>
+                      </div>
+                      <div>
+                        <div class="progress progress-md bg-info h-100">
+                          <div class="progress-bar bg-success w-<%= TanpaAlergiBar %>" role="progressbar"
+                            aria-valuenow="<%= TanpaAlergiBar %>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer pt-0 p-3 d-flex align-items-center">
-              <div class="w-100">
-                <p class="text-sm">
-                  Ada <b></b> dari <b></b> Sekolah yang memiliki masalah sistem, dan ada <b></b> kasus keracunan yang
-                  terjadi, segera lakukan penanganan.
-                </p>
-                <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/sekolah">
-                  Lihat Sekolah
-                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer pt-0 p-3 d-flex align-items-center">
+                <div class="w-100">
+                  <p class="text-sm">
+                    dari <%= TotalSiswa %> Siswa ada <span class="text-danger font-weight-bolder">
+                        <%= SiswaAlergiBerat %>
+                      </span> Siswa dengan alergi berat, <span class="text-warning font-weight-bolder">
+                        <%= SiswaAlergiRingan %>
+                      </span> Siswa dengan alergi ringan, dan <span class="text-success font-weight-bolder">
+                        <%= SiswaTanpaAlergi %>
+                      </span> Siswa tanpa alergi. Mohon perhatikan kecocokan menu dari SPPG
+                  </p>
+                  <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="/user/sekolah/siswa">
+                    Lihat data siswa
+                    <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
 
       <div class="col-12 mt-4">
@@ -394,7 +429,7 @@
       </div>
 
       <div class="col-12 mt-4">
-        <div class="row g-3" style="min-height: 350px;">
+        <div class="row g-3" ">
           <% let cardColor; let description; let btncolor; let btndesc; if (sekolah.status_sistem==='nonaktif' ) {
             cardColor='bg-danger' ; description='Sistem sedang down, Petugas sudah diberi peringatan' ;
             btncolor='btn-secondary' ; btndesc=' 🔔 Beri Notifikasi Ulang 🔔' } else if (sekolah.status_sistem==='aktif'
@@ -410,84 +445,83 @@
             btncolor='btn-secondary' ; btndesc='Sistem sedang dalam perbaikan' } %>
 
             <!-- Status Sistem -->
-            <div class="col-lg-6 col-md-6 col-12">
-              <div class="card h-100">
-                <span class="mask <%= cardColor %> opacity-10 border-radius-lg"></span>
-                <div class="card-body p-3 position-relative ">
-                  <div class="d-flex flex-column align-items-center h-100 w-100">
-                    <div
-                      class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
-                      style="width:60px; height:60px;">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="CurrentColor">
-                        <path
-                          d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
-                      </svg>
-                    </div>
-                    <div
-                      class="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center w-100">
-                      <h5 class="text-white text-uppercase font-weight-bolder mb-0 mt-2">
-                        Status Sistem
-                      </h5>
-                      <h1 class="text-white text-uppercase font-weight-bolder mb-0 mt-1">
-                        <%= sekolah.status_sistem%>
-                      </h1>
-                      <span class="text-white font-weight-bold mt-2">
-                        <%= description %>
-                      </span>
-                    </div>
+            <div class=" col-lg-6 col-md-6 col-12">
+          <div class="card h-100" style="min-height: 350px;">
+            <span class="mask <%= cardColor %> opacity-10 border-radius-lg"></span>
+            <div class="card-body p-3 position-relative ">
+              <div class="d-flex flex-column align-items-center h-100 w-100">
+                <div
+                  class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
+                  style="width:60px; height:60px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="CurrentColor">
+                    <path
+                      d="M96-192v-92q0-25.78 12.5-47.39T143-366q54-32 114.5-49T384-432q66 0 126.5 17T625-366q22 13 34.5 34.61T672-284v92H96Zm648 0v-92q0-42-19.5-78T672-421q39 8 75.5 21.5T817-366q22 13 34.5 34.67Q864-309.65 864-284v92H744ZM384-480q-60 0-102-42t-42-102q0-60 42-102t102-42q60 0 102 42t42 102q0 60-42 102t-102 42Zm336-144q0 60-42 102t-102 42q-8 0-15-.5t-15-2.5q25-29 39.5-64.5T600-624q0-41-14.5-76.5T546-765q8-2 15-2.5t15-.5q60 0 102 42t42 102ZM168-264h432v-20q0-6.47-3.03-11.76-3.02-5.3-7.97-8.24-47-27-99-41.5T384-360q-54 0-106 14t-99 42q-4.95 2.83-7.98 7.91-3.02 5.09-3.02 12V-264Zm216.21-288Q414-552 435-573.21t21-51Q456-654 434.79-675t-51-21Q354-696 333-674.79t-21 51Q312-594 333.21-573t51 21ZM384-264Zm0-360Z" />
+                  </svg>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center w-100">
+                  <h5 class="text-white text-uppercase font-weight-bolder mb-0 mt-2">
+                    Status Sistem
+                  </h5>
+                  <h1 class="text-white text-uppercase font-weight-bolder mb-0 mt-1">
+                    <%= sekolah.status_sistem%>
+                  </h1>
+                  <span class="text-white font-weight-bold mt-2">
+                    <%= description %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keracunan -->
+        <% let cardColor2; let description2; let btncolor2; let btndesc2; if (sekolah.kasus_keracunan==='bahaya' ) {
+          cardColor2='bg-danger' ; description2='Keracunan Telah Terjadi, Petugas Medis akan segera dikirim' ;
+          btncolor2='btn-secondary' ; btndesc2=' 🔔 Beri Notifikasi Ulang 🔔' } else if
+          (sekolah.kasus_keracunan==='aman' ) { cardColor2='bg-success' ; description2='Semua siswa aman dan sehat' ;
+          btncolor2='btn-danger' ; btndesc2=' UBAH STATUS ' } else { cardColor2='bg-warning' ;
+          description2='Masalah keracunan sedang ditangani' ; btncolor2='btn-warning' ;
+          btndesc2='Petugas medis sedang mengobati siswa' } %>
+
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="card h-100" style="min-height: 350px;">
+              <span class="mask <%= cardColor2 %> opacity-10 border-radius-lg"></span>
+              <div class="card-body p-3 position-relative ">
+                <div class="d-flex flex-column align-items-center h-100 w-100">
+                  <div
+                    class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
+                    style="width:60px; height:60px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                      fill="CurrentColor">
+                      <path
+                        d="M599.21-96Q584-96 573.5-106.35T563-132l1-38q-25-4-47.5-13T474-206l-37.69 39.22Q425-156 410.5-156q-14.5 0-25.5-11t-11-25.67q0-14.66 11-25.33l39-39q-4-5-6.67-10.84-2.66-5.85-5.33-11.16l-28-55-48 48q-11 11-25.5 11T285-285.93q-11-10.93-11-25.5T285-337l48-48-54-26q-3.85-1.71-6.92-3.86Q269-417 266-419l-40 40q-11 11-25.5 11T175-378.93q-11-10.93-11-25.5T175-430l37-37q-17.16-21.45-27.58-45.73Q174-537 170.44-564h-38.3q-15.14 0-25.64-10.29T96-599.79q0-15.21 10.42-25.71t25.82-10.5H173q5.17-19.28 12.4-36.52 7.23-17.25 18.6-33.48l-37-37q-11-10.64-11-24.82T167-793q11-11 25.18-11T217-793l38 36q16-11 33-18t36-12v-40.76q0-15.4 10.29-25.82t25.5-10.42q15.21 0 25.71 10.25 10.5 10.26 10.5 25.41V-790q26.15 4.18 49.57 13.59Q469-767 489-752l32.77-32.77Q533-796 547.67-796q14.66 0 25.33 11 11 10.91 11 25.45 0 14.55-11.27 25.82L538-699q3 5 5.58 9.13 2.58 4.12 4.64 9.28L574-629l45-45q10.67-11 25.33-11Q659-685 670-674q11 11 11 25.67 0 14.66-11 25.33l-46 46 57 28q7 3 13 6.5t12 8.5l36.92-36.92Q754-582 768.18-582q14.18 0 24.82 11 11 10.67 11 25.33 0 14.67-10.85 25.96L757-483q14 20 22 42t11.5 45h37.63Q843-396 853-385.71q10 10.29 10 25.5t-10.28 25.71Q842.44-324 827.24-324H787q-5 19-12.5 36.5T756-254l37 37q11 10.67 11 25.33 0 14.67-11 26.15Q782-155 767.5-155T742-166l-37-37q-16 11-33 18t-36 12l-1 41q0 15.3-10.29 25.65Q614.42-96 599.21-96Zm-7.09-144Q652-240 690-285.5q38-45.5 28.36-104.82Q713-421 695.22-445.39 677.44-469.77 649-484l-65-33q-21.85-11.02-39.42-28.01Q527-562 516-584l-32-65q-17-33-47.97-52-30.98-19-68.15-19Q308-720 270-675q-38 45-28.36 104.32Q247-540 265.06-515.23 283.11-490.45 312-476l63.78 31.78Q398-433 415.37-415.42 432.73-397.85 444-376l32 65q17 33 47.97 52 30.98 19 68.15 19ZM372-528q25 0 42.5-17.5T432-588q0-25-17.5-42.5T372-648q-25 0-42.5 17.5T312-588q0 25 17.5 42.5T372-528Zm203.89 216Q596-312 610-325.89q14-13.88 14-34Q624-380 610.11-394q-13.88-14-34-14Q556-408 542-394.11q-14 13.88-14 34Q528-340 541.89-326q13.88 14 34 14ZM480-480Z" />
+                    </svg>
+                  </div>
+                  <div
+                    class="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center w-100">
+                    <h5 class="text-white text-uppercase font-weight-bold mb-0 mt-2">
+                      Kasus Keracunan
+                    </h5>
+                    <h1 class="text-white text-uppercase font-weight-bolder mb-0 mt-1">
+                      <%= sekolah.kasus_keracunan%>
+                    </h1>
+                    <span class="text-white font-weight-bold mt-2">
+                      <%= description2 %>
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Keracunan -->
-            <% let cardColor2; let description2; let btncolor2; let btndesc2; if (sekolah.kasus_keracunan==='bahaya' ) {
-              cardColor2='bg-danger' ; description2='Keracunan Telah Terjadi, Petugas Medis akan segera dikirim' ;
-              btncolor2='btn-secondary' ; btndesc2=' 🔔 Beri Notifikasi Ulang 🔔' } else if
-              (sekolah.kasus_keracunan==='aman' ) { cardColor2='bg-success' ; description2='Semua siswa aman dan sehat'
-              ; btncolor2='btn-danger' ; btndesc2=' UBAH STATUS ' } else { cardColor2='bg-warning' ;
-              description2='Masalah keracunan sedang ditangani' ; btncolor2='btn-warning' ;
-              btndesc2='Petugas medis sedang mengobati siswa' } %>
+          <div class="col-12 mt-4">
+            <a href="sekolah/peringatan" class="btn btn-danger w-100">
+              Ubah Status & Peringatan
+            </a>
+          </div>
 
-              <div class="col-lg-6 col-md-6 col-12">
-                <div class="card h-100">
-                  <span class="mask <%= cardColor2 %> opacity-10 border-radius-lg"></span>
-                  <div class="card-body p-3 position-relative ">
-                    <div class="d-flex flex-column align-items-center h-100 w-100">
-                      <div
-                        class="icon icon-shape bg-white shadow text-center border-radius-2xl d-flex align-items-center justify-content-center w-100"
-                        style="width:60px; height:60px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                          fill="CurrentColor">
-                          <path
-                            d="M599.21-96Q584-96 573.5-106.35T563-132l1-38q-25-4-47.5-13T474-206l-37.69 39.22Q425-156 410.5-156q-14.5 0-25.5-11t-11-25.67q0-14.66 11-25.33l39-39q-4-5-6.67-10.84-2.66-5.85-5.33-11.16l-28-55-48 48q-11 11-25.5 11T285-285.93q-11-10.93-11-25.5T285-337l48-48-54-26q-3.85-1.71-6.92-3.86Q269-417 266-419l-40 40q-11 11-25.5 11T175-378.93q-11-10.93-11-25.5T175-430l37-37q-17.16-21.45-27.58-45.73Q174-537 170.44-564h-38.3q-15.14 0-25.64-10.29T96-599.79q0-15.21 10.42-25.71t25.82-10.5H173q5.17-19.28 12.4-36.52 7.23-17.25 18.6-33.48l-37-37q-11-10.64-11-24.82T167-793q11-11 25.18-11T217-793l38 36q16-11 33-18t36-12v-40.76q0-15.4 10.29-25.82t25.5-10.42q15.21 0 25.71 10.25 10.5 10.26 10.5 25.41V-790q26.15 4.18 49.57 13.59Q469-767 489-752l32.77-32.77Q533-796 547.67-796q14.66 0 25.33 11 11 10.91 11 25.45 0 14.55-11.27 25.82L538-699q3 5 5.58 9.13 2.58 4.12 4.64 9.28L574-629l45-45q10.67-11 25.33-11Q659-685 670-674q11 11 11 25.67 0 14.66-11 25.33l-46 46 57 28q7 3 13 6.5t12 8.5l36.92-36.92Q754-582 768.18-582q14.18 0 24.82 11 11 10.67 11 25.33 0 14.67-10.85 25.96L757-483q14 20 22 42t11.5 45h37.63Q843-396 853-385.71q10 10.29 10 25.5t-10.28 25.71Q842.44-324 827.24-324H787q-5 19-12.5 36.5T756-254l37 37q11 10.67 11 25.33 0 14.67-11 26.15Q782-155 767.5-155T742-166l-37-37q-16 11-33 18t-36 12l-1 41q0 15.3-10.29 25.65Q614.42-96 599.21-96Zm-7.09-144Q652-240 690-285.5q38-45.5 28.36-104.82Q713-421 695.22-445.39 677.44-469.77 649-484l-65-33q-21.85-11.02-39.42-28.01Q527-562 516-584l-32-65q-17-33-47.97-52-30.98-19-68.15-19Q308-720 270-675q-38 45-28.36 104.32Q247-540 265.06-515.23 283.11-490.45 312-476l63.78 31.78Q398-433 415.37-415.42 432.73-397.85 444-376l32 65q17 33 47.97 52 30.98 19 68.15 19ZM372-528q25 0 42.5-17.5T432-588q0-25-17.5-42.5T372-648q-25 0-42.5 17.5T312-588q0 25 17.5 42.5T372-528Zm203.89 216Q596-312 610-325.89q14-13.88 14-34Q624-380 610.11-394q-13.88-14-34-14Q556-408 542-394.11q-14 13.88-14 34Q528-340 541.89-326q13.88 14 34 14ZM480-480Z" />
-                        </svg>
-                      </div>
-                      <div
-                        class="d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center w-100">
-                        <h5 class="text-white text-uppercase font-weight-bold mb-0 mt-2">
-                          Kasus Keracunan
-                        </h5>
-                        <h1 class="text-white text-uppercase font-weight-bolder mb-0 mt-1">
-                          <%= sekolah.kasus_keracunan%>
-                        </h1>
-                        <span class="text-white font-weight-bold mt-2">
-                          <%= description2 %>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 mt-4">
-                <a href="sekolah/peringatan" class="btn btn-danger w-100">
-                  Ubah Status & Peringatan
-                </a>
-              </div>
-
-        </div>
+      </div>
   </main>
 
   </div>
